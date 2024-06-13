@@ -27,6 +27,7 @@
                 <Button 
                     Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                     Width="18" 
+                    Command="{Binding ResizeTitlebarCommand}"
                     Margin="2,2,5,2"
                     Style="{DynamicResource ThemedButton}">
                     <Button.Background>
@@ -38,6 +39,7 @@
                      Margin="2,2,5,2" 
                      Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                      Width="18" 
+                     Command="{Binding MinimizeTitlebarCommand}"
                      Style="{DynamicResource ThemedButton}">
                      <Button.Background>
                         <ImageBrush ImageSource="minimize.png"/>

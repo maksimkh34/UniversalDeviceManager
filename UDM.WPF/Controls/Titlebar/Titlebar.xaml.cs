@@ -4,7 +4,7 @@ namespace UDM.WPF.Controls.Titlebar
 {
     public partial class Titlebar
     {
-        Window? _parentWindow;
+        private Window? _parentWindow;
         public Titlebar()
         {
             InitializeComponent();
@@ -15,7 +15,7 @@ namespace UDM.WPF.Controls.Titlebar
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             _parentWindow = Window.GetWindow(this);
-            DataContext = new TitlebarViewModel(_parentWindow!);
+            DataContext = new TitlebarViewModel(_parentWindow!, DefaultWidth, DefaultHeight);
         }
 
         #region DependencyProperties
@@ -28,14 +28,14 @@ namespace UDM.WPF.Controls.Titlebar
 
         public int DefaultWidth
         {
-            get => (int)GetValue(WidthProperty);
-            set => SetValue(WidthProperty, value);
+            get => (int)GetValue(DefaultWidthProperty);
+            set => SetValue(DefaultWidthProperty, value);
         }
 
         public int DefaultHeight
         {
-            get => (int)GetValue(HeightProperty);
-            set => SetValue(HeightProperty, value);
+            get => (int)GetValue(DefaultHeightProperty);
+            set => SetValue(DefaultHeightProperty, value);
         }
 
         public bool CanMinimize
