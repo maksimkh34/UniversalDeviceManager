@@ -36,6 +36,7 @@
                 </Button>
                 
                 <Button 
+                    x:Name="MinimizeButton"
                      Margin="2,2,5,2" 
                      Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                      Width="18" 

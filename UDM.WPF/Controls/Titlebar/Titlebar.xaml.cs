@@ -16,6 +16,11 @@ namespace UDM.WPF.Controls.Titlebar
         {
             _parentWindow = Window.GetWindow(this);
             DataContext = new TitlebarViewModel(_parentWindow!, DefaultWidth, DefaultHeight);
+
+            if (!CanMinimize)
+            {
+                MinimizeButton.Visibility = Visibility.Collapsed;
+            }
         }
 
         #region DependencyProperties
@@ -44,8 +49,6 @@ namespace UDM.WPF.Controls.Titlebar
             set => SetValue(CanMinimizeProperty, value);
         }
 
-
-
         public static readonly DependencyProperty HeaderProperty =
             DependencyProperty.Register(nameof(Header), typeof(string), typeof(Titlebar), new PropertyMetadata(default(string)));
 
@@ -56,7 +59,7 @@ namespace UDM.WPF.Controls.Titlebar
             DependencyProperty.Register(nameof(DefaultHeight), typeof(int), typeof(Titlebar), new PropertyMetadata(default(int)));
 
         public static readonly DependencyProperty CanMinimizeProperty =
-                    DependencyProperty.Register(nameof(CanMinimize), typeof(bool), typeof(Titlebar), new PropertyMetadata(default(bool)));
+                    DependencyProperty.Register(nameof(CanMinimize), typeof(bool), typeof(Titlebar), new PropertyMetadata(true));
 
 
         #endregion

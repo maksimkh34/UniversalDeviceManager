@@ -9,8 +9,8 @@ namespace UDM.WPF.Controls.Titlebar
     {
         #region Properties
 
-        private int _defaultHeight;
-        private int _defaultWidth;
+        private readonly int _defaultHeight;
+        private readonly int _defaultWidth;
 
         #endregion
 

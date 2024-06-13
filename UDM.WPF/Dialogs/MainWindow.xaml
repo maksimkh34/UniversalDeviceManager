@@ -30,11 +30,10 @@
         <DockPanel>
             <titlebar:Titlebar VerticalAlignment="Top" 
                                HorizontalAlignment="Stretch" 
-                               DefaultHeight="400" DefaultWidth="600"
+                               DefaultHeight="400" 
+                               DefaultWidth="600"
                                DockPanel.Dock="Top"
-                               CanMinimize="True"
                                Header="UDM">
-                
             </titlebar:Titlebar>
         </DockPanel>
     </Window.Content>
