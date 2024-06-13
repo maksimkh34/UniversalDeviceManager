@@ -1,0 +1,41 @@
+﻿<Window x:Class="UDM.WPF.Dialogs.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vms="clr-namespace:UDM.Core.ViewModels;assembly=UDM.Core"
+        xmlns:titlebar="clr-namespace:UDM.WPF.Controls.Titlebar"
+        mc:Ignorable="d"
+        
+        Closed="Window_Closed"
+        
+        Style="{DynamicResource ThemedWindow}"
+        SizeToContent="Manual"
+        ResizeMode="CanResize"
+        MinHeight="320" MinWidth="375"
+        MaxHeight="800" MaxWidth="1200"
+        Height="400" Width="600">
+
+    <Window.DataContext>
+        <vms:MainViewModel/>
+    </Window.DataContext>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+            CaptionHeight="0"
+            ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
+    
+    <Window.Content>
+        <DockPanel>
+            <titlebar:Titlebar VerticalAlignment="Top" 
+                               HorizontalAlignment="Stretch" 
+                               DefaultHeight="400" DefaultWidth="600"
+                               DockPanel.Dock="Top"
+                               CanMinimize="True"
+                               Header="UDM">
+                
+            </titlebar:Titlebar>
+        </DockPanel>
+    </Window.Content>
+</Window>
