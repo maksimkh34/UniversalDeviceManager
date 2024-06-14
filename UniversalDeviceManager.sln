@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Blend for Visual Studio Version 17
+# Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{ECA26EB2-F092-4367-8FF2-A89A2593DC9A}"
@@ -15,7 +15,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UDM.Avalonia.Desktop", "UDM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UDM.Model", "UDM.Model\UDM.Model.csproj", "{D679328B-33C6-457F-9167-7DB8AE3FB213}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UDM.WPF", "UDM.WPF\UDM.WPF.csproj", "{99E0D2B3-A42E-4E4B-8873-D3D017881655}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UDM.WPF", "UDM.WPF\UDM.WPF.csproj", "{99E0D2B3-A42E-4E4B-8873-D3D017881655}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{38BBA6FA-4C10-4907-BC0A-9FDE77AD3060}"
+	ProjectSection(SolutionItems) = preProject
+		TODO.md = TODO.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

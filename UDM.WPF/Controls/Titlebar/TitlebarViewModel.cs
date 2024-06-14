@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using UDM.Core.ViewModels;
 using UDM.Model;
+using UDM.Model.Log;
 
 namespace UDM.WPF.Controls.Titlebar
 {

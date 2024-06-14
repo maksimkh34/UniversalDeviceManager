@@ -4,11 +4,22 @@ namespace UDM.WPF.Controls.Titlebar
 {
     public partial class Titlebar
     {
-        private Window? _parentWindow;
+        #region Constructor
+
         public Titlebar()
         {
             InitializeComponent();
         }
+
+        #endregion
+
+        #region Properties
+
+        private Window? _parentWindow;
+
+        #endregion
+
+        #region Triggers
 
         private void Border_MouseDown_Trigger(object sender, RoutedEventArgs e) => _parentWindow?.DragMove();
 
@@ -22,6 +33,8 @@ namespace UDM.WPF.Controls.Titlebar
                 MinimizeButton.Visibility = Visibility.Collapsed;
             }
         }
+
+        #endregion
 
         #region DependencyProperties
 

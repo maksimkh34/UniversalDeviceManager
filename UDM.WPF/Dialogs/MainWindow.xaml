@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         
         Closed="Window_Closed"
+        Loaded="MainWindow_Loaded"
         
         Style="{DynamicResource ThemedWindow}"
         SizeToContent="Manual"
@@ -35,6 +36,65 @@
                                DockPanel.Dock="Top"
                                Header="UDM">
             </titlebar:Titlebar>
+
+            <Menu VerticalAlignment="Top"
+                  DockPanel.Dock="Top"
+                  Style="{DynamicResource ThemedMenu}">
+                <MenuItem Header="{DynamicResource mm_File}" 
+                          Style="{DynamicResource ThemedMenuItem}">
+                    <MenuItem Header="{DynamicResource mm_File_Settings}"
+                              Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+                </MenuItem>
+
+                <MenuItem Header="{DynamicResource mm_Scripts}" 
+                          Style="{DynamicResource ThemedMenuItem}">
+                    <MenuItem Header="{DynamicResource mm_Scripts_New}"
+                              Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+
+                    <MenuItem Header="{DynamicResource mm_Scripts_Edit}"
+                              Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource mm_Scripts_Execute}"
+                              Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+                </MenuItem>
+
+                <MenuItem Header="{DynamicResource mm_Fastboot}" 
+                          Style="{DynamicResource ThemedMenuItem}">
+                    <MenuItem Header="{DynamicResource mm_Fastboot_Flash}"
+                              Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource mm_Fastboot_Reboot}"
+                              Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+
+                    <MenuItem Header="{DynamicResource mm_Fastboot_CheckBLStatus}"
+                              Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+
+            <Grid DockPanel.Dock="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBox
+                    Grid.ColumnSpan="3"
+                    Margin="10"
+                    IsReadOnly="True"
+                    FontFamily="Consolas"
+                    Style="{DynamicResource ThemedTextBox}">
+                </TextBox>
+            </Grid>
+
         </DockPanel>
     </Window.Content>
 </Window>

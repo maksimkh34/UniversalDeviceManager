@@ -3,7 +3,7 @@
     <!-- Theme -->
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Skins/Resources.xaml"/>
+        <ResourceDictionary Source="/Resource/Skins/Resources.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="ThemedWindow" TargetType="Window">
