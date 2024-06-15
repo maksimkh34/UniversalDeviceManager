@@ -1,33 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using UDM.Model.Log;
 
 namespace UDM.WPF.Converters
 {
-    #region Converters
-
-    public class LogEntriesToStringConverter : IValueConverter
+    public class LogEntryCollectionToTextConverter : IMultiValueConverter
     {
-        public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is ObservableCollection<LogEntry> logEntries)
+            var logEntries = values[0] as ObservableCollection<LogEntry>;
+            ObservableCollection<string> logsStr = new();
+            if (logEntries == null) return "Log init error. ";
+            foreach (var logEntry in logEntries)
             {
-                return string.Join("\n", logEntries.Select(entry => entry.Message));
+                logsStr.Add(logEntry.GetReadable());
             }
-            return string.Empty;
+
+            return logEntries.Count > 0 ? string.Join("\r\n", logsStr) : string.Empty;
+
         }
 
-        public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
     }
-
-    #endregion
 }

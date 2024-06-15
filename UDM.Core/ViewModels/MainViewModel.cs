@@ -7,9 +7,7 @@ namespace UDM.Core.ViewModels
     {
         #region Properties
 
-        #endregion
-
-        #region Functions
+        public ObservableCollection<LogEntry> Logs { get; } = LogService.Logs;
 
         #endregion
     }

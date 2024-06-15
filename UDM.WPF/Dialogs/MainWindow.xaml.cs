@@ -1,19 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-using UDM.Model;
-using UDM.Model.Log;
+﻿using System.Windows;
+using UDM.Core.ViewModels;
 
 namespace UDM.WPF.Dialogs
 {
     public partial class MainWindow
     {
-        #region Converters
-
-
-        #endregion
-
         public MainWindow()
         {
             InitializeComponent();
@@ -26,13 +17,8 @@ namespace UDM.WPF.Dialogs
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            DataContext = new Core.ViewModels.MainViewModel();
+            var dataContext = new MainViewModel();
+            DataContext = dataContext;
         }
-
-        #region DP
-
-
-
-        #endregion
     }
 }

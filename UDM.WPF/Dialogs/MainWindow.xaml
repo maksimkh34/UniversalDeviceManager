@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vms="clr-namespace:UDM.Core.ViewModels;assembly=UDM.Core"
+        xmlns:converters="clr-namespace:UDM.WPF.Converters"
         xmlns:titlebar="clr-namespace:UDM.WPF.Controls.Titlebar"
         mc:Ignorable="d"
         
@@ -17,9 +17,9 @@
         MaxHeight="800" MaxWidth="1200"
         Height="400" Width="600">
 
-    <Window.DataContext>
-        <vms:MainViewModel/>
-    </Window.DataContext>
+    <Window.Resources>
+        <converters:LogEntryCollectionToTextConverter x:Key="LogToTextConverter"></converters:LogEntryCollectionToTextConverter>
+    </Window.Resources>
 
     <WindowChrome.WindowChrome>
         <WindowChrome 
@@ -92,6 +92,12 @@
                     IsReadOnly="True"
                     FontFamily="Consolas"
                     Style="{DynamicResource ThemedTextBox}">
+                <TextBox.Text>
+                    <MultiBinding Converter="{StaticResource LogToTextConverter}">
+                        <Binding Path="Logs" Mode="OneWay"></Binding>
+                        <Binding Path="Logs.Count" Mode="OneWay"></Binding>
+                    </MultiBinding>
+                </TextBox.Text>
                 </TextBox>
             </Grid>
 

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UDM.Model
+﻿namespace UDM.Model
 {
     /// <summary>
     /// Основные команды для всего приложения. 
