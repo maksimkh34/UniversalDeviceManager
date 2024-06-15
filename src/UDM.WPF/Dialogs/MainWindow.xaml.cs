@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using UDM.Core.ViewModels;
+using UDM.Model.Log;
 
 namespace UDM.WPF.Dialogs
 {
@@ -19,6 +20,8 @@ namespace UDM.WPF.Dialogs
         {
             var dataContext = new MainViewModel();
             DataContext = dataContext;
+
+            LogService.Log("Hello!", LogLevel.Debug);
         }
     }
 }

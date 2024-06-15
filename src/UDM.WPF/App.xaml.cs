@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using UDM.Model.Log;
 
 namespace UDM.WPF
 {
@@ -12,8 +13,9 @@ namespace UDM.WPF
             mw.Show();
         }
 
-        internal static void ShutdownApp()
+        public static void ShutdownApp()
         {
+            LogService.Save("D:\\log.log");
             Environment.Exit(0);
         }
 
