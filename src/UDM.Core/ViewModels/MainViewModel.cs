@@ -7,7 +7,13 @@ namespace UDM.Core.ViewModels
     {
         #region Properties
 
-        public ObservableCollection<LogEntry> Logs { get; } = LogService.Logs;
+        public ObservableCollection<LogEntry> Logs { get; } = LogService.Logs;  // Connected to LogService and Log text box in main window
+
+        #endregion
+
+        #region Commands
+
+        
 
         #endregion
     }

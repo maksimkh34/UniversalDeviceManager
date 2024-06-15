@@ -53,9 +53,9 @@ namespace UDM.WPF.Controls.Titlebar
             _defaultWidth = defaultWidth;
             _defaultHeight = defaultHeight;
 
-            CloseTitlebarCommand = new DelegateCommand(CloseWindow, CoreCommands.DefaultCanExecute);
-            ResizeTitlebarCommand = new DelegateCommand(ResizeWindow, CoreCommands.DefaultCanExecute);
-            MinimizeTitlebarCommand = new DelegateCommand(MinimizeWindow, CoreCommands.DefaultCanExecute);
+            CloseTitlebarCommand = new DelegateCommand(CloseWindow, DelegateCommand.DefaultCanExecute);
+            ResizeTitlebarCommand = new DelegateCommand(ResizeWindow, DelegateCommand.DefaultCanExecute);
+            MinimizeTitlebarCommand = new DelegateCommand(MinimizeWindow, DelegateCommand.DefaultCanExecute);
         }
 
         #endregion

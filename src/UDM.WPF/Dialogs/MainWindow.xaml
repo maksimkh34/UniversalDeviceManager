@@ -99,6 +99,29 @@
                     </MultiBinding>
                 </TextBox.Text>
                 </TextBox>
+                <ListBox Grid.Row="1" 
+                         Style="{DynamicResource ThemedListBox}"
+                         Grid.Column="0" 
+                         Margin="10,0,5,10">
+                    <ListBoxItem 
+                        Style="{DynamicResource ThemedListBoxItem}">
+                        <ListBoxItem.Content>
+                            <TextBlock Style="{DynamicResource DeviceTextBox}">Device1</TextBlock>
+                        </ListBoxItem.Content>
+                    </ListBoxItem>
+                    <ListBoxItem 
+                        Style="{DynamicResource ThemedListBoxItem}">
+                        <ListBoxItem.Content>
+                            <TextBlock Style="{DynamicResource DeviceTextBox}">Device2</TextBlock>
+                        </ListBoxItem.Content>
+                    </ListBoxItem>
+                    <ListBox.ContextMenu>
+                        <ContextMenu Style="{DynamicResource ContextMenuStyle}">
+                            <MenuItem Style="{DynamicResource ContextMenuItemStyle}" Header="Select"></MenuItem>
+                            <MenuItem Style="{DynamicResource ContextMenuItemStyle}" Header="Disconnect"></MenuItem>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                </ListBox>
             </Grid>
 
         </DockPanel>
