@@ -1,3 +1,3 @@
 # UniversalDeviceManager
 
-* [Discord](https://discord.gg/eQXvPej8Ms)
+* [Discord Server](https://discord.gg/eQXvPej8Ms)
