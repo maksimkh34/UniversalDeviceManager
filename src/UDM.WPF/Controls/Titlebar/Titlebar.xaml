@@ -30,6 +30,7 @@
                 <Button 
                     Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                     Width="18" 
+                    x:Name="RestoreSizeButton"
                     Command="{Binding ResizeTitlebarCommand}"
                     Margin="2,2,5,2"
                     Style="{DynamicResource ThemedButton}">

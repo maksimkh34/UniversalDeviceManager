@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UDM.InteractionService\UDM.InteractionService.csproj" />
     <ProjectReference Include="..\UDM.Model\UDM.Model.csproj" />
   </ItemGroup>
 

@@ -21,7 +21,14 @@ public static class LogService
     public static void Log(string message, LogLevel level)
     {
         if (!IsDebugRelease && level == LogLevel.Debug) return;
-        Logs.Add(new LogEntry(message, level));
+        if (message.Contains("\r\n"))
+        {
+            foreach (var logMsg  in message.Split("\r\n"))
+            {
+                Log(logMsg, level);
+            }
+        }
+        else if(!message.StartsWith('\0')) Logs.Add(new LogEntry(message.Replace("\n", "\t"), level));
     }
 
     public static void Save(string filename)

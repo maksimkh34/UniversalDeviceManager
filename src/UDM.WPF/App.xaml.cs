@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using UDM.Model.LogService;
+using UDM.WPF.Dialogs;
 
 namespace UDM.WPF
 {
@@ -19,6 +20,11 @@ namespace UDM.WPF
             Environment.Exit(0);
         }
 
+        public static void ShowWaitForInputWindow()
+        {
+            WaitForInputWindow window = new();
+            window.ShowDialog();
+        }
     }
 
 }

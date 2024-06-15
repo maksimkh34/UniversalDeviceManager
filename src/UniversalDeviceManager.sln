@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решен
 		..\TODO.md = ..\TODO.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UDM.InteractionService", "UDM.InteractionService\UDM.InteractionService.csproj", "{ED04853F-5A31-4318-B785-E660218A5A32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{99E0D2B3-A42E-4E4B-8873-D3D017881655}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99E0D2B3-A42E-4E4B-8873-D3D017881655}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99E0D2B3-A42E-4E4B-8873-D3D017881655}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED04853F-5A31-4318-B785-E660218A5A32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED04853F-5A31-4318-B785-E660218A5A32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED04853F-5A31-4318-B785-E660218A5A32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED04853F-5A31-4318-B785-E660218A5A32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +65,7 @@ Global
 		{6F11B732-2AA3-4FC3-A5BC-E0639096A2C2} = {ECA26EB2-F092-4367-8FF2-A89A2593DC9A}
 		{D679328B-33C6-457F-9167-7DB8AE3FB213} = {7F153427-D255-49D8-A03A-1F1874D6B793}
 		{99E0D2B3-A42E-4E4B-8873-D3D017881655} = {ECA26EB2-F092-4367-8FF2-A89A2593DC9A}
+		{ED04853F-5A31-4318-B785-E660218A5A32} = {7F153427-D255-49D8-A03A-1F1874D6B793}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4A64C66-8B46-4A1C-8545-C19C4D47C5BC}

@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using UDM.Core.ViewModels;
 using UDM.Model.LogService;
+using MessageBox = System.Windows.MessageBox;
 
 namespace UDM.WPF.Dialogs
 {

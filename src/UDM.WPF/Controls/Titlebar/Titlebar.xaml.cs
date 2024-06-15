@@ -32,6 +32,11 @@ namespace UDM.WPF.Controls.Titlebar
             {
                 MinimizeButton.Visibility = Visibility.Collapsed;
             }
+
+            if (!CanRestoreSize)
+            {
+                RestoreSizeButton.Visibility = Visibility.Collapsed;
+            }
         }
 
         #endregion
@@ -62,6 +67,12 @@ namespace UDM.WPF.Controls.Titlebar
             set => SetValue(CanMinimizeProperty, value);
         }
 
+        public bool CanRestoreSize
+        {
+            get => (bool)GetValue(CanRestoreSizeProperty);
+            set => SetValue(CanRestoreSizeProperty, value);
+        }
+
         public static readonly DependencyProperty HeaderProperty =
             DependencyProperty.Register(nameof(Header), typeof(string), typeof(Titlebar), new PropertyMetadata(default(string)));
 
@@ -72,7 +83,10 @@ namespace UDM.WPF.Controls.Titlebar
             DependencyProperty.Register(nameof(DefaultHeight), typeof(int), typeof(Titlebar), new PropertyMetadata(default(int)));
 
         public static readonly DependencyProperty CanMinimizeProperty =
-                    DependencyProperty.Register(nameof(CanMinimize), typeof(bool), typeof(Titlebar), new PropertyMetadata(true));
+            DependencyProperty.Register(nameof(CanMinimize), typeof(bool), typeof(Titlebar), new PropertyMetadata(true));
+
+        public static readonly DependencyProperty CanRestoreSizeProperty =
+            DependencyProperty.Register(nameof(CanRestoreSize), typeof(bool), typeof(Titlebar), new PropertyMetadata(true));
 
 
         #endregion
