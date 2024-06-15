@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using UDM.Model.Log;
+using UDM.Model.LogService;
 
 namespace UDM.WPF
 {

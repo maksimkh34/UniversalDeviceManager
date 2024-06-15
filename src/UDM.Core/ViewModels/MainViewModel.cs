@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using UDM.Model.Log;
+using UDM.Model.LogService;
 
 namespace UDM.Core.ViewModels
 {

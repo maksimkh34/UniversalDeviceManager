@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using UDM.Core.ViewModels;
-using UDM.Model.Log;
+using UDM.Model.LogService;
 
 namespace UDM.WPF.Dialogs
 {
