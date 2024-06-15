@@ -1,0 +1,106 @@
+﻿<Window x:Class="UDM.WPF.Dialogs.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:UDM.WPF.Converters"
+        xmlns:titlebar="clr-namespace:UDM.WPF.Controls.Titlebar"
+        mc:Ignorable="d"
+        
+        Closed="Window_Closed"
+        Loaded="MainWindow_Loaded"
+        
+        Style="{DynamicResource ThemedWindow}"
+        SizeToContent="Manual"
+        ResizeMode="CanResize"
+        MinHeight="320" MinWidth="375"
+        MaxHeight="800" MaxWidth="1200"
+        Height="400" Width="600">
+
+    <Window.Resources>
+        <converters:LogEntryCollectionToTextConverter x:Key="LogToTextConverter"></converters:LogEntryCollectionToTextConverter>
+    </Window.Resources>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+            CaptionHeight="0"
+            ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
+    
+    <Window.Content>
+        <DockPanel>
+            <titlebar:Titlebar VerticalAlignment="Top" 
+                               HorizontalAlignment="Stretch" 
+                               DefaultHeight="400" 
+                               DefaultWidth="600"
+                               DockPanel.Dock="Top"
+                               Header="UDM">
+            </titlebar:Titlebar>
+
+            <Menu VerticalAlignment="Top"
+                  DockPanel.Dock="Top"
+                  Style="{DynamicResource ThemedMenu}">
+                <MenuItem Header="{DynamicResource mm_File}" 
+                          Style="{DynamicResource ThemedMenuItem}">
+                    <MenuItem Header="{DynamicResource mm_File_Settings}"
+                              Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+                </MenuItem>
+
+                <MenuItem Header="{DynamicResource mm_Scripts}" 
+                          Style="{DynamicResource ThemedMenuItem}">
+                    <MenuItem Header="{DynamicResource mm_Scripts_New}"
+                              Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+
+                    <MenuItem Header="{DynamicResource mm_Scripts_Edit}"
+                              Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource mm_Scripts_Execute}"
+                              Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+                </MenuItem>
+
+                <MenuItem Header="{DynamicResource mm_Fastboot}" 
+                          Style="{DynamicResource ThemedMenuItem}">
+                    <MenuItem Header="{DynamicResource mm_Fastboot_Flash}"
+                              Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+                    <MenuItem Header="{DynamicResource mm_Fastboot_Reboot}"
+                              Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+
+                    <MenuItem Header="{DynamicResource mm_Fastboot_CheckBLStatus}"
+                              Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+
+            <Grid DockPanel.Dock="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBox
+                    Grid.ColumnSpan="3"
+                    Margin="10"
+                    IsReadOnly="True"
+                    FontFamily="Consolas"
+                    Style="{DynamicResource ThemedTextBox}">
+                <TextBox.Text>
+                    <MultiBinding Converter="{StaticResource LogToTextConverter}">
+                        <Binding Path="Logs" Mode="OneWay"></Binding>
+                        <Binding Path="Logs.Count" Mode="OneWay"></Binding>
+                    </MultiBinding>
+                </TextBox.Text>
+                </TextBox>
+            </Grid>
+
+        </DockPanel>
+    </Window.Content>
+</Window>
