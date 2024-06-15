@@ -2,16 +2,16 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- Brushes -->
 
-    <SolidColorBrush x:Key="SCBBackground">#23272b</SolidColorBrush>
-    <SolidColorBrush x:Key="SCBBackgroundMouseOver">#282D3C</SolidColorBrush>
-    <SolidColorBrush x:Key="SCBBackgroundPressed">#373A60</SolidColorBrush>
-    <SolidColorBrush x:Key="SCBBlueBackground">#21252B</SolidColorBrush>
-    <SolidColorBrush x:Key="SCBBorder">#585d5e</SolidColorBrush>
-    <SolidColorBrush x:Key="SCBDarkBackground">#121314</SolidColorBrush>
-    <SolidColorBrush x:Key="SCBForeground">#d7d7d9</SolidColorBrush>
-    <SolidColorBrush x:Key="SCBSecondaryForeground">#989899</SolidColorBrush>
-    <SolidColorBrush x:Key="SCBLink">#4ca6ff</SolidColorBrush>
-    <SolidColorBrush x:Key="SCBAccent">#434669</SolidColorBrush>
+    <SolidColorBrush x:Key="ScbBackground">#23272b</SolidColorBrush>
+    <SolidColorBrush x:Key="ScbBackgroundMouseOver">#282D3C</SolidColorBrush>
+    <SolidColorBrush x:Key="ScbBackgroundPressed">#373A60</SolidColorBrush>
+    <SolidColorBrush x:Key="ScbBlueBackground">#21252B</SolidColorBrush>
+    <SolidColorBrush x:Key="ScbBorder">#585d5e</SolidColorBrush>
+    <SolidColorBrush x:Key="ScbDarkBackground">#121314</SolidColorBrush>
+    <SolidColorBrush x:Key="ScbForeground">#d7d7d9</SolidColorBrush>
+    <SolidColorBrush x:Key="ScbSecondaryForeground">#989899</SolidColorBrush>
+    <SolidColorBrush x:Key="ScbLink">#4ca6ff</SolidColorBrush>
+    <SolidColorBrush x:Key="ScbAccent">#434669</SolidColorBrush>
 
     <!-- Colors -->
 

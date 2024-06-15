@@ -34,7 +34,7 @@
                                DefaultHeight="400" 
                                DefaultWidth="600"
                                DockPanel.Dock="Top"
-                               Header="UDM">
+                               Header="Menu">
             </titlebar:Titlebar>
 
             <Menu VerticalAlignment="Top"

@@ -6,21 +6,24 @@
              mc:Ignorable="d"
              
              Height="30"
-             Background="{StaticResource SCBDarkBackground}"
+             Background="{StaticResource ScbDarkBackground}"
              MinWidth="80"
              
              Loaded="UserControl_Loaded">
 
     <Border MouseDown="Border_MouseDown_Trigger" 
-            Background="{StaticResource SCBDarkBackground}"
+            Background="{StaticResource ScbDarkBackground}"
             MinWidth="200">
         <Grid>
-            <TextBlock FontSize="14" 
-                   Margin="10,2,0,0" 
-                   VerticalAlignment="Center"
-                   Style="{DynamicResource ThemedTextBlock}" 
-                   Text="{Binding Header, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                   HorizontalAlignment="Left"></TextBlock>
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock FontSize="14" 
+                           Margin="10,2,0,0" 
+                           VerticalAlignment="Center"
+                           Style="{DynamicResource ThemedTextBlock}" 
+                           Text="{Binding Header, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                           HorizontalAlignment="Left"></TextBlock>
+            </StackPanel>
+            
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 
@@ -37,11 +40,11 @@
                 
                 <Button 
                     x:Name="MinimizeButton"
-                     Margin="2,2,5,2" 
-                     Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
-                     Width="18" 
-                     Command="{Binding MinimizeTitlebarCommand}"
-                     Style="{DynamicResource ThemedButton}">
+                    Margin="2,2,5,2" 
+                    Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                    Width="18" 
+                    Command="{Binding MinimizeTitlebarCommand}"
+                    Style="{DynamicResource ThemedButton}">
                      <Button.Background>
                         <ImageBrush ImageSource="minimize.png"/>
                      </Button.Background>
@@ -50,9 +53,9 @@
                 <Button 
                         Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                         Width="18" 
+                        Style="{DynamicResource ThemedButton}"
                         Command="{Binding CloseTitlebarCommand}"
-                        Margin="2,2,7,2"
-                        Style="{DynamicResource ThemedButton}">
+                        Margin="2,2,7,2">
                     <Button.Background>
                         <ImageBrush ImageSource="close.png"/>
                     </Button.Background>

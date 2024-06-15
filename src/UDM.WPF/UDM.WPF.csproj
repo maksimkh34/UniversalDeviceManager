@@ -6,6 +6,9 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <PackageIcon>udm_mini.png</PackageIcon>
+    <StartupObject>UDM.WPF.App</StartupObject>
+    <ApplicationIcon>Assets\Icons\udm_mini.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +16,13 @@
     <None Remove="Assets\Icons\close.png" />
     <None Remove="Assets\Icons\minimize.png" />
     <None Remove="Assets\Icons\resize.png" />
+    <None Remove="Assets\Icons\udm_full.jpg" />
+    <None Remove="Assets\Icons\udm_mini.png" />
     <None Remove="Assets\Icons\UUTLogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Icons\udm_mini.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +33,14 @@
     <Resource Include="Assets\Fonts\Manrope-VariableFont_wght.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\Icons\udm_full.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\udm_mini.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Controls\Titlebar\close.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -31,9 +48,6 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Controls\Titlebar\resize.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\Icons\UUTLogo.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

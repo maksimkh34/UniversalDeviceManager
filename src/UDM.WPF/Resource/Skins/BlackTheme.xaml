@@ -8,8 +8,8 @@
 
     <Style x:Key="ThemedWindow" TargetType="Window">
         <Style.Setters>
-            <Setter Property="Background" Value="{StaticResource SCBBlueBackground}"/>
-            <Setter Property="Foreground" Value="{StaticResource SCBForeground}"/>
+            <Setter Property="Background" Value="{StaticResource ScbBlueBackground}"/>
+            <Setter Property="Foreground" Value="{StaticResource ScbForeground}"/>
             <Setter Property="FontFamily" Value="Manrope SemiBold"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="ResizeMode" Value="NoResize"/>
@@ -20,21 +20,21 @@
 
     <Style x:Key="ThemedTextBlock" TargetType="TextBlock">
         <Style.Setters>
-            <Setter Property="Foreground" Value="{StaticResource SCBForeground}"/>
+            <Setter Property="Foreground" Value="{StaticResource ScbForeground}"/>
             <Setter Property="FontFamily" Value="Manrope SemiBold"/>
         </Style.Setters>
     </Style>
 
     <Style x:Key="ThemedButton" TargetType="Button">
         <Style.Setters>
-            <Setter Property="Background" Value="{StaticResource SCBBlueBackground}"/>
-            <Setter Property="Foreground" Value="{StaticResource SCBForeground}"/>
+            <Setter Property="Background" Value="{StaticResource ScbBlueBackground}"/>
+            <Setter Property="Foreground" Value="{StaticResource ScbForeground}"/>
             <Setter Property="Height" Value="26"/>
             <Setter Property="FontFamily" Value="Manrope SemiBold"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{DynamicResource SCBBorder}" BorderThickness="1">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{DynamicResource ScbBorder}" BorderThickness="1">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
                         </Border>
                     </ControlTemplate>
@@ -44,20 +44,20 @@
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource SCBBackgroundMouseOver}"/>
+                <Setter Property="Background" Value="{StaticResource ScbBackgroundMouseOver}"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{StaticResource SCBBackgroundPressed}"/>
+                <Setter Property="Background" Value="{StaticResource ScbBackgroundPressed}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <Style x:Key="ThemedComboBox" TargetType="ComboBox">
-        <Setter Property="Background" Value="{StaticResource SCBBlueBackground}"/>
-        <Setter Property="Foreground" Value="{StaticResource SCBForeground}"/>
+        <Setter Property="Background" Value="{StaticResource ScbBlueBackground}"/>
+        <Setter Property="Foreground" Value="{StaticResource ScbForeground}"/>
         <Setter Property="FontFamily" Value="Manrope SemiBold"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource SCBBorder}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ScbBorder}"/>
         <Setter Property="Padding" Value="5"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -69,7 +69,7 @@
                                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                                     <Grid>
                                         <ContentPresenter/>
-                                        <Path x:Name="Arrow" Data="M0,0 L4,4 L8,0" Fill="{StaticResource SCBForeground}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,4,0"/>
+                                        <Path x:Name="Arrow" Data="M0,0 L4,4 L8,0" Fill="{StaticResource ScbForeground}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,4,0"/>
                                     </Grid>
                                 </ControlTemplate>
                             </ToggleButton.Template>
@@ -88,17 +88,17 @@
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource SCBBackgroundMouseOver}"/>
+                <Setter Property="Background" Value="{StaticResource ScbBackgroundMouseOver}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <Style x:Key="ThemedMenuItem" TargetType="MenuItem" >
-        <Setter Property="Background" Value="{StaticResource SCBBlueBackground}"/>
-        <Setter Property="Foreground" Value="{StaticResource SCBForeground}"/>
+        <Setter Property="Background" Value="{StaticResource ScbBlueBackground}"/>
+        <Setter Property="Foreground" Value="{StaticResource ScbForeground}"/>
         <Setter Property="FontFamily" Value="Manrope SemiBold"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource SCBBorder}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ScbBorder}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type MenuItem}">
@@ -106,7 +106,7 @@
                         <Grid>
                             <ContentPresenter Margin="6,3,6,3" ContentSource="Header" RecognizesAccessKey="True" />
                             <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsSubmenuOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Fade">
-                                <Border x:Name="SubmenuBorder" SnapsToDevicePixels="True" BorderThickness="1" Background="{DynamicResource SCBBackground}">
+                                <Border x:Name="SubmenuBorder" SnapsToDevicePixels="True" BorderThickness="1" Background="{DynamicResource ScbBackground}">
                                     <Border.BorderBrush>
                                         <SolidColorBrush Color="{DynamicResource CBorder}" />
                                     </Border.BorderBrush>
@@ -121,18 +121,18 @@
     </Style>
 
     <Style x:Key="ThemedMenu" TargetType="Menu" >
-        <Setter Property="Background" Value="{StaticResource SCBBlueBackground}"/>
-        <Setter Property="Foreground" Value="{StaticResource SCBForeground}"/>
+        <Setter Property="Background" Value="{StaticResource ScbBlueBackground}"/>
+        <Setter Property="Foreground" Value="{StaticResource ScbForeground}"/>
         <Setter Property="FontFamily" Value="Manrope SemiBold"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource SCBBorder}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ScbBorder}"/>
     </Style>
 
     <Style x:Key="ThemedTextBox" TargetType="TextBox">
         <Style.Setters>
-            <Setter Property="Background" Value="{StaticResource SCBDarkBackground}"/>
-            <Setter Property="Foreground" Value="{StaticResource SCBForeground}"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource SCBBorder}"/>
+            <Setter Property="Background" Value="{StaticResource ScbDarkBackground}"/>
+            <Setter Property="Foreground" Value="{StaticResource ScbForeground}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource ScbBorder}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontFamily" Value="Manrope SemiBold"/>
             <Setter Property="Padding" Value="3"/>
@@ -140,12 +140,12 @@
     </Style>
 
     <Style x:Key="ThemedListBox" TargetType="ListBox">
-        <Setter Property="Background" Value="{StaticResource SCBDarkBackground}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource SCBBorder}"/>
+        <Setter Property="Background" Value="{StaticResource ScbDarkBackground}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ScbBorder}"/>
     </Style>
 
     <Style x:Key="ThemedListBoxItem" TargetType="ListBoxItem">
-        <Setter Property="Foreground" Value="{StaticResource SCBForeground}"/>
+        <Setter Property="Foreground" Value="{StaticResource ScbForeground}"/>
         <Setter Property="FontFamily" Value="Manrope SemiBold"/>
 
         <Setter Property="Template">
@@ -158,7 +158,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="true">
-                            <Setter TargetName="_Border" Property="Background" Value="{StaticResource SCBAccent}"/>
+                            <Setter TargetName="_Border" Property="Background" Value="{StaticResource ScbAccent}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -174,20 +174,20 @@
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="FontFamily" Value="Manrope Bold"/>
-        <Setter Property="Foreground" Value="{StaticResource SCBForeground}"/>
+        <Setter Property="Foreground" Value="{StaticResource ScbForeground}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type MenuItem}">
-                    <Grid Name="Root" Height="27" Background="{StaticResource SCBBackground}">
+                    <Grid Name="Root" Height="27" Background="{StaticResource ScbBackground}">
                         <ContentPresenter Name="HeaderHost" Margin="10,0,0,0" ContentSource="Header" RecognizesAccessKey="True" HorizontalAlignment="Left" VerticalAlignment="Center"
                       TextOptions.TextRenderingMode="ClearType" TextBlock.FontSize="12" TextBlock.Foreground="{TemplateBinding Foreground}" TextOptions.TextFormattingMode="Display"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Root" Property="Background" Value="{StaticResource SCBBackgroundMouseOver}"/>
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource ScbBackgroundMouseOver}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Root" Property="Background" Value="{StaticResource SCBBackgroundPressed}"/>
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource ScbBackgroundPressed}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -205,7 +205,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContextMenu}">
                     <Grid Background="Transparent">
-                        <Border Margin="0,0,5,5" Background="{StaticResource SCBBackground}" BorderThickness="0">
+                        <Border Margin="0,0,5,5" Background="{StaticResource ScbBackground}" BorderThickness="0">
                             <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" Margin="2"/>
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="3" ShadowDepth="3" Color="Black" Opacity="0.5"/>
@@ -216,4 +216,5 @@
             </Setter.Value>
         </Setter>
     </Style>
+
 </ResourceDictionary>
