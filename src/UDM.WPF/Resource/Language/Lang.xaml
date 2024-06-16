@@ -1,10 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:v="clr-namespace:System;assembly=mscorlib"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:v="clr-namespace:System;assembly=mscorlib">
     <v:String x:Key="mm_File">File</v:String>
     <v:String x:Key="mm_Scripts">Scripts</v:String>
     <v:String x:Key="mm_Fastboot">Fastboot</v:String>
-
 
     <v:String x:Key="mm_File_Settings">Properties</v:String>
 

@@ -4,8 +4,8 @@ namespace UDM.InteractionService
 {
     public class InteractionService
     {
-        readonly Process _proc = new();
-        private bool running = false;
+        private readonly Process _proc = new();
+        private bool _running;
 
         public InteractionService(string pathToScript)
         {
@@ -22,12 +22,12 @@ namespace UDM.InteractionService
         public void Run()
         {
             _proc.Start();
-            running = true;
+            _running = true;
         }
 
         public string Read()
         {
-            if (!running) throw new Exception("Interaction session is not running");
+            if (!_running) throw new Exception("Interaction session is not running");
             var buffer = new char[1000];
             _proc.StandardOutput.Read(buffer, 0, buffer.Length);
             return string.Join("", buffer);
@@ -40,10 +40,9 @@ namespace UDM.InteractionService
 
         public void Write(string msg)
         {
-            if (!running) throw new Exception("Interaction session is not running");
+            if (!_running) throw new Exception("Interaction session is not running");
             _proc.StandardInput.WriteLine(msg);
             _proc.StandardInput.FlushAsync();
         }
-
     }
 }

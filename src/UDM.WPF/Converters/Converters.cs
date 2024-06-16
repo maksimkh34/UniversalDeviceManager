@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
+using UDM.Model;
 using UDM.Model.LogService;
 
 namespace UDM.WPF.Converters
@@ -9,16 +11,14 @@ namespace UDM.WPF.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var logEntries = values[0] as ObservableCollection<LogEntry>;
             ObservableCollection<string> logsStr = new();
-            if (logEntries == null) return "Log init error. ";
+            if (values[0] is not ObservableCollection<LogEntry> logEntries) return "Log init error. ";
             foreach (var logEntry in logEntries)
             {
                 logsStr.Add(logEntry.GetReadable());
             }
 
             return logEntries.Count > 0 ? string.Join("\r\n", logsStr) : string.Empty;
-
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
@@ -26,4 +26,5 @@ namespace UDM.WPF.Converters
             throw new NotImplementedException();
         }
     }
+
 }

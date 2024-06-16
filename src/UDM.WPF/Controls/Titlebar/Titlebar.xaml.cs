@@ -11,13 +11,13 @@ namespace UDM.WPF.Controls.Titlebar
             InitializeComponent();
         }
 
-        #endregion
+        #endregion Constructor
 
         #region Properties
 
         private Window? _parentWindow;
 
-        #endregion
+        #endregion Properties
 
         #region Triggers
 
@@ -39,7 +39,7 @@ namespace UDM.WPF.Controls.Titlebar
             }
         }
 
-        #endregion
+        #endregion Triggers
 
         #region DependencyProperties
 
@@ -88,7 +88,6 @@ namespace UDM.WPF.Controls.Titlebar
         public static readonly DependencyProperty CanRestoreSizeProperty =
             DependencyProperty.Register(nameof(CanRestoreSize), typeof(bool), typeof(Titlebar), new PropertyMetadata(true));
 
-
-        #endregion
+        #endregion DependencyProperties
     }
 }

@@ -4,31 +4,19 @@ namespace UDM.Model.LogService;
 
 public static class LogService
 {
-    public static bool IsDebugRelease
-    {
-        get
-        {
-#if DEBUG
-            return true;
-#else
-                return false;
-#endif
-        }
-    }
-
     public static ObservableCollection<LogEntry> Logs = new();
 
     public static void Log(string message, LogLevel level)
     {
-        if (!IsDebugRelease && level == LogLevel.Debug) return;
+        if (!(MainModel.IsDebugRelease || (bool)(MainModelHelpers.SettingsStorage.GetValue(MainModel.SnForceDebugLogs) ?? false)) && level == LogLevel.Debug) return;
         if (message.Contains("\r\n"))
         {
-            foreach (var logMsg  in message.Split("\r\n"))
+            foreach (var logMsg in message.Split("\r\n"))
             {
                 Log(logMsg, level);
             }
         }
-        else if(!message.StartsWith('\0')) Logs.Add(new LogEntry(message.Replace("\n", "\t"), level));
+        else if (!message.StartsWith('\0')) Logs.Add(new LogEntry(message.Replace("\n", "\t"), level));
     }
 
     public static void Save(string filename)

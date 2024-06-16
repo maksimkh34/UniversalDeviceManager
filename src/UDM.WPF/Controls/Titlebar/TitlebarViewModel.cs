@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using UDM.Core.ViewModels;
-using UDM.Model;
+using UDM.Model.Commands;
 
 namespace UDM.WPF.Controls.Titlebar
 {
@@ -12,7 +12,7 @@ namespace UDM.WPF.Controls.Titlebar
         private readonly int _defaultHeight;
         private readonly int _defaultWidth;
 
-        #endregion
+        #endregion Properties
 
         #region Commands
 
@@ -22,7 +22,7 @@ namespace UDM.WPF.Controls.Titlebar
 
         private readonly Window _parentWindow;
 
-        #endregion
+        #endregion Commands
 
         #region Command Functions
 
@@ -42,7 +42,7 @@ namespace UDM.WPF.Controls.Titlebar
             _parentWindow.WindowState = WindowState.Minimized;
         }
 
-        #endregion
+        #endregion Command Functions
 
         #region Constructor
 
@@ -58,6 +58,6 @@ namespace UDM.WPF.Controls.Titlebar
             MinimizeTitlebarCommand = new DelegateCommand(MinimizeWindow, DelegateCommand.DefaultCanExecute);
         }
 
-        #endregion
+        #endregion Constructor
     }
 }

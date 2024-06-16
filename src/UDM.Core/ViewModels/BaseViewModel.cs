@@ -9,7 +9,7 @@ namespace UDM.Core.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        #endregion
+        #endregion Events
 
         #region Protected Methods
 
@@ -18,6 +18,6 @@ namespace UDM.Core.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        #endregion
+        #endregion Protected Methods
     }
 }

@@ -21,6 +21,4 @@
 
     <FontFamily x:Key="Manrope">pack://application:,,,/Assets/Fonts/#Manrope</FontFamily>
     <FontFamily x:Key="Manrope (static)">pack://application:,,,/Assets/Fonts/static/#Manrope</FontFamily>
-
-
 </ResourceDictionary>

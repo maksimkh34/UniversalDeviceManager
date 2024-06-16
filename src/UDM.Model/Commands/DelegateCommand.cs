@@ -1,8 +1,7 @@
 ﻿using System.Windows.Input;
 
-namespace UDM.Model
+namespace UDM.Model.Commands
 {
-
     public class DelegateCommand(Action<object> openAction, Predicate<object> canExecutePredicate) : ICommand
     {
         public static bool DefaultCanExecute(object param) => true;

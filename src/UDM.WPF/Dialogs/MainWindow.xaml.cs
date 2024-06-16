@@ -1,8 +1,6 @@
-﻿using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using UDM.Core.ViewModels;
 using UDM.Model.LogService;
-using MessageBox = System.Windows.MessageBox;
 
 namespace UDM.WPF.Dialogs
 {
@@ -21,6 +19,7 @@ namespace UDM.WPF.Dialogs
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             var dataContext = new MainViewModel();
+            dataContext.UpdateDevicesCommand?.Execute(null);
             DataContext = dataContext;
 
             LogService.Log("Hello!", LogLevel.Debug);

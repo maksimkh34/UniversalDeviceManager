@@ -1,15 +1,17 @@
 ﻿<Window x:Class="UDM.WPF.Dialogs.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:converters="clr-namespace:UDM.WPF.Converters"
         xmlns:titlebar="clr-namespace:UDM.WPF.Controls.Titlebar"
+        xmlns:converters="clr-namespace:UDM.WPF.Converters" 
+        xmlns:viewmodels="clr-namespace:UDM.Core.ViewModels;assembly=UDM.Core" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
-        
+
         Closed="Window_Closed"
         Loaded="MainWindow_Loaded"
-        
+
         Style="{DynamicResource ThemedWindow}"
         SizeToContent="Manual"
         ResizeMode="CanResize"
@@ -22,16 +24,16 @@
     </Window.Resources>
 
     <WindowChrome.WindowChrome>
-        <WindowChrome 
+        <WindowChrome
             CaptionHeight="0"
             ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
-    
+
     <Window.Content>
         <DockPanel>
-            <titlebar:Titlebar VerticalAlignment="Top" 
-                               HorizontalAlignment="Stretch" 
-                               DefaultHeight="400" 
+            <titlebar:Titlebar VerticalAlignment="Top"
+                               HorizontalAlignment="Stretch"
+                               DefaultHeight="400"
                                DefaultWidth="600"
                                DockPanel.Dock="Top"
                                Header="Menu">
@@ -40,14 +42,14 @@
             <Menu VerticalAlignment="Top"
                   DockPanel.Dock="Top"
                   Style="{DynamicResource ThemedMenu}">
-                <MenuItem Header="{DynamicResource mm_File}" 
+                <MenuItem Header="{DynamicResource mm_File}"
                           Style="{DynamicResource ThemedMenuItem}">
                     <MenuItem Header="{DynamicResource mm_File_Settings}"
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
                 </MenuItem>
 
-                <MenuItem Header="{DynamicResource mm_Scripts}" 
+                <MenuItem Header="{DynamicResource mm_Scripts}"
                           Style="{DynamicResource ThemedMenuItem}">
                     <MenuItem Header="{DynamicResource mm_Scripts_New}"
                               Style="{DynamicResource ThemedMenuItem}">
@@ -61,7 +63,7 @@
                     </MenuItem>
                 </MenuItem>
 
-                <MenuItem Header="{DynamicResource mm_Fastboot}" 
+                <MenuItem Header="{DynamicResource mm_Fastboot}"
                           Style="{DynamicResource ThemedMenuItem}">
                     <MenuItem Header="{DynamicResource mm_Fastboot_Flash}"
                               Style="{DynamicResource ThemedMenuItem}">
@@ -78,13 +80,13 @@
 
             <Grid DockPanel.Dock="Bottom">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <TextBox
                     Grid.ColumnSpan="3"
@@ -92,38 +94,49 @@
                     IsReadOnly="True"
                     FontFamily="Consolas"
                     Style="{DynamicResource ThemedTextBox}">
-                <TextBox.Text>
-                    <MultiBinding Converter="{StaticResource LogToTextConverter}">
-                        <Binding Path="Logs" Mode="OneWay"></Binding>
-                        <Binding Path="Logs.Count" Mode="OneWay"></Binding>
-                    </MultiBinding>
-                </TextBox.Text>
+                    <TextBox.Text>
+                        <MultiBinding Converter="{StaticResource LogToTextConverter}">
+                            <Binding Path="Logs" Mode="OneWay"></Binding>
+                            <Binding Path="Logs.Count" Mode="OneWay"></Binding>
+                        </MultiBinding>
+                    </TextBox.Text>
                 </TextBox>
-                <ListBox Grid.Row="1" 
+                <ListBox Grid.Row="1"
                          Style="{DynamicResource ThemedListBox}"
-                         Grid.Column="0" 
+                         Grid.Column="0"
+                         ItemsSource="{Binding Path=Devices}"
                          Margin="10,0,5,10">
-                    <ListBoxItem 
-                        Style="{DynamicResource ThemedListBoxItem}">
-                        <ListBoxItem.Content>
-                            <TextBlock Style="{DynamicResource DeviceTextBox}">Device1</TextBlock>
-                        </ListBoxItem.Content>
-                    </ListBoxItem>
-                    <ListBoxItem 
-                        Style="{DynamicResource ThemedListBoxItem}">
-                        <ListBoxItem.Content>
-                            <TextBlock Style="{DynamicResource DeviceTextBox}">Device2</TextBlock>
-                        </ListBoxItem.Content>
-                    </ListBoxItem>
-                    <ListBox.ContextMenu>
-                        <ContextMenu Style="{DynamicResource ContextMenuStyle}">
+                    
+                    <ListBox.Resources>
+                        <ContextMenu Style="{DynamicResource ContextMenuStyle}" x:Key="DeviceItemContextMenu">
                             <MenuItem Style="{DynamicResource ContextMenuItemStyle}" Header="Select"></MenuItem>
                             <MenuItem Style="{DynamicResource ContextMenuItemStyle}" Header="Disconnect"></MenuItem>
                         </ContextMenu>
+
+                        <ContextMenu Style="{DynamicResource ContextMenuStyle}" x:Key="DeviceBoxContextMenu">
+                            <MenuItem Style="{DynamicResource ContextMenuItemStyle}" Header="Update" Command="{Binding UpdateDevicesCommand}"></MenuItem>
+                        </ContextMenu>
+                    </ListBox.Resources>
+
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource ThemedListBoxItem}">
+                            <Setter Property="ContextMenu" Value="{StaticResource DeviceItemContextMenu}" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Style="{StaticResource DeviceTextBox}" Text="{Binding DeviceToStr}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                    <ListBox.ContextMenu>
+                        <Binding Source="{StaticResource DeviceBoxContextMenu}"></Binding>
                     </ListBox.ContextMenu>
+                    
+                    
                 </ListBox>
             </Grid>
-
         </DockPanel>
     </Window.Content>
 </Window>

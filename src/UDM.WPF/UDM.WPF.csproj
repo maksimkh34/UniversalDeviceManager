@@ -10,6 +10,7 @@
     <StartupObject>UDM.WPF.App</StartupObject>
     <ApplicationIcon>Assets\Icons\udm_mini.ico</ApplicationIcon>
     <UseWindowsForms>True</UseWindowsForms>
+    <Configurations>Debug;Release;Preelease</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

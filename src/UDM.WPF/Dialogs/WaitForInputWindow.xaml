@@ -9,12 +9,12 @@
         Style="{DynamicResource ThemedWindow}">
     <DockPanel>
         <titlebar:Titlebar DockPanel.Dock="Top"
-                           Header="Warning" 
+                           Header="Warning"
                            CanMinimize="False"
                            CanRestoreSize="False"></titlebar:Titlebar>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical">
-            <TextBlock Style="{DynamicResource ThemedTextBlock}" 
-                       HorizontalAlignment="Center" 
+            <TextBlock Style="{DynamicResource ThemedTextBlock}"
+                       HorizontalAlignment="Center"
                        Margin="45,15,45,10"
                        FontSize="18">Ожидание ввода...</TextBlock>
             <Button Style="{DynamicResource ThemedButton}" Margin="5" Click="ButtonBase_OnClick">OK</Button>
