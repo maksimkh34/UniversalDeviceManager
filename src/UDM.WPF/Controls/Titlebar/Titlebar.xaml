@@ -11,6 +11,35 @@
 
              Loaded="UserControl_Loaded">
 
+    <UserControl.Resources>
+        <Style TargetType="Button" x:Key="TitleBarButton">
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="{StaticResource ScbBorder}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderThickness" Value="2"></Setter>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="BorderBrush" Value="{StaticResource ScbBackgroundPressed}"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Border MouseDown="Border_MouseDown_Trigger"
             Background="{StaticResource ScbDarkBackground}"
             MinWidth="200">
@@ -30,12 +59,13 @@
                     Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                     Width="18"
                     x:Name="RestoreSizeButton"
+                    Style="{StaticResource TitleBarButton}"
                     Command="{Binding ResizeTitlebarCommand}"
-                    Margin="2,2,5,2"
-                    Style="{DynamicResource ThemedButton}">
+                    Margin="2,2,5,2">
                     <Button.Background>
                         <ImageBrush ImageSource="resize.png" />
                     </Button.Background>
+
                 </Button>
 
                 <Button
@@ -44,7 +74,7 @@
                     Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                     Width="18"
                     Command="{Binding MinimizeTitlebarCommand}"
-                    Style="{DynamicResource ThemedButton}">
+                    Style="{StaticResource TitleBarButton}">
                      <Button.Background>
                         <ImageBrush ImageSource="minimize.png" />
                      </Button.Background>
@@ -53,7 +83,7 @@
                 <Button
                         Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                         Width="18"
-                        Style="{DynamicResource ThemedButton}"
+                        Style="{StaticResource TitleBarButton}"
                         Command="{Binding CloseTitlebarCommand}"
                         Margin="2,2,7,2">
                     <Button.Background>
