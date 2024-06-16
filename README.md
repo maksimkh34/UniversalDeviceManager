@@ -7,4 +7,6 @@ Executable (*.exe)
 
 pythonutil/scripts/main.py
 
+pythonutil/scripts/main.py.md
+
 pythonutil/tools/python.exe
