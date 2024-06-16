@@ -20,5 +20,5 @@
     <!-- Fonts -->
 
     <FontFamily x:Key="Manrope">pack://application:,,,/Assets/Fonts/#Manrope</FontFamily>
-    <FontFamily x:Key="Manrope (static)">pack://application:,,,/Assets/Fonts/static/#Manrope</FontFamily>
+    <FontFamily x:Key="Manrope (Static)">pack://application:,,,/Assets/Fonts/static/#Manrope</FontFamily>
 </ResourceDictionary>

@@ -1,6 +1,7 @@
 ﻿// ReSharper disable InconsistentNaming
 
 using System.Collections.ObjectModel;
+using UDM.Model.LogService;
 
 namespace UDM.Model
 {
@@ -10,12 +11,15 @@ namespace UDM.Model
 
         public void UpdateFastbootDevices()
         {
+            LogService.LogService.Log("Updating fastboot devices", LogLevel.Debug);
             var fastbootResult = SysCalls.Exec(MainModel.PathToFastboot, "fastboot.exe", "devices");
             foreach (var device in fastbootResult.Split("\r\n"))
             {
                 if (device != "")
                 {
-                    DeviceConnections.Add(DeviceConnection.Parse(device));
+                    var parsedDevice = DeviceConnection.Parse(device);
+                    LogService.LogService.Log("New device: " + parsedDevice.DeviceToStr, LogLevel.Debug);
+                    DeviceConnections.Add(parsedDevice);
                 }
                 
             }
@@ -25,19 +29,6 @@ namespace UDM.Model
         {
             DeviceConnections.Clear();
             UpdateFastbootDevices();
-        }
-
-        public ObservableCollection<DeviceConnection> ClearDevices(ObservableCollection<DeviceConnection> collection, DeviceConnectionType connectionType)
-        {
-            ObservableCollection<DeviceConnection> connections = new();
-            foreach (var device in collection)
-            {
-                if (device.Type != connectionType)
-                {
-                    connections.Add(device);
-                }
-            }
-            return connections;
         }
     }
 

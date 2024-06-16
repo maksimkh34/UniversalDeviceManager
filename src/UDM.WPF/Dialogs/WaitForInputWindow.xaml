@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:UDM.WPF.Dialogs"
         mc:Ignorable="d"
         xmlns:titlebar="clr-namespace:UDM.WPF.Controls.Titlebar"
         Style="{DynamicResource ThemedWindow}">
@@ -17,7 +16,14 @@
                        HorizontalAlignment="Center"
                        Margin="45,15,45,10"
                        FontSize="18">Ожидание ввода...</TextBlock>
-            <Button Style="{DynamicResource ThemedButton}" Margin="5" Click="ButtonBase_OnClick">OK</Button>
+            <Button Style="{DynamicResource ThemedButton}" 
+                    Margin="5" 
+                    Click="ButtonBase_OnClick" 
+                    Content="OK">
+                <Button.ToolTip>
+                    <ToolTip Content="Check logs to get more info"></ToolTip>
+                </Button.ToolTip>
+            </Button>
         </StackPanel>
     </DockPanel>
 </Window>

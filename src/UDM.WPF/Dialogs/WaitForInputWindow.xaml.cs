@@ -5,7 +5,7 @@ namespace UDM.WPF.Dialogs
     /// <summary>
     /// Логика взаимодействия для WaitForInputWindow.xaml
     /// </summary>
-    public partial class WaitForInputWindow : Window
+    public partial class WaitForInputWindow
     {
         public WaitForInputWindow()
         {

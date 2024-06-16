@@ -19,10 +19,10 @@ namespace UDM.WPF.Dialogs
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             var dataContext = new MainViewModel();
-            dataContext.UpdateDevicesCommand?.Execute(null);
+            dataContext.UpdateDevicesCommand.Execute(null);
             DataContext = dataContext;
 
-            LogService.Log("Hello!", LogLevel.Debug);
+            LogService.Log("MainWindow Loaded!", LogLevel.Debug);
         }
     }
 }

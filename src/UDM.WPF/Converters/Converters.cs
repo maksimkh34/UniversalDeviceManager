@@ -1,8 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
-using UDM.Model;
 using UDM.Model.LogService;
 
 namespace UDM.WPF.Converters

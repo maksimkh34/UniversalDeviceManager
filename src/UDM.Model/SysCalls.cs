@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
+using UDM.Model.LogService;
 
 namespace UDM.Model
 {
@@ -17,6 +11,8 @@ namespace UDM.Model
 
         public static string Exec(string path, string filename, string args)
         {
+            LogService.LogService.Log("Executing " + path + "\\" +filename + " " + args, LogLevel.Debug);
+
             string output;
             switch (OsType)
             {
