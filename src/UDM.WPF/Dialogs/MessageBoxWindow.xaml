@@ -1,0 +1,45 @@
+﻿<Window x:Class="UDM.WPF.Dialogs.MessageBoxWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vms="clr-namespace:UDM.Core.ViewModels;assembly=UDM.Core"
+        mc:Ignorable="d"
+        Loaded="MessageBoxWindow_OnLoaded"
+        xmlns:titlebar="clr-namespace:UDM.WPF.Controls.Titlebar"
+        Style="{DynamicResource ThemedWindow}">
+
+    <Window.DataContext>
+        <vms:MessageBoxWindowViewModel></vms:MessageBoxWindowViewModel>
+    </Window.DataContext>
+    <DockPanel>
+        <titlebar:Titlebar DockPanel.Dock="Top"
+                           Header="Warning"
+                           CanMinimize="False"
+                           CanRestoreSize="False"></titlebar:Titlebar>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical">
+            <StackPanel>
+                <TextBlock Style="{DynamicResource ThemedTextBlock}"
+                           HorizontalAlignment="Center"
+                           Margin="45,15,45,10"
+                           Text="{Binding Message}"
+                           FontSize="18"></TextBlock>
+                <TextBox Style="{DynamicResource ThemedTextBox}" 
+                         Margin="10,0,10,0" 
+                         MinHeight="50"
+                         FontFamily="Consolas"
+                         x:Name="DisplayTextBox"
+                         IsReadOnly="True"
+                         Text="{Binding TextBoxMessage}"></TextBox>
+            </StackPanel>
+            <Button Style="{DynamicResource ThemedButton}" 
+                    Margin="10,5,10,10" 
+                    Click="ButtonBase_OnClick"
+                    Content="OK" IsDefault="True">
+                <Button.ToolTip>
+                    <ToolTip Content="Check logs to get more info"></ToolTip>
+                </Button.ToolTip>
+            </Button>
+        </StackPanel>
+    </DockPanel>
+</Window>

@@ -24,5 +24,10 @@ namespace UDM.WPF.Dialogs
 
             LogService.Log("MainWindow Loaded!", LogLevel.Debug);
         }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -8,7 +8,7 @@
     <UseWPF>true</UseWPF>
     <PackageIcon>udm_mini.png</PackageIcon>
     <StartupObject>UDM.WPF.App</StartupObject>
-    <ApplicationIcon>Assets\Icons\udm_mini.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\Icons\UDM.multi.ico</ApplicationIcon>
     <UseWindowsForms>True</UseWindowsForms>
     <Configurations>Debug;Release;Preelease</Configurations>
   </PropertyGroup>
@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Assets\Icons\udm_mini.ico" />
+    <Content Include="Assets\Icons\UDM.multi.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +52,12 @@
     <Resource Include="Controls\Titlebar\resize.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Dialogs\MessageBoxWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>

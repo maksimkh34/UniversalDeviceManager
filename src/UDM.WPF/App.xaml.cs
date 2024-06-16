@@ -34,15 +34,23 @@ namespace UDM.WPF
 
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            LogService.Log("Unhandled exception captured. Logs will be saved to " + MainModel.LogPath, LogLevel.Fatal);
-            LogService.Log(e.Exception.GetType() + ": " + e.Exception.Message, LogLevel.Fatal);
+            const string msg1 = "Unhandled exception captured. Logs will be saved to " + MainModel.LogPath;
+            var msg2 = e.Exception.GetType() + ": " + e.Exception.Message;
+            LogService.Log(msg1, LogLevel.Fatal);
+            LogService.Log(msg2, LogLevel.Fatal);
             LogService.Save(MainModel.LogPath);
 
             e.Handled = true;
 
-            ShowWaitForInputWindow();
+            ShowMessage(msg1, msg2);
 
             Environment.Exit(0);
+        }
+
+        public static void ShowMessage(string message, string textBoxMessage= "$unfilled$")
+        {
+            MessageBoxWindow window = new(message, textBoxMessage);
+            window.ShowDialog();
         }
     }
 }
