@@ -109,8 +109,14 @@
                     
                     <ListBox.Resources>
                         <ContextMenu Style="{DynamicResource ContextMenuStyle}" x:Key="DeviceItemContextMenu">
-                            <MenuItem Style="{DynamicResource ContextMenuItemStyle}" Header="Select"></MenuItem>
-                            <MenuItem Style="{DynamicResource ContextMenuItemStyle}" Header="Disconnect"></MenuItem>
+                            <MenuItem Style="{DynamicResource ContextMenuItemStyle}" 
+                                      Command="{Binding SelectCommand}"
+                                      CommandParameter="{Binding Id}"
+                                      Header="Select"></MenuItem>
+                            <MenuItem Style="{DynamicResource ContextMenuItemStyle}" 
+                                      Command="{Binding DisconnectCommand}"
+                                      CommandParameter="{Binding Id}"
+                                      Header="Disconnect"></MenuItem>
                         </ContextMenu>
 
                         <ContextMenu Style="{DynamicResource ContextMenuStyle}" x:Key="DeviceBoxContextMenu">
