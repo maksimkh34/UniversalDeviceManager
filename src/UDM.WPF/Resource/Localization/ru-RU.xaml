@@ -2,4 +2,18 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <system:String x:Key="MwBarTitle">Меню</system:String>
+
+    <system:String x:Key="MwFile">Файл</system:String>
+    <system:String x:Key="MwFileSettings">Настройки</system:String>
+
+    <system:String x:Key="MwScript">Скрипт</system:String>
+    <system:String x:Key="MwScriptNew">Новый</system:String>
+    <system:String x:Key="MwScriptEdit">Изменить</system:String>
+    <system:String x:Key="MwScriptExec">Запустить</system:String>
+
+    <system:String x:Key="MwFastboot">Fastboot</system:String>
+    <system:String x:Key="MwFastbootFlash">Прошить</system:String>
+    <system:String x:Key="MwFastbootReboot">Перезагрузить</system:String>
+    <system:String x:Key="MwFastbootCheckBL">Проверить состояние загрузчика</system:String>
+
 </ResourceDictionary>   

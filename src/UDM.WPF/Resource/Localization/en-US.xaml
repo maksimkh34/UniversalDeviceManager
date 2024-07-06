@@ -2,4 +2,18 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <system:String x:Key="MwBarTitle">Menu</system:String>
+    
+    <system:String x:Key="MwFile">File</system:String>
+    <system:String x:Key="MwFileSettings">Settings</system:String>
+    
+    <system:String x:Key="MwScript">Script</system:String>
+    <system:String x:Key="MwScriptNew">New</system:String>
+    <system:String x:Key="MwScriptEdit">Edit</system:String>
+    <system:String x:Key="MwScriptExec">Execute</system:String>
+    
+    <system:String x:Key="MwFastboot">Fastboot</system:String>
+    <system:String x:Key="MwFastbootFlash">Flash</system:String>
+    <system:String x:Key="MwFastbootReboot">Reboot</system:String>
+    <system:String x:Key="MwFastbootCheckBL">Check BL status</system:String>
+
 </ResourceDictionary>   
