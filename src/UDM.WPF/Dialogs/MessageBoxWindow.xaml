@@ -14,7 +14,7 @@
     </Window.DataContext>
     <DockPanel>
         <titlebar:Titlebar DockPanel.Dock="Top"
-                           Header="Warning"
+                           Header="{DynamicResource MsgTitle}"
                            CanMinimize="False"
                            CanRestoreSize="False"></titlebar:Titlebar>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical">
@@ -37,7 +37,7 @@
                     Click="ButtonBase_OnClick"
                     Content="OK" IsDefault="True">
                 <Button.ToolTip>
-                    <ToolTip Content="Check logs to get more info"></ToolTip>
+                    <ToolTip Content="{DynamicResource MsgInfo}"></ToolTip>
                 </Button.ToolTip>
             </Button>
         </StackPanel>

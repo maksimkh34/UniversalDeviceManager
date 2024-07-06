@@ -1,10 +1,11 @@
 ﻿using UDM.Model.SettingsService;
 
-namespace UDM.Model;
-
-public static class MainModelHelpers
+namespace UDM.Model
 {
-    public static SettingsStorage SettingsStorage = new("settings_storage.conf");
+    public static class MainModelHelpers
+    {
+        public static SettingsStorage SettingsStorage = new("settings_storage.conf");
 
-    public static SettingChanged? LangChanged;
+        public static SettingChanged? LangChanged;
+    }
 }

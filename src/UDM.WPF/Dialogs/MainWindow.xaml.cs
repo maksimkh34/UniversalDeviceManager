@@ -27,7 +27,7 @@ namespace UDM.WPF.Dialogs
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            MainModelHelpers.SettingsStorage.Set(MainModel.SnCurrentLanguage, "ru-RU");
+            UDM.Model.MainModelHelpers.SettingsStorage.Set(UDM.Model.MainModel.SnCurrentLanguage, "ru-RU");
         }
     }
 }

@@ -16,4 +16,7 @@
     <system:String x:Key="MwFastbootReboot">Reboot</system:String>
     <system:String x:Key="MwFastbootCheckBL">Check BL status</system:String>
 
+    <system:String x:Key="MsgTitle">Warning</system:String>
+    <system:String x:Key="MsgInfo">Check logs to get more info</system:String>
+
 </ResourceDictionary>   

@@ -14,6 +14,9 @@
     <system:String x:Key="MwFastboot">Fastboot</system:String>
     <system:String x:Key="MwFastbootFlash">Прошить</system:String>
     <system:String x:Key="MwFastbootReboot">Перезагрузить</system:String>
-    <system:String x:Key="MwFastbootCheckBL">Проверить состояние загрузчика</system:String>
+    <system:String x:Key="MwFastbootCheckBL">Проверить загрузчика</system:String>
+
+    <system:String x:Key="MsgTitle">Предупреждение</system:String>
+    <system:String x:Key="MsgInfo">Для большей информации посмотрите логи</system:String>
 
 </ResourceDictionary>   
