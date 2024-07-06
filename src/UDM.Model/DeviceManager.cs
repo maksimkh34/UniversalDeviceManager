@@ -40,7 +40,6 @@ namespace UDM.Model
                 var parsedDevice = DeviceConnection.Parse(device);
                 LogService.LogService.Log("New device: " + parsedDevice.DeviceToStr, LogLevel.Debug);
                 DeviceConnections.Add(parsedDevice);
-
             }
         }
 
@@ -84,7 +83,7 @@ namespace UDM.Model
 
         public string DeviceToStr => Id + $"\t({Type})";
 
-        public ICommand DisconnectCommand { get; }= new DelegateCommand(DeviceCommands.DisconnectDevice, DelegateCommand.DefaultCanExecute);
+        public ICommand DisconnectCommand { get; } = new DelegateCommand(DeviceCommands.DisconnectDevice, DelegateCommand.DefaultCanExecute);
         public ICommand SelectCommand { get; } = new DelegateCommand(DeviceCommands.SelectDevice, DelegateCommand.DefaultCanExecute);
     }
 

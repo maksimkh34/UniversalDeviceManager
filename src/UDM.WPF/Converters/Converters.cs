@@ -24,5 +24,4 @@ namespace UDM.WPF.Converters
             throw new NotImplementedException();
         }
     }
-
 }

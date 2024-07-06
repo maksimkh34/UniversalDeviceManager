@@ -16,9 +16,9 @@
                        HorizontalAlignment="Center"
                        Margin="45,15,45,10"
                        FontSize="18">Ожидание ввода...</TextBlock>
-            <Button Style="{DynamicResource ThemedButton}" 
-                    Margin="5" 
-                    Click="ButtonBase_OnClick" 
+            <Button Style="{DynamicResource ThemedButton}"
+                    Margin="5"
+                    Click="ButtonBase_OnClick"
                     Content="OK">
                 <Button.ToolTip>
                     <ToolTip Content="Check logs to get more info"></ToolTip>

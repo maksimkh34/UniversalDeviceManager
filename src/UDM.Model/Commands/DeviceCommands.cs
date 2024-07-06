@@ -4,13 +4,11 @@ namespace UDM.Model.Commands
 {
     public static class DeviceCommands
     {
-
         #region Commands
 
         public static ICommand UpdateDevicesCommand = new DelegateCommand(UpdateDevices, DelegateCommand.DefaultCanExecute);
 
-
-        #endregion
+        #endregion Commands
 
         #region Command Funcs
 
@@ -35,6 +33,6 @@ namespace UDM.Model.Commands
             }
         }
 
-        #endregion
+        #endregion Command Funcs
     }
 }

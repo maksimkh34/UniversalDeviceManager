@@ -11,7 +11,7 @@ namespace UDM.Model
 
         public static string Exec(string path, string filename, string args)
         {
-            LogService.LogService.Log("Executing " + path + "\\" +filename + " " + args, LogLevel.Debug);
+            LogService.LogService.Log("Executing " + path + "\\" + filename + " " + args, LogLevel.Debug);
 
             string output;
             switch (OsType)
@@ -25,7 +25,7 @@ namespace UDM.Model
                     p.StartInfo.Arguments = args;
                     p.StartInfo.FileName = filename;
                     p.StartInfo.WorkingDirectory = path;
-                    
+
                     p.Start();
                     output = p.StandardOutput.ReadToEnd();
 
