@@ -22,7 +22,7 @@ namespace UDM.Model
             {
                 if (IsDebugRelease)
                 {
-                    return LocalEnvVars.LocalFastbootPath;
+                    //return LocalEnvVars.LocalFastbootPath;
                 }
                 return Directory.GetCurrentDirectory() + @"fastboot\";
             }
