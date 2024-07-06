@@ -6,6 +6,7 @@
         xmlns:titlebar="clr-namespace:UDM.WPF.Controls.Titlebar"
         xmlns:converters="clr-namespace:UDM.WPF.Converters" 
         xmlns:viewmodels="clr-namespace:UDM.Core.ViewModels;assembly=UDM.Core" 
+        xmlns:local="clr-namespace:UDM.WPF." 
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
 
@@ -36,7 +37,7 @@
                                DefaultHeight="400"
                                DefaultWidth="600"
                                DockPanel.Dock="Top"
-                               Header="Menu">
+                               Header="{DynamicResource MainWindow_Title}">
             </titlebar:Titlebar>
 
             <Menu VerticalAlignment="Top"

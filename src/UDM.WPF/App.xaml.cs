@@ -1,8 +1,11 @@
 ﻿using System.Windows;
+using System.Resources;
 using System.Windows.Threading;
 using UDM.Model;
 using UDM.Model.LogService;
 using UDM.WPF.Dialogs;
+using System.Reflection;
+using System.Globalization;
 
 namespace UDM.WPF
 {
@@ -18,6 +21,8 @@ namespace UDM.WPF
 
             MainWindow mw = new();
             mw.Show();
+            ResourceManager rm = new ResourceManager("UDM.WPF.Resource.Language.lang", Assembly.GetExecutingAssembly());
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture("ru-RU");
         }
 
         public static void ShutdownApp()
