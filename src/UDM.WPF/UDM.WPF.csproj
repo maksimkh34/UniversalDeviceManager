@@ -58,27 +58,6 @@
     <Compile Update="Dialogs\MessageBoxWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Resource\Language\RU.Designer.cs">
-      <DependentUpon>RU.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Resource\Language\EN.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EN.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Resource\Language\RU.resx">
-      <LastGenOutput>RU.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resource\Language\EN.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>EN.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

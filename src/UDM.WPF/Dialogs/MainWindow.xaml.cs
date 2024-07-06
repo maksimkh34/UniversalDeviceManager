@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using UDM.Core.ViewModels;
+using UDM.Model;
 using UDM.Model.LogService;
 
 namespace UDM.WPF.Dialogs
@@ -27,7 +28,7 @@ namespace UDM.WPF.Dialogs
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            
+            MainModelHelpers.SettingsStorage.Set(MainModel.SnCurrentLanguage, "te-ST");
         }
     }
 }

@@ -21,7 +21,12 @@
 
         private readonly ValidateSettingValue _localValidateSettingValue = validateSettingValue ?? DefaultValidateSettingValue;
         private readonly CorrectSettingValue _localCorrectSettingValue = correctSettingValue ?? DefalutCorrectSettingValue;
-        private readonly SettingChanged _localSettingChanged = settingChanged ?? DefaultSettingChanged;
+        private SettingChanged _localSettingChanged = settingChanged ?? DefaultSettingChanged;
+
+        public void UpdateValueChanged(SettingChanged foo)
+        {
+            _localSettingChanged = foo;
+        }
 
         public string Name { get; set; } = settingName;
 
@@ -68,6 +73,16 @@
             foreach (var setting in _settingsStorage.Where(setting => setting.Name == settingName))
             {
                 return setting.Value;
+            }
+
+            throw new SettingsExceptions.SettingNotExists();
+        }
+
+        public Setting Get(string settingName)   // Возвращает значение настройки по ее имени
+        {
+            foreach (var setting in _settingsStorage.Where(setting => setting.Name == settingName))
+            {
+                return setting;
             }
 
             throw new SettingsExceptions.SettingNotExists();

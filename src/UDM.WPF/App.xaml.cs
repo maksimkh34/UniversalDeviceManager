@@ -6,6 +6,7 @@ using UDM.Model.LogService;
 using UDM.WPF.Dialogs;
 using System.Reflection;
 using System.Globalization;
+using UDM.Model.SettingsService;
 
 namespace UDM.WPF
 {
@@ -21,13 +22,15 @@ namespace UDM.WPF
 
             MainWindow mw = new();
             mw.Show();
-            ResourceManager rm = new ResourceManager("UDM.WPF.Resource.Language.lang", Assembly.GetExecutingAssembly());
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture("ru-RU");
+
+            MainModelHelpers.SettingsStorage.Get(MainModel.SnCurrentLanguage).UpdateValueChanged(UpdateLang);
+            UpdateLang(new SettingChangedContext("", MainModelHelpers.SettingsStorage.GetValue(MainModel.SnCurrentLanguage) ?? "en-US"));
         }
 
         public static void ShutdownApp()
         {
             LogService.Save(MainModel.LogPath);
+            // MainModelHelpers.SettingsStorage.SaveSettings();
             Environment.Exit(0);
         }
 
@@ -57,5 +60,23 @@ namespace UDM.WPF
             MessageBoxWindow window = new(message, textBoxMessage);
             window.ShowDialog();
         }
+
+        private static void UpdateLang(SettingChangedContext context)
+        {
+            var dict = new ResourceDictionary
+            {
+                Source = new Uri("Resource/Localization/" + context.NewValue + ".xaml", UriKind.Relative)
+            };
+
+            foreach (var dictionary in Current.Resources.MergedDictionaries)
+            {
+                if (!dictionary.Source.ToString().Contains("Resource/Localization/")) continue;
+                var ind = Current.Resources.MergedDictionaries.IndexOf(dictionary);
+                Current.Resources.MergedDictionaries.Remove(dictionary);
+                Current.Resources.MergedDictionaries.Insert(ind, dict);
+                break;
+            }
+        }
+
     }
 }

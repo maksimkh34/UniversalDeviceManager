@@ -2,8 +2,9 @@
 
 namespace UDM.Model;
 
-internal static class MainModelHelpers
+public static class MainModelHelpers
 {
-
     public static SettingsStorage SettingsStorage = new("settings_storage.conf");
+
+    public static SettingChanged? LangChanged;
 }
