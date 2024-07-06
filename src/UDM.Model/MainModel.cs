@@ -28,8 +28,8 @@ namespace UDM.Model
             }
         }
 
-        public const string LogPath = "D:\\log.log";
         public const string SnForceDebugLogs = nameof(SnForceDebugLogs); // Sn - SettingName
+        public const string SnLogPath = nameof(SnLogPath);
         public const string SnCurrentLanguage = nameof(SnCurrentLanguage);
 
         public static void RegisterMainModel()
@@ -42,12 +42,16 @@ namespace UDM.Model
                 Languages[0], typeof(string),
                 null, null, MainModelHelpers.LangChanged,
                 "App language", true, Languages));
+            MainModelHelpers.SettingsStorage.Register(new Setting(SnLogPath,
+                "C:\\XTU_xmlfiles\\log.log", typeof(string),
+                null, null, null,
+                "Logs path", false, null));
 
             MainModelHelpers.
                         SettingsStorage.LoadSettings();
         }
 
-        public static string[] Languages = { "en-US", "ru-RU", "te-ST" };
+        public static string[] Languages = { "en-US", "ru-RU" };
 
         public static DeviceManager ModelDeviceManager = new();
     }

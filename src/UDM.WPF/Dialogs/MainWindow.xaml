@@ -38,41 +38,40 @@
                                DockPanel.Dock="Top"
                                Header="{DynamicResource MwBarTitle}">
             </titlebar:Titlebar>
-
             <Menu VerticalAlignment="Top"
                   DockPanel.Dock="Top"
                   Style="{DynamicResource ThemedMenu}">
-                <MenuItem Header="{DynamicResource mm_File}"
+                <MenuItem Header="{DynamicResource MwFile}"
                           Style="{DynamicResource ThemedMenuItem}">
-                    <MenuItem Header="{DynamicResource mm_File_Settings}"
+                    <MenuItem Header="{DynamicResource MwFileSettings}"
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
                 </MenuItem>
 
-                <MenuItem Header="{DynamicResource mm_Scripts}"
+                <MenuItem Header="{DynamicResource MwScript}"
                           Style="{DynamicResource ThemedMenuItem}">
-                    <MenuItem Header="{DynamicResource mm_Scripts_New}"
+                    <MenuItem Header="{DynamicResource MwScriptNew}"
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
 
-                    <MenuItem Header="{DynamicResource mm_Scripts_Edit}"
+                    <MenuItem Header="{DynamicResource MwScriptEdit}"
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
-                    <MenuItem Header="{DynamicResource mm_Scripts_Execute}"
+                    <MenuItem Header="{DynamicResource MwScriptExec}"
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
                 </MenuItem>
 
-                <MenuItem Header="{DynamicResource mm_Fastboot}"
+                <MenuItem Header="{DynamicResource MwFastboot}"
                           Style="{DynamicResource ThemedMenuItem}">
-                    <MenuItem Header="{DynamicResource mm_Fastboot_Flash}"
+                    <MenuItem Header="{DynamicResource MwFastbootFlash}"
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
-                    <MenuItem Header="{DynamicResource mm_Fastboot_Reboot}"
+                    <MenuItem Header="{DynamicResource MwFastbootReboot}"
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
 
-                    <MenuItem Header="{DynamicResource mm_Fastboot_CheckBLStatus}"
+                    <MenuItem Header="{DynamicResource MwFastbootCheckBL}"
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
                 </MenuItem>
