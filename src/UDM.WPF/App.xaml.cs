@@ -1,12 +1,9 @@
 ﻿using System.Windows;
-using System.Resources;
 using System.Windows.Threading;
 using UDM.Model;
 using UDM.Model.LogService;
-using UDM.WPF.Dialogs;
-using System.Reflection;
-using System.Globalization;
 using UDM.Model.SettingsService;
+using UDM.WPF.Dialogs;
 
 namespace UDM.WPF
 {
@@ -55,7 +52,7 @@ namespace UDM.WPF
             Environment.Exit(0);
         }
 
-        public static void ShowMessage(string message, string textBoxMessage= "$unfilled$")
+        public static void ShowMessage(string message, string textBoxMessage = "$unfilled$")
         {
             MessageBoxWindow window = new(message, textBoxMessage);
             window.ShowDialog();
@@ -77,6 +74,5 @@ namespace UDM.WPF
                 break;
             }
         }
-
     }
 }

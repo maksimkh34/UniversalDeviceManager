@@ -46,15 +46,17 @@
                     else throw new SettingsExceptions.ValueIsNotAllowed();
                 }
                 else throw new SettingsExceptions.InvalidSettingValueType();
-
             }
         }
 
         // Стандартные значения делегатов
 
         private static bool DefaultValidateSettingValue(object value) => true;
+
         private static dynamic DefalutCorrectSettingValue(dynamic value) => value;
-        private static void DefaultSettingChanged(SettingChangedContext context) { }
+
+        private static void DefaultSettingChanged(SettingChangedContext context)
+        { }
 
         private bool IsValuePossible(string value)  // Есть ли значение в массиве разрешенных
         {
@@ -212,8 +214,9 @@
     public interface ISettingValueCallbacks
     {
         bool ValidateSettingValue(object value);
+
         dynamic CorrectSettingValue(dynamic value);
+
         public void SettingChanged(SettingChangedContext context);
     }
 }
-

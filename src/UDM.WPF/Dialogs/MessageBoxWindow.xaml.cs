@@ -9,7 +9,8 @@ namespace UDM.WPF.Dialogs
     {
         private readonly string _msg;
         private readonly string _textBoxMessage;
-        public MessageBoxWindow(string message, string textBoxMessage )
+
+        public MessageBoxWindow(string message, string textBoxMessage)
         {
             InitializeComponent();
             _msg = message;

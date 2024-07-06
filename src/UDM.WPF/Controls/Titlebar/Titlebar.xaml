@@ -24,7 +24,7 @@
                                 Background="{TemplateBinding Background}">
                             <ContentPresenter Content="{TemplateBinding Content}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
-                                              Margin="{TemplateBinding Padding}"/>
+                                              Margin="{TemplateBinding Padding}" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -65,7 +65,6 @@
                     <Button.Background>
                         <ImageBrush ImageSource="resize.png" />
                     </Button.Background>
-
                 </Button>
 
                 <Button

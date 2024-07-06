@@ -3,9 +3,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:UDM.Core.ViewModels;assembly=UDM.Core"
         xmlns:titlebar="clr-namespace:UDM.WPF.Controls.Titlebar"
-        xmlns:converters="clr-namespace:UDM.WPF.Converters" 
-        xmlns:viewmodels="clr-namespace:UDM.Core.ViewModels;assembly=UDM.Core" 
+        xmlns:converters="clr-namespace:UDM.WPF.Converters"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
 
@@ -106,14 +106,14 @@
                          Grid.Column="0"
                          ItemsSource="{Binding Path=Devices}"
                          Margin="10,0,5,10">
-                    
+
                     <ListBox.Resources>
                         <ContextMenu Style="{DynamicResource ContextMenuStyle}" x:Key="DeviceItemContextMenu">
-                            <MenuItem Style="{DynamicResource ContextMenuItemStyle}" 
+                            <MenuItem Style="{DynamicResource ContextMenuItemStyle}"
                                       Command="{Binding SelectCommand}"
                                       CommandParameter="{Binding Id}"
                                       Header="Select"></MenuItem>
-                            <MenuItem Style="{DynamicResource ContextMenuItemStyle}" 
+                            <MenuItem Style="{DynamicResource ContextMenuItemStyle}"
                                       Command="{Binding DisconnectCommand}"
                                       CommandParameter="{Binding Id}"
                                       Header="Disconnect"></MenuItem>
@@ -139,12 +139,11 @@
                     <ListBox.ContextMenu>
                         <Binding Source="{StaticResource DeviceBoxContextMenu}"></Binding>
                     </ListBox.ContextMenu>
-
                 </ListBox>
 
-                <Button Style="{DynamicResource ThemedButton}" 
-                        Grid.Column="2" 
-                        Grid.Row="1" 
+                <Button Style="{DynamicResource ThemedButton}"
+                        Grid.Column="2"
+                        Grid.Row="1"
                         Click="ButtonBase_OnClick"
                         Margin="10">test button</Button>
             </Grid>

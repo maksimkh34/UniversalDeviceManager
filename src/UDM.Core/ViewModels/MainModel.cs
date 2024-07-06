@@ -10,9 +10,9 @@ namespace UDM.Core.ViewModels
 
         public static void RegisterMainModel()
         {
-            SettingsStorage.Register(new Setting(SnForceDebugLogs, 
-                false, typeof(bool), 
-            null, null, null, 
+            SettingsStorage.Register(new Setting(SnForceDebugLogs,
+                false, typeof(bool),
+            null, null, null,
             "Force debug logs to show", false, null));
 
             SettingsStorage.LoadSettings();

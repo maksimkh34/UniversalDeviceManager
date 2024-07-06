@@ -43,7 +43,6 @@ namespace UDM.Model
                 null, null, MainModelHelpers.LangChanged,
                 "App language", true, Languages));
 
-
             MainModelHelpers.
                         SettingsStorage.LoadSettings();
         }
