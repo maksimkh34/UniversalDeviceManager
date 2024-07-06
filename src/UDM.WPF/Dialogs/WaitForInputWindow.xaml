@@ -22,7 +22,7 @@
                     Click="ButtonBase_OnClick"
                     Content="OK">
                 <Button.ToolTip>
-                    <ToolTip Content="Check logs to get more info"></ToolTip>
+                    <ToolTip Content="{DynamicResource MsgInfo}"></ToolTip>
                 </Button.ToolTip>
             </Button>
         </StackPanel>

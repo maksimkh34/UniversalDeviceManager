@@ -14,10 +14,16 @@
     <system:String x:Key="MwFastboot">Fastboot</system:String>
     <system:String x:Key="MwFastbootFlash">Прошить</system:String>
     <system:String x:Key="MwFastbootReboot">Перезагрузить</system:String>
-    <system:String x:Key="MwFastbootCheckBL">Проверить загрузчика</system:String>
+    <system:String x:Key="MwFastbootCheckBL">Проверить статус загрузчика</system:String>
+
+    <system:String x:Key="DialogUnhandledExceptionMsg">Во время выполнения приложения произошла ошибка. Лог будет сохранен по пути</system:String>
+
+    <system:String x:Key="DevicesContextMenuUpdate">Обновить</system:String>
+    <system:String x:Key="DevicesContextMenuSelect">Выбрать</system:String>
+    <system:String x:Key="DevicesContextMenuDisconnect">Отключить</system:String>
 
     <system:String x:Key="MsgTitle">Предупреждение</system:String>
-    <system:String x:Key="MsgInfo">Для большей информации посмотрите логи</system:String>
+    <system:String x:Key="MsgInfo">Для подробной информации просмотрите логи</system:String>
     <system:String x:Key="MsgWait">Ожидание ввода...</system:String>
     
 </ResourceDictionary>   

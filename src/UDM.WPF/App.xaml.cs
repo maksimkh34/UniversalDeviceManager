@@ -27,7 +27,7 @@ namespace UDM.WPF
         public static void ShutdownApp()
         {
             LogService.Save((string)(MainModelHelpers.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log"));
-            //MainModelHelpers.SettingsStorage.SaveSettings();
+            // MainModelHelpers.SettingsStorage.SaveSettings();
             Environment.Exit(0);
         }
 
@@ -39,7 +39,7 @@ namespace UDM.WPF
 
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            string msg1 = "Unhandled exception captured. Logs will be saved to " + (string)(MainModelHelpers.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log");
+            var msg1 = Resources["DialogUnhandledExceptionMsg"] + " " +(string)(MainModelHelpers.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log");
             var msg2 = e.Exception.GetType() + ": " + e.Exception.Message;
             LogService.Log(msg1, LogLevel.Fatal);
             LogService.Log(msg2, LogLevel.Fatal);
@@ -60,10 +60,18 @@ namespace UDM.WPF
 
         private static void UpdateLang(SettingChangedContext context)
         {
-            var dict = new ResourceDictionary
+            ResourceDictionary dict;
+            try
             {
-                Source = new Uri("Resource/Localization/" + context.NewValue + ".xaml", UriKind.Relative)
-            };
+                dict = new ResourceDictionary
+                {
+                    Source = new Uri("Resource/Localization/" + context.NewValue + ".xaml", UriKind.Relative)
+                };
+            }
+            catch(System.IO.IOException)
+            {
+                throw new Exception("Error loading files for " + context.NewValue + " locale. ");
+            }
 
             foreach (var dictionary in Current.Resources.MergedDictionaries)
             {

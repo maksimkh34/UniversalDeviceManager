@@ -119,7 +119,7 @@
                         </ContextMenu>
 
                         <ContextMenu Style="{DynamicResource ContextMenuStyle}" x:Key="DeviceBoxContextMenu">
-                            <MenuItem Style="{DynamicResource ContextMenuItemStyle}" Header="Update" Command="{Binding UpdateDevicesCommand}"></MenuItem>
+                            <MenuItem Style="{DynamicResource ContextMenuItemStyle}" Header="{DynamicResource DevicesContextMenuUpdate}" Command="{Binding UpdateDevicesCommand}"></MenuItem>
                         </ContextMenu>
                     </ListBox.Resources>
 

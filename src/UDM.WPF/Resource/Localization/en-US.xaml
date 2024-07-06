@@ -16,6 +16,12 @@
     <system:String x:Key="MwFastbootReboot">Reboot</system:String>
     <system:String x:Key="MwFastbootCheckBL">Check BL status</system:String>
 
+    <system:String x:Key="DialogUnhandledExceptionMsg">Unhandled exception captured. Logs will be saved to</system:String>
+
+    <system:String x:Key="DevicesContextMenuUpdate">Update</system:String>
+    <system:String x:Key="DevicesContextMenuSelect">Select</system:String>
+    <system:String x:Key="DevicesContextMenuDisconnect">Disconnect</system:String>
+
     <system:String x:Key="MsgTitle">Warning</system:String>
     <system:String x:Key="MsgInfo">Check logs to get more info</system:String>
     <system:String x:Key="MsgWait">Waiting for input...</system:String>
