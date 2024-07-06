@@ -18,5 +18,6 @@
 
     <system:String x:Key="MsgTitle">Предупреждение</system:String>
     <system:String x:Key="MsgInfo">Для большей информации посмотрите логи</system:String>
-
+    <system:String x:Key="MsgWait">Ожидание ввода...</system:String>
+    
 </ResourceDictionary>   

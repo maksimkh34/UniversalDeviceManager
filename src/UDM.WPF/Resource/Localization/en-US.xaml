@@ -18,5 +18,6 @@
 
     <system:String x:Key="MsgTitle">Warning</system:String>
     <system:String x:Key="MsgInfo">Check logs to get more info</system:String>
+    <system:String x:Key="MsgWait">Waiting for input...</system:String>
 
 </ResourceDictionary>   
