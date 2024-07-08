@@ -1,6 +1,8 @@
 ﻿// ReSharper disable InconsistentNaming
 
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using UDM.Model.Commands;
 using UDM.Model.LogService;
@@ -11,24 +13,39 @@ namespace UDM.Model
     public class DeviceManager
     {
         public ObservableCollection<DeviceConnection> DeviceConnections = new();
-        public int SelectedDeviceIndex = -1;
+
+        private readonly DeviceConnection _connection = new();
 
         public DeviceConnection SelectedDevice
         {
-            get => SelectedDeviceIndex == -1 ? new DeviceConnection() : DeviceConnections[SelectedDeviceIndex];
+            get
+            {
+                if(DeviceConnected(_connection.Id) || _connection.Type == DeviceConnectionType.Disconnected) return _connection;
+                throw new DeviceDisconnectedException("Selected device is not connected. ");
+            }
             set
             {
-                var index = 0;
-                foreach (var device in DeviceConnections)
+                if (value.Type == DeviceConnectionType.Disconnected)
                 {
-                    if (device.Id == value.Id)
-                    {
-                        SelectedDeviceIndex = index;
-                    }
-                    index += 1;
+                    if (_connection.Type == DeviceConnectionType.Disconnected) return;
+                    LogService.LogService.Log("Resetting selected device", LogLevel.Debug);
+                    _connection.Id = "";
+                    _connection.Type = DeviceConnectionType.Disconnected;
+                    return;
                 }
+
+                if (!DeviceConnections.Contains(value)) throw new DeviceDisconnectedException("Selected device is not connected. ");
+                _connection.Id = value.Id;
+                _connection.Type = value.Type;
             }
         }
+
+        public bool DeviceConnected(string id)
+        {
+            return DeviceConnections.Any(device => device.Id == id);
+        }
+
+        public bool ActiveDeviceConnected() => DeviceConnected(SelectedDevice.Id);
 
         public void UpdateFastbootDevices()
         {
@@ -40,6 +57,11 @@ namespace UDM.Model
                 var parsedDevice = DeviceConnection.Parse(device);
                 LogService.LogService.Log("New device: " + parsedDevice.DeviceToStr, LogLevel.Debug);
                 DeviceConnections.Add(parsedDevice);
+            }
+
+            if (!DeviceConnected(SelectedDevice.Id))
+            {
+                SelectedDevice = new DeviceConnection();
             }
         }
 
@@ -54,6 +76,11 @@ namespace UDM.Model
             foreach (var device in DeviceConnections)
             {
                 if (device.Id != id) continue;
+                LogService.LogService.Log("Disconnecting " + device.Id + "...", LogLevel.Debug);
+                if (device.DeviceToStr == SelectedDevice.DeviceToStr)
+                {
+                    SelectedDevice = new DeviceConnection();
+                }
                 DeviceConnections.Remove(device);
                 break;
             }
@@ -65,26 +92,52 @@ namespace UDM.Model
             foreach (var device in DeviceConnections)
             {
                 if (device.Id != id) continue;
+                LogService.LogService.Log("Selected: " + device.Id + "...", LogLevel.Info);
                 SelectedDevice = device;
                 break;
             }
         }
     }
 
-    public class DeviceConnection(string id = "disconnected_id", DeviceConnectionType type = DeviceConnectionType.Disconnected)
+    public class DeviceConnection(string id = "disconnected_id", DeviceConnectionType type = DeviceConnectionType.Disconnected) : INotifyPropertyChanged
     {
-        public string Id { get; set; } = id;
-        public DeviceConnectionType Type { get; set; } = type;
+        public string Id
+        {
+            get => id;
+            set
+            {
+                id = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DeviceConnectionType Type
+        {
+            get => type;
+            set
+            {
+                type = value;
+                OnPropertyChanged();
+            }
+        }
 
         public static DeviceConnection Parse(string unparsed)
         {
             return new DeviceConnection(unparsed.Split('\t')[0], Enum.Parse<DeviceConnectionType>(unparsed.Split('\t')[1]));
         }
 
-        public string DeviceToStr => Id + $"\t({Type})";
+        public string DeviceToStr => Type == DeviceConnectionType.Disconnected ? "Disconnected" : (Id + $"\t({Type})");
 
         public ICommand DisconnectCommand { get; } = new DelegateCommand(DeviceCommands.DisconnectDevice, DelegateCommand.DefaultCanExecute);
+
         public ICommand SelectCommand { get; } = new DelegateCommand(DeviceCommands.SelectDevice, DelegateCommand.DefaultCanExecute);
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
     public enum DeviceConnectionType
@@ -95,5 +148,22 @@ namespace UDM.Model
         BROM,
         EDL,
         Disconnected
+    }
+
+    public class DeviceDisconnectedException : Exception
+    {
+        public DeviceDisconnectedException()
+        {
+        }
+
+        public DeviceDisconnectedException(string message)
+            : base(message)
+        {
+        }
+
+        public DeviceDisconnectedException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
     }
 }

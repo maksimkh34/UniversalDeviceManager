@@ -107,7 +107,8 @@
                          Margin="10,0,5,10">
 
                     <ListBox.Resources>
-                        <ContextMenu Style="{DynamicResource ContextMenuStyle}" x:Key="DeviceItemContextMenu">
+                        <ContextMenu Style="{DynamicResource ContextMenuStyle}" 
+                                     x:Key="DeviceItemContextMenu">
                             <MenuItem Style="{DynamicResource ContextMenuItemStyle}"
                                       Command="{Binding SelectCommand}"
                                       CommandParameter="{Binding Id}"
@@ -118,27 +119,52 @@
                                       Header="Disconnect"></MenuItem>
                         </ContextMenu>
 
-                        <ContextMenu Style="{DynamicResource ContextMenuStyle}" x:Key="DeviceBoxContextMenu">
-                            <MenuItem Style="{DynamicResource ContextMenuItemStyle}" Header="{DynamicResource DevicesContextMenuUpdate}" Command="{Binding UpdateDevicesCommand}"></MenuItem>
+                        <ContextMenu Style="{DynamicResource ContextMenuStyle}" 
+                                     x:Key="DeviceBoxContextMenu">
+                            <MenuItem Style="{DynamicResource ContextMenuItemStyle}" 
+                                      Header="{DynamicResource DevicesContextMenuUpdate}" 
+                                      Command="{Binding UpdateDevicesCommand}">
+
+                            </MenuItem>
                         </ContextMenu>
                     </ListBox.Resources>
 
                     <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource ThemedListBoxItem}">
-                            <Setter Property="ContextMenu" Value="{StaticResource DeviceItemContextMenu}" />
+                        <Style TargetType="ListBoxItem" 
+                               BasedOn="{StaticResource ThemedListBoxItem}">
+                            <Setter Property="ContextMenu" 
+                                    Value="{StaticResource DeviceItemContextMenu}" />
                         </Style>
                     </ListBox.ItemContainerStyle>
 
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Style="{StaticResource DeviceTextBox}" Text="{Binding DeviceToStr}" />
+                            <TextBlock Style="{StaticResource DeviceTextBox}" 
+                                       Text="{Binding DeviceToStr}" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
 
                     <ListBox.ContextMenu>
-                        <Binding Source="{StaticResource DeviceBoxContextMenu}"></Binding>
+                        <Binding 
+                            Source="{StaticResource DeviceBoxContextMenu}"></Binding>
                     </ListBox.ContextMenu>
                 </ListBox>
+
+                <StackPanel Grid.Row="1" 
+                            Grid.Column="1">
+                    <TextBlock Margin="5,0,5,5" 
+                               Style="{DynamicResource ThemedTextBlock}" 
+                               HorizontalAlignment="Center" 
+                               FontWeight="Bold">Selected device</TextBlock>
+                    <TextBox Style="{DynamicResource ThemedTextBox}" 
+                             Margin="5,0,5,0" 
+                             Height="24"
+                             IsReadOnly="True"
+                             Text="{Binding Connection.DeviceToStr, Mode=OneWay}"
+                             VerticalAlignment="Top">
+
+                    </TextBox>
+                </StackPanel>
 
                 <Button Style="{DynamicResource ThemedButton}"
                         Grid.Column="2"

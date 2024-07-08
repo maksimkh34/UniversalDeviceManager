@@ -14,6 +14,20 @@ namespace UDM.Core.ViewModels
 
         public ICommand UpdateDevicesCommand => Model.Commands.DeviceCommands.UpdateDevicesCommand;
 
+        private string _deviceString = "Test device!";
+        public string DeviceString
+        {
+            get => _deviceString;
+            set
+            {
+                _deviceString = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private readonly DeviceConnection _connection = new();
+        public DeviceConnection Connection => Model.MainModel.ModelDeviceManager.SelectedDevice;
+
         #endregion Properties
     }
 }

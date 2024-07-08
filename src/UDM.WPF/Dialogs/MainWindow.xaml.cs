@@ -1,11 +1,14 @@
 ﻿using System.Windows;
 using UDM.Core.ViewModels;
+using UDM.Model;
 using UDM.Model.LogService;
 
 namespace UDM.WPF.Dialogs
 {
     public partial class MainWindow
     {
+        MainViewModel? _dataContext;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -18,16 +21,19 @@ namespace UDM.WPF.Dialogs
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var dataContext = new MainViewModel();
+            _dataContext = new MainViewModel();
             //dataContext.UpdateDevicesCommand.Execute(null);
-            DataContext = dataContext;
+            DataContext = _dataContext;
+
+            MainModel.ModelDeviceManager.UpdateDevices();
 
             LogService.Log("MainWindow Loaded!", LogLevel.Debug);
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            UDM.Model.MainModelHelpers.SettingsStorage.Set(Model.MainModel.SnCurrentLanguage, "ru-RU");
+            if (_dataContext != null) Model.MainModel.ModelDeviceManager.SelectedDevice.Type = DeviceConnectionType.fastboot;
+            if (_dataContext != null) Model.MainModel.ModelDeviceManager.SelectedDevice.Id = "test clicked";
         }
     }
 }

@@ -39,6 +39,7 @@ namespace UDM.WPF
 
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
+            if (MainModel.IsDebugRelease) return;
             var msg1 = Resources["DialogUnhandledExceptionMsg"] + " " +(string)(MainModelHelpers.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log");
             var msg2 = e.Exception.GetType() + ": " + e.Exception.Message;
             LogService.Log(msg1, LogLevel.Fatal);

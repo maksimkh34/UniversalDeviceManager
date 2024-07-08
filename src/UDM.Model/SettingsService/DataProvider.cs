@@ -2,7 +2,7 @@
 {
     internal static class DataProvider
     {
-        public static Dictionary<string, string> LoadDataDict(string fileName, char delimeter = '=')
+        public static Dictionary<string, string> LoadDataDict(string fileName, char delimiter = '=')
         {
             Dictionary<string, string> result = new();
             string[] text;
@@ -12,23 +12,23 @@
             }
             catch (FileNotFoundException)
             {
-                return new();
+                return new Dictionary<string, string>();
             }
             catch (DirectoryNotFoundException)
             {
-                return new();
+                return new Dictionary<string, string>();
             }
             if (text.Length == 0) return result;
 
-            foreach (string line in text)
+            foreach (var line in text)
             {
-                result.Add(line.Split(delimeter)[0], line.Split(delimeter)[1]);
+                result.Add(line.Split(delimiter)[0], line.Split(delimiter)[1]);
             }
 
             return result;
         }
 
-        public static List<List<string>> LoadDataList(string fileName, char delimeter = '=')
+        public static List<List<string>> LoadDataList(string fileName, char delimiter = '=')
         {
             List<List<string>> result = new();
 
@@ -39,15 +39,15 @@
             }
             catch (FileNotFoundException)
             {
-                return new();
+                return new List<List<string>>();
             }
             catch (DirectoryNotFoundException)
             {
-                return new();
+                return new List<List<string>>();
             }
             if (text.Length == 0) return result;
 
-            result.AddRange(text.Select(line => line.Split(delimeter)).Select(inputArray => new List<string>(inputArray)));
+            result.AddRange(text.Select(line => line.Split(delimiter)).Select(inputArray => new List<string>(inputArray)));
 
             return result;
         }
@@ -68,19 +68,19 @@
             }
         }
 
-        public static void WriteDataList(string fileName, List<List<string>> data, char delimeter = '=')
+        public static void WriteDataList(string fileName, List<List<string>> data, char delimiter = '=')
         {
             using StreamWriter writer = new(fileName);
-            foreach (List<string> dataLine in data)
+            foreach (var dataLine in data)
             {
-                string output = "";
-                foreach (string line in dataLine)
+                var output = "";
+                foreach (var line in dataLine)
                 {
-                    if (line.Contains(delimeter))
+                    if (line.Contains(delimiter))
                     {
                         throw new InvalidDataProvidedException();
                     }
-                    output += line + delimeter;
+                    output += line + delimiter;
                 }
                 output = output.Remove(output.Length - 1, 1);
                 writer.WriteLine(output);
@@ -88,20 +88,4 @@
         }
     }
 
-    public class InvalidDataProvidedException : Exception
-    {
-        public InvalidDataProvidedException()
-        {
-        }
-
-        public InvalidDataProvidedException(string message)
-            : base(message)
-        {
-        }
-
-        public InvalidDataProvidedException(string message, Exception inner)
-            : base(message, inner)
-        {
-        }
-    }
 }
