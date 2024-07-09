@@ -18,11 +18,7 @@ namespace UDM.Model
 
         public DeviceConnection SelectedDevice
         {
-            get
-            {
-                if(DeviceConnected(_connection.Id) || _connection.Type == DeviceConnectionType.Disconnected) return _connection;
-                throw new DeviceDisconnectedException("Selected device is not connected. ");
-            }
+            get => _connection;
             set
             {
                 if (value.Type == DeviceConnectionType.Disconnected)
@@ -73,6 +69,12 @@ namespace UDM.Model
 
         public void Disconnect(string id)
         {
+            UpdateDevices();
+            if (!DeviceConnected(id))
+            {
+                MainModel.ModelDeviceManager.UpdateDevices(); return;
+            }
+
             foreach (var device in DeviceConnections)
             {
                 if (device.Id != id) continue;
@@ -89,6 +91,12 @@ namespace UDM.Model
 
         public void Select(string id)
         {
+            UpdateDevices();
+            if (!DeviceConnected(id))
+            {
+                MainModel.ModelDeviceManager.UpdateDevices(); return;
+            }
+
             foreach (var device in DeviceConnections)
             {
                 if (device.Id != id) continue;

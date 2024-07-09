@@ -25,8 +25,7 @@ namespace UDM.Core.ViewModels
             }
         }
 
-        private readonly DeviceConnection _connection = new();
-        public DeviceConnection Connection => Model.MainModel.ModelDeviceManager.SelectedDevice;
+        public DeviceConnection Connection => MainModel.ModelDeviceManager.SelectedDevice;
 
         #endregion Properties
     }

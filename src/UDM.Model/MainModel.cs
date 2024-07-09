@@ -24,7 +24,7 @@ namespace UDM.Model
                 {
                     return LocalEnvVars.LocalFastbootPath;
                 }
-                return Directory.GetCurrentDirectory() + @"fastboot\";
+                return Directory.GetCurrentDirectory() + @"\fastboot\";
             }
         }
 
@@ -43,7 +43,7 @@ namespace UDM.Model
                 null, null, MainModelHelpers.LangChanged,
                 "App language", true, Languages));
             MainModelHelpers.SettingsStorage.Register(new Setting(SnLogPath,
-                "C:\\XTU_xmlfiles\\log.log", typeof(string),
+                LocalEnvVars.LocalLogPath, typeof(string),
                 null, null, null,
                 "Logs path", false, null));
 

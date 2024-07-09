@@ -32,8 +32,6 @@ namespace UDM.WPF.Dialogs
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            if (_dataContext != null) Model.MainModel.ModelDeviceManager.SelectedDevice.Type = DeviceConnectionType.fastboot;
-            if (_dataContext != null) Model.MainModel.ModelDeviceManager.SelectedDevice.Id = "test clicked";
         }
     }
 }
