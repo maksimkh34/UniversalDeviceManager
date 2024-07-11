@@ -41,9 +41,12 @@ namespace UDM.Model
             }
         }
 
+        public static string CurrentScriptCode { get; set; } = NoCodeExecutedDefaultMsg;
+
         public const string SnForceDebugLogs = nameof(SnForceDebugLogs); // Sn - SettingName
         public const string SnLogPath = nameof(SnLogPath);
         public const string SnCurrentLanguage = nameof(SnCurrentLanguage);
+        public const string NoCodeExecutedDefaultMsg = "No code is being executed.";
 
         public static void RegisterMainModel()
         {

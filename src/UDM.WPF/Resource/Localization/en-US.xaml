@@ -26,6 +26,7 @@
     <system:String x:Key="MsgInfo">Check logs to get more info</system:String>
     <system:String x:Key="MsgWait">Waiting for input...</system:String>
     <system:String x:Key="MsgInvalidLogPath">Invalid Log Path provided!</system:String>
+    <system:String x:Key="MsgHello">Remember to select your device!</system:String>
 
     <system:String x:Key="SettingsBarTitle">Settings</system:String>
 
@@ -36,4 +37,6 @@
                FontSize="12"
                Style="{DynamicResource ThemedTextBlock}">Force show debug logs</TextBlock>
 
+    <system:String x:Key="ExecuteBarTitle">Execute</system:String>
+    <system:String x:Key="ExecuteWindowMessage">Review DIL code to be executed. </system:String>
 </ResourceDictionary>   

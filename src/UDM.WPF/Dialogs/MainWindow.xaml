@@ -50,7 +50,8 @@
                 <MenuItem Header="{DynamicResource MwScript}"
                           Style="{DynamicResource ThemedMenuItem}">
                     <MenuItem Header="{DynamicResource MwScriptNew}"
-                              Style="{DynamicResource ThemedMenuItem}">
+                              Style="{DynamicResource ThemedMenuItem}"
+                              Click="Menu_ScriptNew_Click">
                     </MenuItem>
 
                     <MenuItem Header="{DynamicResource MwScriptEdit}"
@@ -89,6 +90,8 @@
                 <TextBox
                     Grid.ColumnSpan="3"
                     Margin="10"
+                    VerticalScrollBarVisibility="Auto"
+                    TextWrapping="Wrap"
                     IsReadOnly="True"
                     FontFamily="Consolas"
                     Style="{DynamicResource ThemedTextBox}">
@@ -98,6 +101,9 @@
                             <Binding Path="Logs.Count" Mode="OneWay"></Binding>
                         </MultiBinding>
                     </TextBox.Text>
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource ScrollViewerStyle}"></Style>
+                    </TextBox.Resources>
                 </TextBox>
                 <ListBox Grid.Row="1"
                          Style="{DynamicResource ThemedListBox}"

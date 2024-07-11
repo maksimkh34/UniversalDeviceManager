@@ -22,6 +22,8 @@ namespace UDM.WPF
 
             MainModelHelpers.SettingsStorage.Get(MainModel.SnCurrentLanguage).UpdateValueChanged(UpdateLang);
             UpdateLang(new SettingChangedContext("", MainModelHelpers.SettingsStorage.GetValue(MainModel.SnCurrentLanguage) ?? "en-US"));
+
+            LogService.Log(FindResource("MsgHello")?.ToString() ?? "lang_err", LogLevel.Info);
         }
 
         public static void ShutdownApp()

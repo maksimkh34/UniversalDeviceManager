@@ -30,14 +30,21 @@ namespace UDM.WPF.Dialogs
             LogService.Log("MainWindow Loaded!", LogLevel.Debug);
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)   // test button
         {
+            new PreDIL().ShowDialog();
         }
 
         private void MenuItem_OnClick(object sender, RoutedEventArgs e)
         {
             Settings window = new();
-            window.ShowDialog();
+            window.Show();
+        }
+
+        private void Menu_ScriptNew_Click(object sender, RoutedEventArgs e)
+        {
+            MainModel.CurrentScriptCode = string.Empty;
+            new PreDIL().Show();
         }
     }
 }

@@ -26,6 +26,7 @@
     <system:String x:Key="MsgInfo">Для подробной информации просмотрите логи</system:String>
     <system:String x:Key="MsgWait">Ожидание ввода...</system:String>
     <system:String x:Key="MsgInvalidLogPath">Неправильно задан путь для логов!</system:String>
+    <system:String x:Key="MsgHello">Не забудьте выбрать ваше устройство в меню устройств</system:String>
 
     <system:String x:Key="SettingsBarTitle">Настройки</system:String>
 
@@ -36,4 +37,6 @@
                FontSize="12"
                Style="{DynamicResource ThemedTextBlock}">Принудительно отображать логи уровня Debug</TextBlock>
 
+    <system:String x:Key="ExecuteBarTitle">Выполнить</system:String>
+    <system:String x:Key="ExecuteWindowMessage">Пересмотрите код перед его выполнением. </system:String>
 </ResourceDictionary>   
