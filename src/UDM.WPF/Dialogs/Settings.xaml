@@ -1,0 +1,21 @@
+﻿<Window x:Class="UDM.WPF.Dialogs.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UDM.WPF.Dialogs"
+        xmlns:titlebar="clr-namespace:UDM.WPF.Controls.Titlebar"
+        mc:Ignorable="d"
+        Loaded="Settings_OnLoaded"
+        Style="{DynamicResource ThemedWindow}"
+        SizeToContent="Height"
+        Title="Settings" Height="300" Width="500">
+    <StackPanel>
+        <titlebar:Titlebar
+            DockPanel.Dock="Top"
+            CanMinimize="False"
+            CanRestoreSize="False"
+            Header="{DynamicResource SettingsBarTitle}"></titlebar:Titlebar>
+        <StackPanel x:Name="MainStackPanel"></StackPanel>
+    </StackPanel>
+</Window>

@@ -14,7 +14,7 @@
     <system:String x:Key="MwFastboot">Fastboot</system:String>
     <system:String x:Key="MwFastbootFlash">Прошить</system:String>
     <system:String x:Key="MwFastbootReboot">Перезагрузить</system:String>
-    <system:String x:Key="MwFastbootCheckBL">Проверить статус загрузчика</system:String>
+    <system:String x:Key="MwFastbootCheckBl">Проверить статус загрузчика</system:String>
 
     <system:String x:Key="DialogUnhandledExceptionMsg">Во время выполнения приложения произошла ошибка. Лог будет сохранен по пути</system:String>
 
@@ -25,5 +25,15 @@
     <system:String x:Key="MsgTitle">Предупреждение</system:String>
     <system:String x:Key="MsgInfo">Для подробной информации просмотрите логи</system:String>
     <system:String x:Key="MsgWait">Ожидание ввода...</system:String>
-    
+    <system:String x:Key="MsgInvalidLogPath">Неправильно задан путь для логов!</system:String>
+
+    <system:String x:Key="SettingsBarTitle">Настройки</system:String>
+
+    <system:String x:Key="StCurrentLanguage">Текущая локализация</system:String>
+    <system:String x:Key="StLogPath">Путь к файлу логов</system:String>
+
+    <TextBlock x:Key="StForceDebugLogs"
+               FontSize="12"
+               Style="{DynamicResource ThemedTextBlock}">Принудительно отображать логи уровня Debug</TextBlock>
+
 </ResourceDictionary>   

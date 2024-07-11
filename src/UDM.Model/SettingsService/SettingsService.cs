@@ -45,9 +45,13 @@
                     }
                     else throw new SettingsExceptions.ValueIsNotAllowed();
                 }
-                else throw new SettingsExceptions.InvalidSettingValueType();
+                else throw new SettingsExceptions.InvalidSettingValueType("Invalid Setting Value Type");
             }
         }
+
+        public bool IsUsingPossibleValues() => isUsingPossibleValues;
+
+        public IEnumerable<string>? GetPossibleValues() => possibleValues;
 
         // Стандартные значения делегатов
 

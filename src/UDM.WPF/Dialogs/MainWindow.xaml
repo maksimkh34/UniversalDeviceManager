@@ -31,9 +31,7 @@
 
     <Window.Content>
         <DockPanel>
-            <titlebar:Titlebar VerticalAlignment="Top"
-                               HorizontalAlignment="Stretch"
-                               DefaultHeight="400"
+            <titlebar:Titlebar DefaultHeight="400"
                                DefaultWidth="600"
                                DockPanel.Dock="Top"
                                Header="{DynamicResource MwBarTitle}">
@@ -44,6 +42,7 @@
                 <MenuItem Header="{DynamicResource MwFile}"
                           Style="{DynamicResource ThemedMenuItem}">
                     <MenuItem Header="{DynamicResource MwFileSettings}"
+                              Click="MenuItem_OnClick"
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
                 </MenuItem>
@@ -71,7 +70,7 @@
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
 
-                    <MenuItem Header="{DynamicResource MwFastbootCheckBL}"
+                    <MenuItem Header="{DynamicResource MwFastbootCheckBl}"
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
                 </MenuItem>
@@ -112,11 +111,11 @@
                             <MenuItem Style="{DynamicResource ContextMenuItemStyle}"
                                       Command="{Binding SelectCommand}"
                                       CommandParameter="{Binding Id}"
-                                      Header="Select"></MenuItem>
+                                      Header="{DynamicResource DevicesContextMenuSelect}"></MenuItem>
                             <MenuItem Style="{DynamicResource ContextMenuItemStyle}"
                                       Command="{Binding DisconnectCommand}"
                                       CommandParameter="{Binding Id}"
-                                      Header="Disconnect"></MenuItem>
+                                      Header="{DynamicResource DevicesContextMenuDisconnect}"></MenuItem>
                         </ContextMenu>
 
                         <ContextMenu Style="{DynamicResource ContextMenuStyle}" 

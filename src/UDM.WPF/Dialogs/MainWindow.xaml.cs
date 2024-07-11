@@ -7,7 +7,7 @@ namespace UDM.WPF.Dialogs
 {
     public partial class MainWindow
     {
-        MainViewModel? _dataContext;
+        private MainViewModel? _dataContext;
 
         public MainWindow()
         {
@@ -32,6 +32,12 @@ namespace UDM.WPF.Dialogs
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            Settings window = new();
+            window.ShowDialog();
         }
     }
 }
