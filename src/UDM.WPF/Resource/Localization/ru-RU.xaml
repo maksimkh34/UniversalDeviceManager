@@ -6,6 +6,8 @@
     <system:String x:Key="MwFile">Файл</system:String>
     <system:String x:Key="MwFileSettings">Настройки</system:String>
 
+    <system:String x:Key="PredilSave">Сохранить</system:String>
+
     <system:String x:Key="MwScript">Скрипт</system:String>
     <system:String x:Key="MwScriptNew">Новый</system:String>
     <system:String x:Key="MwScriptEdit">Изменить</system:String>

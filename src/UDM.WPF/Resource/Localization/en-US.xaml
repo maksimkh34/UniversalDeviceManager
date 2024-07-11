@@ -2,10 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <system:String x:Key="MwBarTitle">Menu</system:String>
-    
+
     <system:String x:Key="MwFile">File</system:String>
     <system:String x:Key="MwFileSettings">Settings</system:String>
-    
+
+    <system:String x:Key="PredilSave">Save</system:String>
+
     <system:String x:Key="MwScript">Script</system:String>
     <system:String x:Key="MwScriptNew">New</system:String>
     <system:String x:Key="MwScriptEdit">Edit</system:String>

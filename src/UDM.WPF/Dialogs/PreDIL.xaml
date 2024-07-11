@@ -9,7 +9,7 @@
         SizeToContent="Manual"
         mc:Ignorable="d"
         Loaded="PreDIL_OnLoaded"
-        Title="PreDIL" Height="450" Width="800">
+        Title="PreDIL" Height="476" Width="800">
     <Window.DataContext>
         <dc:PreDILViewModel></dc:PreDILViewModel>
     </Window.DataContext>
@@ -18,7 +18,15 @@
                            Header="{DynamicResource ExecuteBarTitle}"
                            CanMinimize="False"
                            CanRestoreSize="False"></titlebar:Titlebar>
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical">
+        <Menu VerticalAlignment="Top"
+              DockPanel.Dock="Top"
+              Style="{DynamicResource ThemedMenu}">
+            <MenuItem Header="{DynamicResource PredilSave}"
+                      Style="{DynamicResource ThemedMenuItem}"
+                      Click="Menu_Save_Click">
+            </MenuItem>
+            </Menu>
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical">
             <StackPanel>
                 <TextBlock Style="{DynamicResource ThemedTextBlock}"
                            HorizontalAlignment="Center"
@@ -27,6 +35,7 @@
                            FontSize="18"></TextBlock>
                 <TextBox Style="{DynamicResource ThemedTextBox}"
                          x:Name="CodeTextBox"
+                         AcceptsReturn="True"
                          Margin="10,0,10,0"
                          MinHeight="330"
                          FontFamily="Consolas"

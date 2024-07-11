@@ -54,11 +54,9 @@
                               Click="Menu_ScriptNew_Click">
                     </MenuItem>
 
-                    <MenuItem Header="{DynamicResource MwScriptEdit}"
-                              Style="{DynamicResource ThemedMenuItem}">
-                    </MenuItem>
                     <MenuItem Header="{DynamicResource MwScriptExec}"
-                              Style="{DynamicResource ThemedMenuItem}">
+                              Style="{DynamicResource ThemedMenuItem}"
+                              Click="Menu_ScriptExec_Click">
                     </MenuItem>
                 </MenuItem>
 

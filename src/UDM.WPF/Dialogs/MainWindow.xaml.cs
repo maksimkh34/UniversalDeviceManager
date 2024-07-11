@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using UDM.Core.ViewModels;
 using UDM.Model;
 using UDM.Model.LogService;
@@ -44,6 +45,25 @@ namespace UDM.WPF.Dialogs
         private void Menu_ScriptNew_Click(object sender, RoutedEventArgs e)
         {
             MainModel.CurrentScriptCode = string.Empty;
+            new PreDIL().Show();
+        }
+
+        private void Menu_ScriptExec_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Multiselect = false,
+                ReadOnlyChecked = false,
+                AddExtension = true,
+                DefaultExt = "dil",
+                Filter = "DIL Scripts (*.dil)|*.dil|All files (*.*)|*.*",
+                Title = "Open DIL Script"
+            };
+            dialog.ShowDialog();
+
+            var scriptFile = dialog.FileName;
+
+            MainModel.CurrentScriptCode = File.ReadAllText(scriptFile);
             new PreDIL().Show();
         }
     }
