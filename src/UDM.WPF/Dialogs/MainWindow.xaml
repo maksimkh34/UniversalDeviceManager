@@ -165,7 +165,9 @@
                     <TextBlock Margin="5,0,5,5" 
                                Style="{DynamicResource ThemedTextBlock}" 
                                HorizontalAlignment="Center" 
-                               FontWeight="Bold">Selected device</TextBlock>
+                               FontWeight="Bold"
+                               Text="{DynamicResource SelectedDevice}">
+                    </TextBlock>
                     <TextBox Style="{DynamicResource ThemedTextBox}" 
                              Margin="5,0,5,0" 
                              Height="24"

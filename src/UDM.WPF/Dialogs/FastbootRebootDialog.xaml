@@ -13,12 +13,14 @@
                            CanMinimize="False"
                            CanRestoreSize="False"
                            DockPanel.Dock="Top"
-                           Header="{DynamicResource FastbootRebootTitle}">
+                           Header="{DynamicResource FRTitle}">
         </titlebar:Titlebar>
         <StackPanel Orientation="Horizontal" Margin="0,10,10,0" VerticalAlignment="Top">
             <TextBlock Style="{StaticResource ThemedTextBlock}" 
                        Margin="15,0,0,0" 
-                       VerticalAlignment="Center">Device</TextBlock>
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource FRDevice}">
+            </TextBlock>
             <Grid Width="15"></Grid>
             <TextBox Style="{StaticResource ThemedTextBox}" 
                      Height="26" 
@@ -29,7 +31,9 @@
         <StackPanel Orientation="Horizontal" Margin="0,10,0,0" VerticalAlignment="Top">
             <TextBlock Style="{StaticResource ThemedTextBlock}" 
                        Margin="15,0,0,0" 
-                       VerticalAlignment="Center">Reboot to</TextBlock>
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource FRMode}">
+            </TextBlock>
             <Grid Width="15"></Grid>
             <ComboBox Style="{StaticResource ThemedComboBox}" 
                       SelectedIndex="0" 
@@ -45,6 +49,8 @@
                 Command="{Binding ApplyCommand}"
                 x:Name="ApplyButton"
                 CommandParameter="{Binding SelectedItem.Text, ElementName=RebootModeComboBox}"
-                Margin="10,10,10,10">Apply</Button>
+                Margin="10,10,10,10"
+                Content="{DynamicResource FRApply}">
+        </Button>
     </StackPanel>
 </Window>

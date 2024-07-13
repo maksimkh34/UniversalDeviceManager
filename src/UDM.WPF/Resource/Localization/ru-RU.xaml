@@ -24,14 +24,28 @@
     <system:String x:Key="DevicesContextMenuSelect">Выбрать</system:String>
     <system:String x:Key="DevicesContextMenuDisconnect">Отключить</system:String>
 
+    <system:String x:Key="SelectedDevice">Выбранное устройство</system:String>
+
+    <system:String x:Key="FFTitle">Прошить (Fastboot)</system:String>
+    <system:String x:Key="FFDevice">Устройство</system:String>
+    <system:String x:Key="FFFlashTo">Раздел</system:String>
+    <system:String x:Key="FFCustomPartition">Свой раздел</system:String>
+    <system:String x:Key="FFImage">Образ</system:String>
+    <system:String x:Key="FFBrowse">Выбрать...</system:String>
+    <system:String x:Key="FFApply">Прошить</system:String>
+    
+    <system:String x:Key="FRTitle">Перезагрузка (Fastboot)</system:String>
+    <system:String x:Key="FRMode">Режим</system:String>
+    <system:String x:Key="FRDevice">Устройство</system:String>
+    <system:String x:Key="FRApply">Перезагрузить</system:String>
+    
     <system:String x:Key="MsgTitle">Предупреждение</system:String>
     <system:String x:Key="MsgInfo">Для подробной информации просмотрите логи</system:String>
     <system:String x:Key="MsgWait">Ожидание ввода...</system:String>
     <system:String x:Key="MsgInvalidLogPath">Неправильно задан путь для логов!</system:String>
     <system:String x:Key="MsgHello">Не забудьте выбрать ваше устройство в меню устройств</system:String>
     <system:String x:Key="MsgChangelog">Список изменений</system:String>
-    <system:String x:Key="FastbootRebootTitle">Перезагрузка (Fastboot)</system:String>
-
+    
     <system:String x:Key="SettingsBarTitle">Настройки</system:String>
 
     <system:String x:Key="StCurrentLanguage">Текущая локализация</system:String>

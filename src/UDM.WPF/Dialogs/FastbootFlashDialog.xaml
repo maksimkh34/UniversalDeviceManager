@@ -18,12 +18,14 @@
                            CanMinimize="False"
                            CanRestoreSize="False"
                            DockPanel.Dock="Top"
-                           Header="Flash (Fastboot)">
+                           Header="{DynamicResource FFTitle}">
         </titlebar:Titlebar>
         <StackPanel Orientation="Horizontal" Margin="0,10,10,0" VerticalAlignment="Top">
             <TextBlock Style="{StaticResource ThemedTextBlock}" 
                        Margin="15,0,0,0" 
-                       VerticalAlignment="Center">Device</TextBlock>
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource FFDevice}">
+            </TextBlock>
             <Grid Width="15"></Grid>
             <TextBox Style="{StaticResource ThemedTextBox}" 
                      Height="26" 
@@ -34,7 +36,9 @@
         <StackPanel Orientation="Horizontal" Margin="0,10,0,0" VerticalAlignment="Top">
             <TextBlock Style="{StaticResource ThemedTextBlock}" 
                        Margin="15,0,0,0" 
-                       VerticalAlignment="Center">Flash to</TextBlock>
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource FFFlashTo}">
+            </TextBlock>
             <Grid Width="15"></Grid>
             <ComboBox Style="{StaticResource ThemedComboBox}" 
                       SelectedIndex="0" 
@@ -51,28 +55,35 @@
         <StackPanel  Orientation="Horizontal" Margin="0,10,0,0" VerticalAlignment="Top">
             <TextBlock Style="{StaticResource ThemedTextBlock}" 
                        Margin="15,0,0,0" 
-                       VerticalAlignment="Center">Custom partition</TextBlock>
-            <TextBox x:Name="textBox" Style="{StaticResource ThemedTextBox}" Margin="15,0,0,0" Width="100">
-                Custom
-            </TextBox>
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource FFCustomPartition}">
+            </TextBlock>
+            <TextBox x:Name="textBox" 
+                     Style="{StaticResource ThemedTextBox}" 
+                     Margin="15,0,0,0" 
+                     Width="100">Custom</TextBox>
         </StackPanel>
         <StackPanel  Orientation="Horizontal" Margin="0,10,0,0" VerticalAlignment="Top">
             <TextBlock Style="{StaticResource ThemedTextBlock}" 
                        Margin="15,0,0,0" 
-                       VerticalAlignment="Center">Image</TextBlock>
+                       VerticalAlignment="Center"
+                       Text="{DynamicResource FFImage}">
+            </TextBlock>
             <Button Style="{StaticResource ThemedButton}" 
                     Margin="15,0,0,0" 
                     Width="116"
-                    Command="{Binding BrowseCommand}">Browse...</Button>
+                    Command="{Binding BrowseCommand}"
+                    Content="{DynamicResource FFBrowse}">
+            </Button>
         </StackPanel>
         <TextBlock Margin="15,10,15,0"
                    Text="{Binding SelectedImagePath, Converter={StaticResource Shorter}}" 
                    HorizontalAlignment="Stretch">
-
+                   
         </TextBlock>
         <Button Style="{StaticResource ThemedButton}" 
                 Command="{Binding ApplyCommand}"
-                Content="Apply"
+                Content="{DynamicResource FFApply}"
                 x:Name="ApplyButton"
                 Margin="10,10,10,10">
             <Button.CommandParameter>
