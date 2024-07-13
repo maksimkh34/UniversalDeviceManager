@@ -86,7 +86,7 @@ namespace UDM.Model
                 "StCurrentLanguage", true, Languages));
 
             MainModelHelpers.SettingsStorage.Register(new Setting(SnLogPath,
-                LocalEnvVars.LocalLogPath, typeof(string),
+                Cwd + @"\Logs.log", typeof(string),
                 ValidateLogPath, null, null,
                 "StLogPath", false, null));
 
