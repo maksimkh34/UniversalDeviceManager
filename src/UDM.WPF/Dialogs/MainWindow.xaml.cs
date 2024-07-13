@@ -54,6 +54,7 @@ namespace UDM.WPF.Dialogs
             {
                 Multiselect = false,
                 ReadOnlyChecked = false,
+                CheckFileExists = false,
                 AddExtension = true,
                 DefaultExt = "dil",
                 Filter = "DIL Scripts (*.dil)|*.dil|All files (*.*)|*.*",
@@ -69,7 +70,7 @@ namespace UDM.WPF.Dialogs
 
         private void Menu_FastbootFlash_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            new FastbootFlashDialog().ShowDialog();
         }
 
         private void Menu_FastbootReboot_Click(object sender, RoutedEventArgs e)
@@ -79,7 +80,7 @@ namespace UDM.WPF.Dialogs
 
         private void Menu_FastbootCheckBootloader_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            MainModel.CheckBlStatus();
         }
     }
 }

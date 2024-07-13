@@ -1,0 +1,86 @@
+﻿<Window x:Class="UDM.WPF.Dialogs.FastbootFlashDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:UDM.WPF.Converters"
+        Loaded="FastbootFlashDialog_OnLoaded"
+        xmlns:titlebar="clr-namespace:UDM.WPF.Controls.Titlebar"
+        Style="{StaticResource ThemedWindow}"
+        mc:Ignorable="d"
+        Title="FastbootFlashDialog">
+    <Window.Resources>
+        <converters:FastbootFlashMultiBindingConverter x:Key="Converter"></converters:FastbootFlashMultiBindingConverter>
+        <converters:FastbootFlashPathShorter x:Key="Shorter"></converters:FastbootFlashPathShorter>
+    </Window.Resources>
+    <StackPanel VerticalAlignment="Stretch">
+        <titlebar:Titlebar VerticalAlignment="Top"
+                           CanMinimize="False"
+                           CanRestoreSize="False"
+                           DockPanel.Dock="Top"
+                           Header="Flash (Fastboot)">
+        </titlebar:Titlebar>
+        <StackPanel Orientation="Horizontal" Margin="0,10,10,0" VerticalAlignment="Top">
+            <TextBlock Style="{StaticResource ThemedTextBlock}" 
+                       Margin="15,0,0,0" 
+                       VerticalAlignment="Center">Device</TextBlock>
+            <Grid Width="15"></Grid>
+            <TextBox Style="{StaticResource ThemedTextBox}" 
+                     Height="26" 
+                     Width="160" 
+                     IsEnabled="False"
+                     x:Name="ActiveDeviceTextBox">Active (</TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,10,0,0" VerticalAlignment="Top">
+            <TextBlock Style="{StaticResource ThemedTextBlock}" 
+                       Margin="15,0,0,0" 
+                       VerticalAlignment="Center">Flash to</TextBlock>
+            <Grid Width="15"></Grid>
+            <ComboBox Style="{StaticResource ThemedComboBox}" 
+                      SelectedIndex="0" 
+                      x:Name="FlashModeComboBox"
+                      Width="152" 
+                      Height="24">
+                <TextBlock Style="{StaticResource ThemedTextBlock}">recovery</TextBlock>
+                <TextBlock Style="{StaticResource ThemedTextBlock}">boot</TextBlock>
+                <TextBlock Style="{StaticResource ThemedTextBlock}">super</TextBlock>
+                <TextBlock Style="{StaticResource ThemedTextBlock}">vbmeta</TextBlock>
+                <TextBlock Style="{StaticResource ThemedTextBlock}" Text="{Binding Text, ElementName=textBox}"></TextBlock>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel  Orientation="Horizontal" Margin="0,10,0,0" VerticalAlignment="Top">
+            <TextBlock Style="{StaticResource ThemedTextBlock}" 
+                       Margin="15,0,0,0" 
+                       VerticalAlignment="Center">Custom partition</TextBlock>
+            <TextBox x:Name="textBox" Style="{StaticResource ThemedTextBox}" Margin="15,0,0,0" Width="100">
+                Custom
+            </TextBox>
+        </StackPanel>
+        <StackPanel  Orientation="Horizontal" Margin="0,10,0,0" VerticalAlignment="Top">
+            <TextBlock Style="{StaticResource ThemedTextBlock}" 
+                       Margin="15,0,0,0" 
+                       VerticalAlignment="Center">Image</TextBlock>
+            <Button Style="{StaticResource ThemedButton}" 
+                    Margin="15,0,0,0" 
+                    Width="116"
+                    Command="{Binding BrowseCommand}">Browse...</Button>
+        </StackPanel>
+        <TextBlock Margin="15,10,15,0"
+                   Text="{Binding SelectedImagePath, Converter={StaticResource Shorter}}" 
+                   HorizontalAlignment="Stretch">
+
+        </TextBlock>
+        <Button Style="{StaticResource ThemedButton}" 
+                Command="{Binding ApplyCommand}"
+                Content="Apply"
+                x:Name="ApplyButton"
+                Margin="10,10,10,10">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource Converter}">
+                    <Binding ElementName="FlashModeComboBox" Path="SelectedItem.Text"></Binding>
+                    <Binding Path="SelectedImagePath"></Binding>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
+    </StackPanel>
+</Window>

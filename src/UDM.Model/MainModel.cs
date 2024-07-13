@@ -1,4 +1,6 @@
-﻿using UDM.Model.SettingsService;
+﻿using System.ComponentModel;
+using UDM.Model.DIL;
+using UDM.Model.SettingsService;
 
 namespace UDM.Model
 {
@@ -55,18 +57,21 @@ namespace UDM.Model
 
         public delegate void ChangelogDialog(string titleText, string textboxText);
         public delegate bool? ExecuteCode();
+        public delegate string GetPath();
 
         public static bool ChangelogFound;
 
         public static ChangelogDialog? UiChangelogDialog;
         public static ExecuteCode? ModelExecuteCode;
+        public static GetPath? GetImagePath;
         public static string? ChangelogTitle;
 
-        public static void RegisterMainModel(ChangelogDialog changelogDialog, string changelogTitle, ExecuteCode executeCode)
+        public static void RegisterMainModel(ChangelogDialog changelogDialog, ExecuteCode executeCode, GetPath getImagePath, string changelogTitle)
         {
             UiChangelogDialog = changelogDialog;
             ChangelogTitle = changelogTitle;
             ModelExecuteCode = executeCode;
+            GetImagePath = getImagePath;
             CheckStartup();
 
             // Do not forget to update SettingsViewModel! 
@@ -118,6 +123,11 @@ namespace UDM.Model
             if (path == string.Empty) return false;
             Directory.CreateDirectory(path);
             return File.Exists((string)value);
+        }
+
+        public static void CheckBlStatus()
+        {
+            DeviceInteractionLanguage.Execute("fastboot_check_bl");
         }
     }
 }

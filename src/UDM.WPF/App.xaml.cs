@@ -13,7 +13,7 @@ namespace UDM.WPF
         {
             base.OnStartup(e);
 
-            MainModel.RegisterMainModel(ShowMessage, (string)FindResource("MsgChangelog")!, OpenPreDil);
+            MainModel.RegisterMainModel(ShowMessage, OpenPreDil, GetImagePath, (string)FindResource("MsgChangelog")!);
             LogService.Logs.Clear();    // ???
             // включить логи уровня дебаг на релизной сборке
             // MainModel.SettingsStorage.Set(MainModel.SnForceDebugLogs, true);
@@ -25,6 +25,23 @@ namespace UDM.WPF
             UpdateLang(new SettingChangedContext("", MainModelHelpers.SettingsStorage.GetValue(MainModel.SnCurrentLanguage) ?? "en-US"));
 
             LogService.Log(FindResource("MsgHello")?.ToString() ?? "lang_err", LogLevel.Info);
+        }
+
+        public static string GetImagePath()
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Multiselect = false,
+                ReadOnlyChecked = false,
+                CheckFileExists = false,
+                AddExtension = true,
+                DefaultExt = "img",
+                Filter = "Image (*.img)|*.img|All files (*.*)|*.*",
+                Title = "Select image to flash"
+            };
+            dialog.ShowDialog();
+
+            return dialog.FileName;
         }
 
         public static bool? OpenPreDil()

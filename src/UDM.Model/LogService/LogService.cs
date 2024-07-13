@@ -13,7 +13,7 @@ public static class LogService
         {
             foreach (var logMsg in message.Split("\r\n"))
             {
-                Log(logMsg, level);
+                if(logMsg != "") Log(logMsg, level);
             }
         }
         else if (!message.StartsWith('\0')) Logs.Add(new LogEntry(message.Replace("\n", "\t"), level));

@@ -59,9 +59,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Dialogs\FastbootFlashDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Dialogs\MessageBoxWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Dialogs\FastbootFlashDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

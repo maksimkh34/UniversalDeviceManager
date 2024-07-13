@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows.Data;
+using System.Windows.Documents;
 using UDM.Model.LogService;
 
 namespace UDM.WPF.Converters
@@ -20,6 +21,37 @@ namespace UDM.WPF.Converters
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class FastbootFlashMultiBindingConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            return values.Select(value => value.ToString()).ToList();
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class FastbootFlashPathShorter : IValueConverter
+    {
+        public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        {
+            if (value is string pathValue)
+            {
+                return pathValue.Length > 30 ? "..." + pathValue[^27..] : pathValue;
+            }
+
+            return "value_type_error";
+        }
+
+        public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

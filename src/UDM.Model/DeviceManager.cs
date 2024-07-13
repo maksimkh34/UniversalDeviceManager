@@ -12,6 +12,8 @@ namespace UDM.Model
     // Never remove devices from list via DeviceConnections.Remove! Use Disconnect(id)!
     public class DeviceManager
     {
+        public const string Disconnected_id = "disconnected_id";
+
         public ObservableCollection<DeviceConnection> DeviceConnections = new();
 
         private readonly DeviceConnection _connection = new();
@@ -107,7 +109,7 @@ namespace UDM.Model
         }
     }
 
-    public class DeviceConnection(string id = "disconnected_id", DeviceConnectionType type = DeviceConnectionType.Disconnected) : INotifyPropertyChanged
+    public class DeviceConnection(string id = DeviceManager.Disconnected_id, DeviceConnectionType type = DeviceConnectionType.Disconnected) : INotifyPropertyChanged
     {
         public string Id
         {
