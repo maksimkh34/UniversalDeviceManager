@@ -38,6 +38,9 @@ namespace UDM.Model
             }
         }
 
+        public bool SelectedDeviceAlive() => SysCalls.Exec(MainModel.PathToFastboot, "fastboot.exe", "devices")
+            .Contains(SelectedDevice.Id);
+
         public bool DeviceConnected(string id)
         {
             return DeviceConnections.Any(device => device.Id == id);

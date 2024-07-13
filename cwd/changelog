@@ -1,0 +1,6 @@
+Beta is out!
+
+v0.5 functional:
+* Load, save and execute **DIL** (Device Interaction Language) scripts 
+* Logs system
+* Simple Fastboot functional (flash, reboot, check bootloader status)

@@ -23,7 +23,7 @@ public class FastbootFlashDialogViewModel(Action closeWindowAction) : BaseViewMo
     public static void BrowseAction(object param)
     {
         var path = MainModel.GetImagePath?.Invoke();
-        if (path is not null)
+        if (path is not null && path != "")
         {
             Updater?.Invoke(path);
         }
@@ -37,7 +37,8 @@ public class FastbootFlashDialogViewModel(Action closeWindowAction) : BaseViewMo
         var partition = enumerable.ElementAt(0);
         var imgPath = enumerable.ElementAt(1);
 
-        Model.DIL.DeviceInteractionLanguage.Execute($"fastboot_flash {partition} {imgPath}");
+        MainModel.CurrentScriptCode = $"fastboot_flash {partition} {imgPath}";
+        MainModel.ModelExecuteCode?.Invoke();
         // fastboot_flash recovery recovery.img
     }
 

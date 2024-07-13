@@ -102,9 +102,6 @@
                             <Binding Path="Logs.Count" Mode="OneWay"></Binding>
                         </MultiBinding>
                     </TextBox.Text>
-                    <TextBox.Resources>
-                        <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource ScrollViewerStyle}"></Style>
-                    </TextBox.Resources>
                 </TextBox>
                 <ListBox Grid.Row="1"
                          HorizontalContentAlignment="Stretch"

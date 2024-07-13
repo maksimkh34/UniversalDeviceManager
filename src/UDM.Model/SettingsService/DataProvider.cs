@@ -56,7 +56,7 @@
         {
             var spittedPath = fileName.Split("\\");
             var path = string.Join("\\", spittedPath.Skip(0).Take(spittedPath.Length - 1));
-            Directory.CreateDirectory(path);
+            if(path != string.Empty) Directory.CreateDirectory(path);
             using StreamWriter writer = new(fileName);
             foreach (var key in data.Keys)
             {

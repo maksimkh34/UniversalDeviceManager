@@ -64,9 +64,10 @@ namespace UDM.WPF.Dialogs
             };
             dialog.ShowDialog();
 
+            if(dialog.FileName == string.Empty) return;
             var scriptFile = dialog.FileName;
 
-            MainModel.CurrentScriptCode = File.ReadAllText(scriptFile);
+            MainModel.CurrentScriptCode = MainModel.ReplaceCodeWars(File.ReadAllText(scriptFile));
             new PreDIL().Show();
         }
 

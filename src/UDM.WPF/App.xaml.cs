@@ -21,6 +21,8 @@ namespace UDM.WPF
             MainWindow mw = new();
             mw.Show();
 
+            MainModel.CheckStartup();
+
             MainModelHelpers.SettingsStorage.Get(MainModel.SnCurrentLanguage).UpdateValueChanged(UpdateLang);
             UpdateLang(new SettingChangedContext("", MainModelHelpers.SettingsStorage.GetValue(MainModel.SnCurrentLanguage) ?? "en-US"));
 
@@ -53,7 +55,7 @@ namespace UDM.WPF
         public static void ShutdownApp()
         {
             LogService.Save((string)(MainModelHelpers.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log"));
-            // MainModelHelpers.SettingsStorage.SaveSettings();
+            MainModelHelpers.SettingsStorage.SaveSettings();
             Environment.Exit(0);
         }
 

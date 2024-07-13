@@ -72,7 +72,6 @@ namespace UDM.Model
             ChangelogTitle = changelogTitle;
             ModelExecuteCode = executeCode;
             GetImagePath = getImagePath;
-            CheckStartup();
 
             // Do not forget to update SettingsViewModel! 
 
@@ -128,6 +127,11 @@ namespace UDM.Model
         public static void CheckBlStatus()
         {
             DeviceInteractionLanguage.Execute("fastboot_check_bl");
+        }
+
+        public static string ReplaceCodeWars(string code)
+        {
+            return code.Replace("%cwd%", Cwd);
         }
     }
 }

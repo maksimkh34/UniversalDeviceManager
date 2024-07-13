@@ -6,7 +6,7 @@ namespace UDM.Model.DIL
     {
         public static void Execute(string script)
         {
-            foreach (var cmd in script.Split(";\n"))
+            foreach (var cmd in script.Split("\r\n"))
             {
                 var instructions = cmd.Split(' ');
                 switch (instructions[0])
@@ -46,6 +46,17 @@ namespace UDM.Model.DIL
                             flashCommand);
                         LogService.LogService.Log(flashOutput, LogLevel.Info);
 
+                        break;
+
+                    case "wait_for_bl":
+                        while (!MainModel.ModelDeviceManager.SelectedDeviceAlive())
+                        {
+                            Thread.Sleep(1000);
+                        }
+                        break;
+
+                    default:
+                        LogService.LogService.Log("Unknown command: " + cmd, LogLevel.Error);
                         break;
                 }
             }
