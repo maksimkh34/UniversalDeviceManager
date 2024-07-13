@@ -177,10 +177,32 @@
                 </StackPanel>
 
                 <Button Style="{DynamicResource ThemedButton}"
+                        Visibility="Hidden"
                         Grid.Column="2"
                         Grid.Row="1"
                         Click="ButtonBase_OnClick"
                         Margin="10">test button</Button>
+
+                <StackPanel Orientation="Vertical"
+                            Grid.Column="2"
+                            Grid.Row="1">
+                    <TextBlock FontSize="15" 
+                               HorizontalAlignment="Center" 
+                               Style="{DynamicResource ThemedTextBlock}">
+                        Universal Device Manager
+                    </TextBlock>
+                    <TextBlock FontSize="12" 
+                               HorizontalAlignment="Center">
+                        beta test
+                    </TextBlock>
+                    <TextBlock Style="{DynamicResource ThemedTextBlock}"
+                               HorizontalAlignment="Center"
+                               FontSize="20" Margin="0,15,0,0">           
+                        <Hyperlink NavigateUri="https://github.com/maksimkh34/UniversalDeviceManager/tree/main" RequestNavigate="Hyperlink_OnRequestNavigate">
+                            Github
+                        </Hyperlink>
+                    </TextBlock>
+                </StackPanel>
             </Grid>
         </DockPanel>
     </Window.Content>

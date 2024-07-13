@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Windows;
+using System.Windows.Navigation;
 using UDM.Core.ViewModels;
 using UDM.Model;
 using UDM.Model.LogService;
@@ -81,6 +83,13 @@ namespace UDM.WPF.Dialogs
         private void Menu_FastbootCheckBootloader_Click(object sender, RoutedEventArgs e)
         {
             MainModel.CheckBlStatus();
+        }
+
+        private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true});
+            e.Handled = true;
+
         }
     }
 }
