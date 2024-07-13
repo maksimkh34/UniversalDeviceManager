@@ -1,4 +1,3 @@
-* Fix ListBox Horizontal Scrollbar style
-* Fix ComboBox style
-* Scripts+fastboot menu
+* Fix changelog - ?
 * autoscroll log textbox
+* Fix margin log textbox

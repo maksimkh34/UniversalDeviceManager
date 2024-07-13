@@ -29,6 +29,8 @@
     <system:String x:Key="MsgWait">Waiting for input...</system:String>
     <system:String x:Key="MsgInvalidLogPath">Invalid Log Path provided!</system:String>
     <system:String x:Key="MsgHello">Remember to select your device!</system:String>
+    <system:String x:Key="MsgChangelog">Changelog</system:String>
+    <system:String x:Key="FastbootRebootTitle">Reboot (Fastboot)</system:String>
 
     <system:String x:Key="SettingsBarTitle">Settings</system:String>
 

@@ -1,0 +1,50 @@
+﻿<Window x:Class="UDM.WPF.Dialogs.FastbootRebootDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Loaded="FastbootRebootDialog_OnLoaded"
+        xmlns:titlebar="clr-namespace:UDM.WPF.Controls.Titlebar"
+        Style="{StaticResource ThemedWindow}"
+        mc:Ignorable="d"
+        Title="FastbootRebootDialog">
+    <StackPanel VerticalAlignment="Stretch">
+        <titlebar:Titlebar VerticalAlignment="Top"
+                           CanMinimize="False"
+                           CanRestoreSize="False"
+                           DockPanel.Dock="Top"
+                           Header="{DynamicResource FastbootRebootTitle}">
+        </titlebar:Titlebar>
+        <StackPanel Orientation="Horizontal" Margin="0,10,10,0" VerticalAlignment="Top">
+            <TextBlock Style="{StaticResource ThemedTextBlock}" 
+                       Margin="15,0,0,0" 
+                       VerticalAlignment="Center">Device</TextBlock>
+            <Grid Width="15"></Grid>
+            <TextBox Style="{StaticResource ThemedTextBox}" 
+                     Height="26" 
+                     Width="160" 
+                     IsEnabled="False"
+                     x:Name="ActiveDeviceTextBox">Active (</TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,10,0,0" VerticalAlignment="Top">
+            <TextBlock Style="{StaticResource ThemedTextBlock}" 
+                       Margin="15,0,0,0" 
+                       VerticalAlignment="Center">Reboot to</TextBlock>
+            <Grid Width="15"></Grid>
+            <ComboBox Style="{StaticResource ThemedComboBox}" 
+                      SelectedIndex="0" 
+                      x:Name="RebootModeComboBox"
+                      Width="142" 
+                      Height="24">
+                <TextBlock Style="{StaticResource ThemedTextBlock}">bootloader</TextBlock>
+                <TextBlock Style="{StaticResource ThemedTextBlock}">system</TextBlock>
+                <TextBlock Style="{StaticResource ThemedTextBlock}">recovery</TextBlock>
+            </ComboBox>
+        </StackPanel>
+        <Button Style="{StaticResource ThemedButton}" 
+                Command="{Binding ApplyCommand}"
+                x:Name="ApplyButton"
+                CommandParameter="{Binding SelectedItem.Text, ElementName=RebootModeComboBox}"
+                Margin="10,10,10,10">Apply</Button>
+    </StackPanel>
+</Window>

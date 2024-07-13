@@ -13,7 +13,8 @@ namespace UDM.WPF
         {
             base.OnStartup(e);
 
-            MainModel.RegisterMainModel();
+            MainModel.RegisterMainModel(ShowMessage, (string)FindResource("MsgChangelog")!, OpenPreDil);
+            LogService.Logs.Clear();    // ???
             // включить логи уровня дебаг на релизной сборке
             // MainModel.SettingsStorage.Set(MainModel.SnForceDebugLogs, true);
 
@@ -24,6 +25,12 @@ namespace UDM.WPF
             UpdateLang(new SettingChangedContext("", MainModelHelpers.SettingsStorage.GetValue(MainModel.SnCurrentLanguage) ?? "en-US"));
 
             LogService.Log(FindResource("MsgHello")?.ToString() ?? "lang_err", LogLevel.Info);
+        }
+
+        public static bool? OpenPreDil()
+        {
+            var dialog = new PreDIL();
+            return dialog.ShowDialog();
         }
 
         public static void ShutdownApp()
@@ -42,7 +49,7 @@ namespace UDM.WPF
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             if (MainModel.IsDebugRelease) return;
-            var msg1 = Resources["DialogUnhandledExceptionMsg"] + " " +(string)(MainModelHelpers.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log");
+            var msg1 = Resources["DialogUnhandledExceptionMsg"] + " " + (string)(MainModelHelpers.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log");
             var msg2 = e.Exception.GetType() + ": " + e.Exception.Message;
             LogService.Log(msg1, LogLevel.Fatal);
             LogService.Log(msg2, LogLevel.Fatal);
@@ -71,7 +78,7 @@ namespace UDM.WPF
                     Source = new Uri("Resource/Localization/" + context.NewValue + ".xaml", UriKind.Relative)
                 };
             }
-            catch(System.IO.IOException)
+            catch (System.IO.IOException)
             {
                 throw new Exception("Error loading files for " + context.NewValue + " locale. ");
             }

@@ -66,5 +66,20 @@ namespace UDM.WPF.Dialogs
             MainModel.CurrentScriptCode = File.ReadAllText(scriptFile);
             new PreDIL().Show();
         }
+
+        private void Menu_FastbootFlash_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Menu_FastbootReboot_Click(object sender, RoutedEventArgs e)
+        {
+            new FastbootRebootDialog().ShowDialog();
+        }
+
+        private void Menu_FastbootCheckBootloader_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace UDM.WPF.Dialogs
     /// <summary>
     /// Логика взаимодействия для Settings.xaml
     /// </summary>
-    public partial class Settings : Window
+    public partial class Settings
     {
         private readonly SettingsViewModel _dataContext = new();
         public Settings()
@@ -62,17 +62,17 @@ namespace UDM.WPF.Dialogs
 
                 if (setting.GetSettingType() == typeof(string) && setting.IsUsingPossibleValues())
                 {
-                    var comboBox = new ComboBox()
+                    var comboBox = new ComboBox
                     {
                         Style = (Style)FindResource("ThemedComboBox"),
                         Width = 90,
                         VerticalAlignment = VerticalAlignment.Center
                     };
 
-                    var title = new TextBlock()
+                    var title = new TextBlock
                     {
                         Style = (Style)FindResource("ThemedTextBlock"),
-                        Margin = new Thickness(0,0,15,0),
+                        Margin = new Thickness(0, 0, 15, 0),
                         FontSize = 12,
                         VerticalAlignment = VerticalAlignment.Center
                     };
@@ -129,7 +129,7 @@ namespace UDM.WPF.Dialogs
                         Path = new PropertyPath(_dataContext.GetPropertyNameBySettingName(settingName))
                     };
                     BindingOperations.SetBinding(textBox, TextBox.TextProperty, binding);
-                    stack.Margin = new Thickness(10,10,10,5);
+                    stack.Margin = new Thickness(10, 10, 10, 5);
                     stack.Children.Add(textBox);
                 }
 

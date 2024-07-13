@@ -29,6 +29,8 @@
     <system:String x:Key="MsgWait">Ожидание ввода...</system:String>
     <system:String x:Key="MsgInvalidLogPath">Неправильно задан путь для логов!</system:String>
     <system:String x:Key="MsgHello">Не забудьте выбрать ваше устройство в меню устройств</system:String>
+    <system:String x:Key="MsgChangelog">Список изменений</system:String>
+    <system:String x:Key="FastbootRebootTitle">Перезагрузка (Fastboot)</system:String>
 
     <system:String x:Key="SettingsBarTitle">Настройки</system:String>
 

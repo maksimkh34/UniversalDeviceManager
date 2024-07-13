@@ -2,7 +2,7 @@
 
 namespace UDM.Model.Commands
 {
-    public class DelegateCommand(Action<object> openAction, Predicate<object> canExecutePredicate) : ICommand
+    public class DelegateCommand(Action<object> openAction, Predicate<object> canExecutePredicate, Action? closeWindow = null) : ICommand
     {
         public static bool DefaultCanExecute(object param) => true;
 
@@ -16,6 +16,7 @@ namespace UDM.Model.Commands
         public void Execute(object? parameter)
         {
             openAction(parameter!);
+            closeWindow?.Invoke();
         }
     }
 }

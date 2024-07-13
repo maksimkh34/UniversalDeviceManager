@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using UDM.Core.ViewModels;
 using UDM.Model;
 
@@ -20,7 +8,8 @@ namespace UDM.WPF.Dialogs
     /// <summary>
     /// Логика взаимодействия для PreDIL.xaml
     /// </summary>
-    public partial class PreDIL : Window
+    // ReSharper disable once InconsistentNaming
+    public partial class PreDIL
     {
         private PreDILViewModel? _dataContext;
 
@@ -31,7 +20,8 @@ namespace UDM.WPF.Dialogs
 
         private void PreDIL_OnLoaded(object sender, RoutedEventArgs e)
         {
-            _dataContext = new PreDILViewModel();
+            _dataContext = new PreDILViewModel(Close);
+            DataContext = _dataContext;
         }
 
         private void Menu_Save_Click(object sender, RoutedEventArgs e)
@@ -46,7 +36,13 @@ namespace UDM.WPF.Dialogs
                 CheckPathExists = true
             };
             dialog.ShowDialog();
-            File.WriteAllLines(dialog.FileName, new List<string> {MainModel.CurrentScriptCode});
+            try
+            {
+                File.WriteAllLines(dialog.FileName, new List<string> { MainModel.CurrentScriptCode });
+            }
+            catch (ArgumentException)
+            {
+            }
         }
     }
 }

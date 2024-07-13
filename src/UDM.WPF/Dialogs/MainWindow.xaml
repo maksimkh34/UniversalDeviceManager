@@ -63,13 +63,16 @@
                 <MenuItem Header="{DynamicResource MwFastboot}"
                           Style="{DynamicResource ThemedMenuItem}">
                     <MenuItem Header="{DynamicResource MwFastbootFlash}"
+                              Click="Menu_FastbootFlash_Click"
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
                     <MenuItem Header="{DynamicResource MwFastbootReboot}"
+                              Click="Menu_FastbootReboot_Click"
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
 
                     <MenuItem Header="{DynamicResource MwFastbootCheckBl}"
+                              Click="Menu_FastbootCheckBootloader_Click"
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
                 </MenuItem>
@@ -104,12 +107,15 @@
                     </TextBox.Resources>
                 </TextBox>
                 <ListBox Grid.Row="1"
+                         HorizontalContentAlignment="Stretch"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                          Style="{DynamicResource ThemedListBox}"
                          Grid.Column="0"
                          ItemsSource="{Binding Path=Devices}"
                          Margin="10,0,5,10">
 
                     <ListBox.Resources>
+                        <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource ScrollViewerStyle}"></Style>
                         <ContextMenu Style="{DynamicResource ContextMenuStyle}" 
                                      x:Key="DeviceItemContextMenu">
                             <MenuItem Style="{DynamicResource ContextMenuItemStyle}"
@@ -143,6 +149,7 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Style="{StaticResource DeviceTextBox}" 
+                                       HorizontalAlignment="Stretch"
                                        Text="{Binding DeviceToStr}" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>

@@ -33,6 +33,15 @@ namespace UDM.Model.Commands
             }
         }
 
+        public static bool ActiveDeviceConnected(object param) => MainModel.ModelDeviceManager.ActiveDeviceConnected();
+
+        public static void ExecuteCode(object param)
+        {
+            if (param is not string mode) return;
+            MainModel.CurrentScriptCode = $"fastboot_reboot {(mode == "system" ? string.Empty : mode)}";
+            MainModel.ModelExecuteCode?.Invoke();
+        }
+
         #endregion Command Funcs
     }
 }

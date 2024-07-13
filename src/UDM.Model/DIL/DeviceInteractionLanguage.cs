@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UDM.Model.LogService;
+﻿using UDM.Model.LogService;
 
 namespace UDM.Model.DIL
 {

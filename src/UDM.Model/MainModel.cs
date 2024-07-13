@@ -1,5 +1,4 @@
-﻿using System.IO;
-using UDM.Model.SettingsService;
+﻿using UDM.Model.SettingsService;
 
 namespace UDM.Model
 {
@@ -41,15 +40,35 @@ namespace UDM.Model
             }
         }
 
-        public static string CurrentScriptCode { get; set; } = NoCodeExecutedDefaultMsg;
+        public static string CurrentScriptCode
+        {
+            get;
+            set;
+        } = NoCodeExecutedDefaultMsg;
 
         public const string SnForceDebugLogs = nameof(SnForceDebugLogs); // Sn - SettingName
         public const string SnLogPath = nameof(SnLogPath);
         public const string SnCurrentLanguage = nameof(SnCurrentLanguage);
-        public const string NoCodeExecutedDefaultMsg = "No code is being executed.";
 
-        public static void RegisterMainModel()
+        public const string NoCodeExecutedDefaultMsg = "No code is being executed.";
+        public const string ChangelogPath = @"\changelog";
+
+        public delegate void ChangelogDialog(string titleText, string textboxText);
+        public delegate bool? ExecuteCode();
+
+        public static bool ChangelogFound;
+
+        public static ChangelogDialog? UiChangelogDialog;
+        public static ExecuteCode? ModelExecuteCode;
+        public static string? ChangelogTitle;
+
+        public static void RegisterMainModel(ChangelogDialog changelogDialog, string changelogTitle, ExecuteCode executeCode)
         {
+            UiChangelogDialog = changelogDialog;
+            ChangelogTitle = changelogTitle;
+            ModelExecuteCode = executeCode;
+            CheckStartup();
+
             // Do not forget to update SettingsViewModel! 
 
             MainModelHelpers.SettingsStorage.Register(new Setting(SnForceDebugLogs,
@@ -80,11 +99,14 @@ namespace UDM.Model
         /// </summary>
         public static void CheckStartup()
         {
-            if(File.Exists(Cwd + @"\init"))
+            if (File.Exists(Cwd + ChangelogPath))
             {
-                return;
+                ChangelogFound = true;
+                UiChangelogDialog?.Invoke(ChangelogTitle ?? "Changelog", File.ReadAllText(Cwd + ChangelogPath));
+                File.Delete(Cwd + ChangelogPath);
             }
-            else
+
+            if (!File.Exists(Cwd + @"\init"))
             {
                 // адреналин работай !!!
             }
