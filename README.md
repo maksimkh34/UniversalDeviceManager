@@ -4,8 +4,17 @@
 
 ## Description
 
-(RU) UDM - приложение для автоматизации и упрощения прошивки смартфонов. Главная особенность - собственный скриптовый язык DIL, позволяющий абстрагировать пользователя от кучи перезагрузок и действий в меню. 
+(RU) 
+
+UDM - приложение для автоматизации и упрощения прошивки смартфонов. Главная особенность - собственный скриптовый язык DIL, позволяющий абстрагировать пользователя от кучи перезагрузок и действий в меню. 
 Теперь для определенных действий (например, переход на новую прошивку, или установка рут-прав) нужно будет всего лишь скачать UDM, подключить телефон и запустить соответствующий скрипт.
+
+## Installation
+
+* *Light* version weights less that regular, but **might not start** on some PCs (for example, on those that don't have **.Net 8**)
+* *Regular* version weights way more than light, but have significantly higher chance to start on **your** PC
+
+  Just unzip applicaition and start `UniversalDeviceManager.exe` / `UDM.WPF.exe`
 
 ## DIL Guide
 
