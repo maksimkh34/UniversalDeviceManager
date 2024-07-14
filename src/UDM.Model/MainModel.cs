@@ -1,11 +1,15 @@
 ﻿using System.ComponentModel;
 using UDM.Model.DIL;
+using UDM.Model.LogService;
 using UDM.Model.SettingsService;
 
 namespace UDM.Model
 {
     public static class MainModel
     {
+        public static SettingsStorage SettingsStorage = new(SettingsConfFilePath);
+        public static SettingChanged? LangChanged;
+
         public static bool IsDebugRelease
         {
             get
@@ -53,7 +57,12 @@ namespace UDM.Model
         public const string SnCurrentLanguage = nameof(SnCurrentLanguage);
 
         public const string NoCodeExecutedDefaultMsg = "No code is being executed.";
+
         public const string ChangelogPath = @"\changelog";
+        public const string InitFilePath = @"\config\init";
+        public const string SettingsConfFilePath = @"\config\settings_storage.conf";
+
+        public const string FirstInstallScriptPath = @"\python\install.py";
 
         public delegate void ChangelogDialog(string titleText, string textboxText);
         public delegate bool? ExecuteCode();
@@ -75,22 +84,22 @@ namespace UDM.Model
 
             // Do not forget to update SettingsViewModel! 
 
-            MainModelHelpers.SettingsStorage.Register(new Setting(SnForceDebugLogs,
+            MainModel.SettingsStorage.Register(new Setting(SnForceDebugLogs,
                 false, typeof(bool),
                 null, null, null,
                 "StForceDebugLogs", false, null));
 
-            MainModelHelpers.SettingsStorage.Register(new Setting(SnCurrentLanguage,
+            MainModel.SettingsStorage.Register(new Setting(SnCurrentLanguage,
                 Languages[0], typeof(string),
-                null, null, MainModelHelpers.LangChanged,
+                null, null, MainModel.LangChanged,
                 "StCurrentLanguage", true, Languages));
 
-            MainModelHelpers.SettingsStorage.Register(new Setting(SnLogPath,
+            MainModel.SettingsStorage.Register(new Setting(SnLogPath,
                 Cwd + @"\Logs.log", typeof(string),
                 ValidateLogPath, null, null,
                 "StLogPath", false, null));
 
-            MainModelHelpers.
+            MainModel.
                         SettingsStorage.LoadSettings();
         }
 
@@ -103,6 +112,7 @@ namespace UDM.Model
         /// </summary>
         public static void CheckStartup()
         {
+            LogService.LogService.Log("CheckStartup Running!", LogLevel.Debug);
             if (File.Exists(Cwd + ChangelogPath))
             {
                 ChangelogFound = true;
@@ -110,10 +120,13 @@ namespace UDM.Model
                 File.Delete(Cwd + ChangelogPath);
             }
 
-            if (!File.Exists(Cwd + @"\init"))
-            {
-                // адреналин работай !!!
-            }
+            if (File.Exists(Cwd + InitFilePath)) return;
+            LogService.LogService.Log("Execution python install...", LogLevel.Debug);
+
+            InteractionService.InteractionService service = new(Cwd + FirstInstallScriptPath);
+            service.Run();
+            LogService.LogService.Log(service.Read(), LogLevel.OuterServices);
+            File.Create(Cwd + InitFilePath);
         }
 
         public static bool ValidateLogPath(object value)
@@ -121,6 +134,7 @@ namespace UDM.Model
             var path = Path.GetDirectoryName((string)value)!;
             if (path == string.Empty) return false;
             Directory.CreateDirectory(path);
+            File.Create(value.ToString()!).Close();
             return File.Exists((string)value);
         }
 

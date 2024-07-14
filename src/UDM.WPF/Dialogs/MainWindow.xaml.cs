@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 using UDM.Core.ViewModels;
 using UDM.Model;
@@ -91,6 +92,11 @@ namespace UDM.WPF.Dialogs
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true});
             e.Handled = true;
 
+        }
+
+        private void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            LogTextBox.ScrollToEnd();
         }
     }
 }

@@ -3,8 +3,8 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <system:String x:Key="MwBarTitle">Меню</system:String>
 
-    <system:String x:Key="MwFile">Файл</system:String>
-    <system:String x:Key="MwFileSettings">Настройки</system:String>
+    <system:String x:Key="MwEdit">Редактировать</system:String>
+    <system:String x:Key="MwEditSettings">Настройки</system:String>
 
     <system:String x:Key="PredilSave">Сохранить</system:String>
 
@@ -26,24 +26,24 @@
 
     <system:String x:Key="SelectedDevice">Выбранное устройство</system:String>
 
-    <system:String x:Key="FFTitle">Прошить (Fastboot)</system:String>
-    <system:String x:Key="FFDevice">Устройство</system:String>
-    <system:String x:Key="FFFlashTo">Раздел</system:String>
-    <system:String x:Key="FFCustomPartition">Свой раздел</system:String>
-    <system:String x:Key="FFImage">Образ</system:String>
-    <system:String x:Key="FFBrowse">Выбрать...</system:String>
-    <system:String x:Key="FFApply">Прошить</system:String>
+    <system:String x:Key="FfTitle">Прошить (Fastboot)</system:String>
+    <system:String x:Key="FfDevice">Устройство</system:String>
+    <system:String x:Key="FfFlashTo">Раздел</system:String>
+    <system:String x:Key="FfCustomPartition">Свой раздел</system:String>
+    <system:String x:Key="FfImage">Образ</system:String>
+    <system:String x:Key="FfBrowse">Выбрать...</system:String>
+    <system:String x:Key="FfApply">Прошить</system:String>
     
-    <system:String x:Key="FRTitle">Перезагрузка (Fastboot)</system:String>
-    <system:String x:Key="FRMode">Режим</system:String>
-    <system:String x:Key="FRDevice">Устройство</system:String>
-    <system:String x:Key="FRApply">Перезагрузить</system:String>
+    <system:String x:Key="FrTitle">Перезагрузка (Fastboot)</system:String>
+    <system:String x:Key="FrMode">Режим</system:String>
+    <system:String x:Key="FrDevice">Устройство</system:String>
+    <system:String x:Key="FrApply">Перезагрузить</system:String>
     
     <system:String x:Key="MsgTitle">Предупреждение</system:String>
     <system:String x:Key="MsgInfo">Для подробной информации просмотрите логи</system:String>
     <system:String x:Key="MsgWait">Ожидание ввода...</system:String>
     <system:String x:Key="MsgInvalidLogPath">Неправильно задан путь для логов!</system:String>
-    <system:String x:Key="MsgHello">Не забудьте выбрать ваше устройство в меню устройств</system:String>
+    <system:String x:Key="MsgHello">Не забудьте выбрать ваше устройство в меню устройств!</system:String>
     <system:String x:Key="MsgChangelog">Список изменений</system:String>
     
     <system:String x:Key="SettingsBarTitle">Настройки</system:String>

@@ -23,8 +23,8 @@ namespace UDM.WPF
 
             MainModel.CheckStartup();
 
-            MainModelHelpers.SettingsStorage.Get(MainModel.SnCurrentLanguage).UpdateValueChanged(UpdateLang);
-            UpdateLang(new SettingChangedContext("", MainModelHelpers.SettingsStorage.GetValue(MainModel.SnCurrentLanguage) ?? "en-US"));
+            MainModel.SettingsStorage.Get(MainModel.SnCurrentLanguage).UpdateValueChanged(UpdateLang);
+            UpdateLang(new SettingChangedContext("", MainModel.SettingsStorage.GetValue(MainModel.SnCurrentLanguage) ?? "en-US"));
 
             LogService.Log(FindResource("MsgHello")?.ToString() ?? "lang_err", LogLevel.Info);
         }
@@ -54,8 +54,8 @@ namespace UDM.WPF
 
         public static void ShutdownApp()
         {
-            LogService.Save((string)(MainModelHelpers.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log"));
-            MainModelHelpers.SettingsStorage.SaveSettings();
+            LogService.Save((string)(MainModel.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log"));
+            MainModel.SettingsStorage.SaveSettings();
             Environment.Exit(0);
         }
 
@@ -68,11 +68,11 @@ namespace UDM.WPF
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             if (MainModel.IsDebugRelease) return;
-            var msg1 = Resources["DialogUnhandledExceptionMsg"] + " " + (string)(MainModelHelpers.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log");
+            var msg1 = Resources["DialogUnhandledExceptionMsg"] + " " + (string)(MainModel.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log");
             var msg2 = e.Exception.GetType() + ": " + e.Exception.Message;
             LogService.Log(msg1, LogLevel.Fatal);
             LogService.Log(msg2, LogLevel.Fatal);
-            LogService.Save((string)(MainModelHelpers.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log"));
+            LogService.Save((string)(MainModel.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log"));
 
             e.Handled = true;
 

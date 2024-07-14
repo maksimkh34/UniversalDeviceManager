@@ -24,10 +24,10 @@ namespace UDM.Core.ViewModels
 
         public bool ForceDebugLogs
         {
-            get => (bool)(MainModelHelpers.SettingsStorage.GetValue(nameof(MainModel.SnForceDebugLogs)) ?? false);
+            get => (bool)(MainModel.SettingsStorage.GetValue(nameof(MainModel.SnForceDebugLogs)) ?? false);
             set
             {
-                MainModelHelpers.SettingsStorage.Set(nameof(MainModel.SnForceDebugLogs), value);
+                MainModel.SettingsStorage.Set(nameof(MainModel.SnForceDebugLogs), value);
                 OnPropertyChanged();
             }
         }
@@ -36,7 +36,7 @@ namespace UDM.Core.ViewModels
         {
             get
             {
-                var lang = MainModelHelpers.SettingsStorage.GetValue(nameof(MainModel.SnCurrentLanguage));
+                var lang = MainModel.SettingsStorage.GetValue(nameof(MainModel.SnCurrentLanguage));
                 var index = 0;
                 foreach (var s in MainModel.Languages)
                 {
@@ -50,17 +50,17 @@ namespace UDM.Core.ViewModels
 
                 return -1;
             }
-            set => MainModelHelpers.SettingsStorage.Set(nameof(MainModel.SnCurrentLanguage), MainModel.Languages[value]);
+            set => MainModel.SettingsStorage.Set(nameof(MainModel.SnCurrentLanguage), MainModel.Languages[value]);
         }
 
         public string LogPath
         {
-            get => (string)(MainModelHelpers.SettingsStorage.GetValue(nameof(MainModel.SnLogPath)) ?? "-error loading path-");
+            get => (string)(MainModel.SettingsStorage.GetValue(nameof(MainModel.SnLogPath)) ?? "-error loading path-");
             set
             {
                 try
                 {
-                    MainModelHelpers.SettingsStorage.Set(nameof(MainModel.SnLogPath), value);
+                    MainModel.SettingsStorage.Set(nameof(MainModel.SnLogPath), value);
                 }
                 catch (SettingsExceptions.InvalidSettingValueType)
                 {

@@ -29,9 +29,9 @@ namespace UDM.WPF.Dialogs
 
             DataContext = _dataContext;
 
-            foreach (var settingName in MainModelHelpers.SettingsStorage.GetSettingsNames())
+            foreach (var settingName in MainModel.SettingsStorage.GetSettingsNames())
             {
-                var setting = MainModelHelpers.SettingsStorage.Get(settingName);
+                var setting = MainModel.SettingsStorage.Get(settingName);
                 var stack = new StackPanel()
                 {
                     Orientation = Orientation.Horizontal,

@@ -6,6 +6,7 @@ namespace UDM.Model.DIL
     {
         public static void Execute(string script)
         {
+            LogService.LogService.Log("Executing script... \n", LogLevel.Info);
             foreach (var cmd in script.Split("\r\n"))
             {
                 var instructions = cmd.Split(' ');
@@ -19,7 +20,14 @@ namespace UDM.Model.DIL
                         var rebootCommand = $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} reboot {instructions[1]}";
                         var rebootOutput = SysCalls.Exec(MainModel.PathToFastboot, "fastboot.exe",
                             rebootCommand);
-                        LogService.LogService.Log(rebootOutput == string.Empty ? "OK!" : rebootOutput, LogLevel.Info);
+                        if (rebootOutput.StdOutput == string.Empty)
+                        {
+                            LogService.LogService.Log(rebootOutput.ErrOutput, LogLevel.Error);
+                        }
+                        else
+                        {
+                            LogService.LogService.Log(rebootOutput.StdOutput, LogLevel.DILOutput);
+                        }
                         break;
 
                     case "fastboot_check_bl":
@@ -31,7 +39,10 @@ namespace UDM.Model.DIL
                         var checkCommand = $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} getvar unlocked";
                         var checkOutput = SysCalls.Exec(MainModel.PathToFastboot, "fastboot.exe",
                             checkCommand);
-                        LogService.LogService.Log(checkOutput.Split("\r\n")[0], LogLevel.Info);
+                        if(checkOutput.ErrOutput == string.Empty)
+                            LogService.LogService.Log(checkOutput.StdOutput.Split("\r\n")[0], LogLevel.DILOutput);
+                        else
+                            LogService.LogService.Log(checkOutput.ErrOutput, LogLevel.Error);
                         break;
 
                     case "fastboot_flash":
@@ -44,7 +55,9 @@ namespace UDM.Model.DIL
                         var flashCommand = $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} flash {instructions[1]} {instructions[2]}";
                         var flashOutput = SysCalls.Exec(MainModel.PathToFastboot, "fastboot.exe",
                             flashCommand);
-                        LogService.LogService.Log(flashOutput, LogLevel.Info);
+                        if(flashOutput.StdOutput != "")
+                            LogService.LogService.Log(flashOutput.StdOutput, LogLevel.DILOutput);
+                        else LogService.LogService.Log(flashOutput.ErrOutput, LogLevel.Error);
 
                         break;
 
@@ -57,7 +70,7 @@ namespace UDM.Model.DIL
 
                     default:
                         LogService.LogService.Log("Unknown command: " + cmd, LogLevel.Error);
-                        break;
+                        return;
                 }
             }
         }

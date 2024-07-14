@@ -38,7 +38,7 @@ namespace UDM.Model
             }
         }
 
-        public bool SelectedDeviceAlive() => SysCalls.Exec(MainModel.PathToFastboot, "fastboot.exe", "devices")
+        public bool SelectedDeviceAlive() => SysCalls.Exec(MainModel.PathToFastboot, "fastboot.exe", "devices").ErrOutput
             .Contains(SelectedDevice.Id);
 
         public bool DeviceConnected(string id)
@@ -52,7 +52,7 @@ namespace UDM.Model
         {
             LogService.LogService.Log("Updating fastboot devices", LogLevel.Debug);
             var fastbootResult = SysCalls.Exec(MainModel.PathToFastboot, "fastboot.exe", "devices");
-            foreach (var device in fastbootResult.Split("\r\n"))
+            foreach (var device in fastbootResult.ErrOutput.Split("\r\n"))
             {
                 if (device == "") continue;
                 var parsedDevice = DeviceConnection.Parse(device);

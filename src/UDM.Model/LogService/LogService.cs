@@ -8,7 +8,7 @@ public static class LogService
 
     public static void Log(string message, LogLevel level)
     {
-        if (!(MainModel.IsDebugRelease || (bool)(MainModelHelpers.SettingsStorage.GetValue(MainModel.SnForceDebugLogs) ?? false)) && level == LogLevel.Debug) return;
+        if (!(MainModel.IsDebugRelease || (bool)(MainModel.SettingsStorage.GetValue(MainModel.SnForceDebugLogs) ?? false)) && level == LogLevel.Debug) return;
         if (message.Contains("\r\n"))
         {
             foreach (var logMsg in message.Split("\r\n"))

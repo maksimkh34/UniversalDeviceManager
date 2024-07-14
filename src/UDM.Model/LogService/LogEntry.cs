@@ -29,6 +29,8 @@ namespace UDM.Model.LogService
         Error,          // Ошибка, не позволяющая завершить текущую операцию или процесс
         Fatal,          // Ошибка, не позволяющая продолжить выполнение программы ни при каких обстоятельствах
         Debug,          // Информация для отладки (разработчиков)
+        // ReSharper disable once InconsistentNaming
+        DILOutput,      // Информация, переданная скриптовым языком DIL
         OuterServices,  // Сообщение из внешнего источника, полученного с помощью InteractionService
     }
 }

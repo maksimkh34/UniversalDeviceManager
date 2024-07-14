@@ -39,9 +39,9 @@
             <Menu VerticalAlignment="Top"
                   DockPanel.Dock="Top"
                   Style="{DynamicResource ThemedMenu}">
-                <MenuItem Header="{DynamicResource MwFile}"
+                <MenuItem Header="{DynamicResource MwEdit}"
                           Style="{DynamicResource ThemedMenuItem}">
-                    <MenuItem Header="{DynamicResource MwFileSettings}"
+                    <MenuItem Header="{DynamicResource MwEditSettings}"
                               Click="MenuItem_OnClick"
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
@@ -90,6 +90,8 @@
                 </Grid.RowDefinitions>
                 <TextBox
                     Grid.ColumnSpan="3"
+                    x:Name="LogTextBox"
+                    TextChanged="TextBoxBase_OnTextChanged"
                     Margin="10"
                     VerticalScrollBarVisibility="Auto"
                     TextWrapping="Wrap"
