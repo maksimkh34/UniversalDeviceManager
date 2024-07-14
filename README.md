@@ -9,6 +9,10 @@
 UDM - приложение для автоматизации и упрощения прошивки смартфонов. Главная особенность - собственный скриптовый язык DIL, позволяющий абстрагировать пользователя от кучи перезагрузок и действий в меню. 
 Теперь для определенных действий (например, переход на новую прошивку, или установка рут-прав) нужно будет всего лишь скачать UDM, подключить телефон и запустить соответствующий скрипт.
 
+(EN)
+
+UDM is an application for automating and simplifying smartphone flashing. The killer feature is its own scripting DIL, which allows you to abstract the user from a bunch of reboots and recovery actions. Now, for certain actions (for example, upgrading to new firmware, or rooting), you just need to download UDM, connect the phone and run the following script.
+
 ## Installation
 
 * *Light* version weights less that regular, but **might not start** on some PCs (for example, on those that don't have **.Net 8**)
