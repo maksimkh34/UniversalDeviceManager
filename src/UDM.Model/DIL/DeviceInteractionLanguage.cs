@@ -18,7 +18,7 @@ namespace UDM.Model.DIL
                             instructions = new[] { instructions[0], "" };
                         }
                         var rebootCommand = $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} reboot {instructions[1]}";
-                        var rebootOutput = SysCalls.Exec(MainModel.PathToFastboot, "fastboot.exe",
+                        var rebootOutput = SysCalls.Exec(MainModel.PathToFastboot, MainModel.PathToFastboot + @"\fastboot.exe",
                             rebootCommand);
                         if (rebootOutput.StdOutput == string.Empty)
                         {
@@ -37,7 +37,7 @@ namespace UDM.Model.DIL
                             return;
                         }
                         var checkCommand = $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} getvar unlocked";
-                        var checkOutput = SysCalls.Exec(MainModel.PathToFastboot, "fastboot.exe",
+                        var checkOutput = SysCalls.Exec(MainModel.PathToFastboot, MainModel.PathToFastboot + @"\fastboot.exe",
                             checkCommand);
                         if(checkOutput.ErrOutput == string.Empty)
                             LogService.LogService.Log(checkOutput.StdOutput.Split("\r\n")[0], LogLevel.DILOutput);
@@ -53,7 +53,7 @@ namespace UDM.Model.DIL
                         }
 
                         var flashCommand = $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} flash {instructions[1]} {instructions[2]}";
-                        var flashOutput = SysCalls.Exec(MainModel.PathToFastboot, "fastboot.exe",
+                        var flashOutput = SysCalls.Exec(MainModel.PathToFastboot, MainModel.PathToFastboot + @"\fastboot.exe",
                             flashCommand);
                         if(flashOutput.StdOutput != "")
                             LogService.LogService.Log(flashOutput.StdOutput, LogLevel.DILOutput);
