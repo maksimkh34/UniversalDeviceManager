@@ -25,9 +25,17 @@ UDM - приложение для автоматизации и упрощени
 ├── UniversalDeviceManager **(root)**
     ├── cwd
     │   ├── fastboot - fastboot tools
+    │   │
+    │   ├── config - configuration files
+    │   │   ├── init - first start indicator
+    │   │   └── settings_storage.conf - settings database
+    │   │
+    │   ├── python - python scripts
+    │   │   └── install.py - first launch script
+    │   │
     │   ├── example.dil - example DIL script (do NOT use!)
     │   ├── UniversalDeviceManager.exe - Executable
-    │   └── settings_storage.conf - local settings storage
+    │   └── changelog - contains changelog for app to display
     │
     └── src
 ```
