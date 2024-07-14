@@ -7,7 +7,7 @@ namespace UDM.Model
 {
     public static class MainModel
     {
-        public static SettingsStorage SettingsStorage = new(SettingsConfFilePath);
+        public static SettingsStorage SettingsStorage = new(Cwd + SettingsConfFilePath);
         public static SettingChanged? LangChanged;
 
         public static bool IsDebugRelease
@@ -61,6 +61,7 @@ namespace UDM.Model
         public const string ChangelogPath = @"\changelog";
         public const string InitFilePath = @"\config\init";
         public const string SettingsConfFilePath = @"\config\settings_storage.conf";
+        public const string PathToEmbed = @"\py_embed";
 
         public const string FirstInstallScriptPath = @"\python\install.py";
 
@@ -123,7 +124,7 @@ namespace UDM.Model
             if (File.Exists(Cwd + InitFilePath)) return;
             LogService.LogService.Log("Execution python install...", LogLevel.Debug);
 
-            InteractionService.InteractionService service = new(Cwd + FirstInstallScriptPath);
+            InteractionService.InteractionService service = new(Cwd + FirstInstallScriptPath, Cwd + PathToEmbed);
             service.Run();
             LogService.LogService.Log(service.Read(), LogLevel.OuterServices);
             File.Create(Cwd + InitFilePath);

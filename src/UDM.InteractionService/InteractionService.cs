@@ -7,9 +7,9 @@ namespace UDM.InteractionService
         private readonly Process _proc = new();
         private bool _running;
 
-        public InteractionService(string pathToScript)
+        public InteractionService(string pathToScript, string cwd)
         {
-            _proc.StartInfo.WorkingDirectory = @"C:\Users\maksi\AppData\Local\Programs\Python\Python312";
+            _proc.StartInfo.WorkingDirectory = cwd;
             _proc.StartInfo.FileName = "python.exe";
             _proc.StartInfo.Arguments = pathToScript;
             _proc.StartInfo.RedirectStandardInput = true;
