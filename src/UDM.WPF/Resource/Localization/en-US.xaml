@@ -26,18 +26,18 @@
     
     <system:String x:Key="SelectedDevice">Selected device</system:String>
 
-    <system:String x:Key="FFTitle">Flash (Fastboot)</system:String>
-    <system:String x:Key="FFDevice">Device</system:String>
-    <system:String x:Key="FFFlashTo">Flash to</system:String>
-    <system:String x:Key="FFCustomPartition">Custom partition</system:String>
-    <system:String x:Key="FFImage">Image</system:String>
-    <system:String x:Key="FFBrowse">Browse...</system:String>
-    <system:String x:Key="FFApply">Flash</system:String>
+    <system:String x:Key="FfTitle">Flash (Fastboot)</system:String>
+    <system:String x:Key="FfDevice">Device</system:String>
+    <system:String x:Key="FfFlashTo">Flash to</system:String>
+    <system:String x:Key="FfCustomPartition">Custom partition</system:String>
+    <system:String x:Key="FfImage">Image</system:String>
+    <system:String x:Key="FfBrowse">Browse...</system:String>
+    <system:String x:Key="FfApply">Flash</system:String>
     
-    <system:String x:Key="FRTitle">Reboot (Fastboot)</system:String>
-    <system:String x:Key="FRMode">Reboot to</system:String>
-    <system:String x:Key="FRDevice">Device</system:String>
-    <system:String x:Key="FRApply">Reboot</system:String>
+    <system:String x:Key="FrTitle">Reboot (Fastboot)</system:String>
+    <system:String x:Key="FrMode">Reboot to</system:String>
+    <system:String x:Key="FrDevice">Device</system:String>
+    <system:String x:Key="FrApply">Reboot</system:String>
     
     <system:String x:Key="MsgTitle">Warning</system:String>
     <system:String x:Key="MsgInfo">Check logs to get more info</system:String>

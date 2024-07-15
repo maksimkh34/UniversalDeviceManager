@@ -57,6 +57,7 @@ namespace UDM.Model
         public const string SnCurrentLanguage = nameof(SnCurrentLanguage);
 
         public const string NoCodeExecutedDefaultMsg = "No code is being executed.";
+        public const string ImageNotSelected = "Image not selected";
 
         public const string ChangelogPath = @"\changelog";
         public const string InitFilePath = @"\config\init";

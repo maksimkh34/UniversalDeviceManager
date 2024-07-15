@@ -1,0 +1,8 @@
+v0.6-beta
+
+* Added reboot to EDL from Fastboot (may not work on new devices)
+* Fixed localization
+* Fixed disabled buttons displaying
+* Reworked Menu style
+
+* Fixed flashing error for paths containing certain characters

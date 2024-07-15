@@ -13,13 +13,13 @@
                            CanMinimize="False"
                            CanRestoreSize="False"
                            DockPanel.Dock="Top"
-                           Header="{DynamicResource FRTitle}">
+                           Header="{DynamicResource FrTitle}">
         </titlebar:Titlebar>
         <StackPanel Orientation="Horizontal" Margin="0,10,10,0" VerticalAlignment="Top">
             <TextBlock Style="{StaticResource ThemedTextBlock}" 
                        Margin="15,0,0,0" 
                        VerticalAlignment="Center"
-                       Text="{DynamicResource FRDevice}">
+                       Text="{DynamicResource FrDevice}">
             </TextBlock>
             <Grid Width="15"></Grid>
             <TextBox Style="{StaticResource ThemedTextBox}" 
@@ -32,7 +32,7 @@
             <TextBlock Style="{StaticResource ThemedTextBlock}" 
                        Margin="15,0,0,0" 
                        VerticalAlignment="Center"
-                       Text="{DynamicResource FRMode}">
+                       Text="{DynamicResource FrMode}">
             </TextBlock>
             <Grid Width="15"></Grid>
             <ComboBox Style="{StaticResource ThemedComboBox}" 
@@ -40,9 +40,10 @@
                       x:Name="RebootModeComboBox"
                       Width="142" 
                       Height="24">
-                <TextBlock Style="{StaticResource ThemedTextBlock}">bootloader</TextBlock>
-                <TextBlock Style="{StaticResource ThemedTextBlock}">system</TextBlock>
-                <TextBlock Style="{StaticResource ThemedTextBlock}">recovery</TextBlock>
+                <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}">bootloader</ComboBoxItem>
+                <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}">system</ComboBoxItem>
+                <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}">recovery</ComboBoxItem>
+                <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}">EDL</ComboBoxItem>
             </ComboBox>
         </StackPanel>
         <Button Style="{StaticResource ThemedButton}" 
@@ -50,7 +51,7 @@
                 x:Name="ApplyButton"
                 CommandParameter="{Binding SelectedItem.Text, ElementName=RebootModeComboBox}"
                 Margin="10,10,10,10"
-                Content="{DynamicResource FRApply}">
+                Content="{DynamicResource FrApply}">
         </Button>
     </StackPanel>
 </Window>

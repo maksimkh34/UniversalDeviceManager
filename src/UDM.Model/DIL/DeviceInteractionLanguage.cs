@@ -17,7 +17,10 @@ namespace UDM.Model.DIL
                         {
                             instructions = new[] { instructions[0], "" };
                         }
-                        var rebootCommand = $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} reboot {instructions[1]}";
+
+                        var rebootCommand = instructions.ElementAt(1) == "EDL" ?
+                            $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} oem edl" :
+                            $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} reboot {instructions[1]}";
                         var rebootOutput = SysCalls.Exec(MainModel.PathToFastboot, "fastboot.exe",
                             rebootCommand);
                         if (rebootOutput.StdOutput == string.Empty)
@@ -52,7 +55,12 @@ namespace UDM.Model.DIL
                             return;
                         }
 
-                        var flashCommand = $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} flash {instructions[1]} {instructions[2]}";
+                        var path = instructions[2];
+                        for (var i = 3; i < instructions.Length; i++)
+                        {
+                            path += " " + instructions[i];
+                        }
+                        var flashCommand = $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} flash {instructions[1]} \"{path}\"";
                         var flashOutput = SysCalls.Exec(MainModel.PathToFastboot, "fastboot.exe",
                             flashCommand);
                         if(flashOutput.StdOutput != "")

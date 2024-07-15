@@ -48,6 +48,10 @@
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{StaticResource ScbBackgroundMouseOver}" />
             </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{StaticResource ScbDisabledBackground}" />
+                <Setter Property="Foreground" Value="{StaticResource ScbDisabledForeground}" />
+            </Trigger>
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Background" Value="{StaticResource ScbBackgroundPressed}" />
             </Trigger>
@@ -185,9 +189,19 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type MenuItem}">
-                    <Border x:Name="Border">
+                    <Border x:Name="Bd"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="1"
+                        Padding="12,2,12,2"
+                        SnapsToDevicePixels="True">
                         <Grid>
-                            <ContentPresenter Margin="6,3,6,3" ContentSource="Header" RecognizesAccessKey="True" />
+                            <ContentPresenter x:Name="ContentPresenter"
+                                          Content="{TemplateBinding Header}"
+                                          ContentSource="Header"
+                                          Margin="{TemplateBinding Padding}"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsSubmenuOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Fade">
                                 <Border x:Name="SubmenuBorder" SnapsToDevicePixels="True" BorderThickness="1" Background="{DynamicResource ScbBackground}">
                                     <Border.BorderBrush>
@@ -198,9 +212,22 @@
                             </Popup>
                         </Grid>
                     </Border>
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="Black" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{StaticResource ScbBackgroundPressed}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ThemedComboBoxItem" TargetType="ComboBoxItem">
+        
     </Style>
 
     <Style x:Key="ThemedMenu" TargetType="Menu">

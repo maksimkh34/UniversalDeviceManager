@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Linq;
+using System.Windows.Input;
 using UDM.Model;
 using UDM.Model.Commands;
 
@@ -7,9 +8,9 @@ namespace UDM.Core.ViewModels;
 public class FastbootFlashDialogViewModel(Action closeWindowAction) : BaseViewModel
 {
     public ICommand BrowseCommand { get; } = new DelegateCommand(BrowseAction, DelegateCommand.DefaultCanExecute);
-    public ICommand ApplyCommand { get; set; } = new DelegateCommand(FlashAction, DeviceCommands.ActiveDeviceConnected, closeWindowAction);
+    public ICommand ApplyCommand { get; set; } = new DelegateCommand(FlashAction, ActiveDeviceConnectedAndImgSelected, closeWindowAction);
 
-    private string _selectedImagePath = "Image not selected";
+    private string _selectedImagePath = MainModel.ImageNotSelected;
     public string SelectedImagePath
     {
         get => _selectedImagePath;
@@ -40,6 +41,13 @@ public class FastbootFlashDialogViewModel(Action closeWindowAction) : BaseViewMo
         MainModel.CurrentScriptCode = $"fastboot_flash {partition} {imgPath}";
         MainModel.ModelExecuteCode?.Invoke();
         // fastboot_flash recovery recovery.img
+    }
+
+    public static bool ActiveDeviceConnectedAndImgSelected(object param)
+    {
+        if (!MainModel.ModelDeviceManager.ActiveDeviceConnected()) return false;
+        if (param is not IEnumerable<string> list) return false;
+        return list.ElementAt(1) != MainModel.ImageNotSelected;
     }
 
     public delegate void PathUpdater(string path);

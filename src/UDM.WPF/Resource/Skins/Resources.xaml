@@ -12,6 +12,8 @@
     <SolidColorBrush x:Key="ScbSecondaryForeground">#989899</SolidColorBrush>
     <SolidColorBrush x:Key="ScbLink">#4ca6ff</SolidColorBrush>
     <SolidColorBrush x:Key="ScbAccent">#434669</SolidColorBrush>
+    <SolidColorBrush x:Key="ScbDisabledForeground">#FFA4A4A4</SolidColorBrush>
+    <SolidColorBrush x:Key="ScbDisabledBackground">#FF181B1F</SolidColorBrush>
 
     <!-- Colors -->
 
