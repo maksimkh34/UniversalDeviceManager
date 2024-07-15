@@ -1,9 +1,0 @@
-v0.5.2-beta changelog
-* Python integration (first launch installation script)
-* Reworked Logs \ Cmd output
-* Added embeddable python 3.12.4
-* Cwd reworked
-Bugfixes
-* Fixed log output
-* Fixed default logfile path
-* Fixed Combo boxes style

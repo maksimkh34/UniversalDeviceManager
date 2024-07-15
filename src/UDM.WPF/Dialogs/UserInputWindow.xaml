@@ -1,0 +1,35 @@
+﻿<Window x:Class="UDM.WPF.Dialogs.UserInputWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vms="clr-namespace:UDM.Core.ViewModels;assembly=UDM.Core"
+        mc:Ignorable="d"
+        xmlns:titlebar="clr-namespace:UDM.WPF.Controls.Titlebar"
+        Style="{DynamicResource ThemedWindow}">
+    <DockPanel>
+        <titlebar:Titlebar DockPanel.Dock="Top"
+                           Header="{DynamicResource MsgTitle}"
+                           CanMinimize="False"
+                           CanRestoreSize="False"></titlebar:Titlebar>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical">
+            <StackPanel>
+                <TextBlock Style="{DynamicResource ThemedTextBlock}"
+                           HorizontalAlignment="Center"
+                           Margin="45,15,45,10"
+                           Text="{Binding InMsg}"
+                           FontSize="18"></TextBlock>
+                <TextBox Style="{DynamicResource ThemedTextBox}"
+                         Margin="10,0,10,0"
+                         MinHeight="50"
+                         x:Name="InputTextBox"
+                         Text="{Binding OutMsg}"></TextBox>
+            </StackPanel>
+            <Button Style="{DynamicResource ThemedButton}"
+                    Margin="10,5,10,10"
+                    Click="ButtonBase_OnClick"
+                    Content="OK" IsDefault="True">
+            </Button>
+        </StackPanel>
+    </DockPanel>
+</Window>

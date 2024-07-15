@@ -1,10 +1,7 @@
-﻿using System.ComponentModel;
-using System.IO.Compression;
-using System.Net;
+﻿using System.IO.Compression;
 using UDM.Model.DIL;
 using UDM.Model.LogService;
 using UDM.Model.SettingsService;
-using static UDM.Model.MainModel;
 
 namespace UDM.Model
 {
@@ -54,6 +51,8 @@ namespace UDM.Model
             get;
             set;
         } = NoCodeExecutedDefaultMsg;
+
+        public static string? CurrentUserInputFromUserInputWindow;
 
         public const string SnForceDebugLogs = nameof(SnForceDebugLogs); // Sn - SettingName
         public const string SnLogPath = nameof(SnLogPath);
@@ -183,7 +182,6 @@ namespace UDM.Model
         public static string ReplaceCodeWars(string code)
         {
             var result = code.Replace("%cwd%", Cwd);
-            // %askuser: [msg]%
             while (result.Contains("askuser"))
             {
                 var msg = GetBetween(result, "%askuser: [", "]%");

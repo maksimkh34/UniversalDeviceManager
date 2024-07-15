@@ -62,6 +62,9 @@
     <Compile Update="Dialogs\FastbootFlashDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Dialogs\UserInputWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Dialogs\MessageBoxWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -69,6 +72,9 @@
 
   <ItemGroup>
     <Page Update="Dialogs\FastbootFlashDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Dialogs\UserInputWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

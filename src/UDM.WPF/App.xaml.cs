@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Threading;
+using UDM.Core.ViewModels;
 using UDM.Model;
 using UDM.Model.LogService;
 using UDM.Model.SettingsService;
@@ -69,9 +70,16 @@ namespace UDM.WPF
             return dialog.ShowDialog();
         }
 
-        public static string GetUserInput(string message)
+        public static string? GetUserInput(string message)
         {
-            return string.Empty;
+            var window = new UserInputWindow
+            {
+                DataContext = new UserInputWindowViewModel(message)
+            };
+            window.ShowDialog();
+            var result = MainModel.CurrentUserInputFromUserInputWindow;
+            MainModel.CurrentUserInputFromUserInputWindow = null;
+            return result;
         }
 
         public static void ShutdownApp()

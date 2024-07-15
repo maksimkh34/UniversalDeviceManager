@@ -45,11 +45,11 @@
                       x:Name="FlashModeComboBox"
                       Width="152" 
                       Height="24">
-                <TextBlock Style="{StaticResource ThemedTextBlock}">recovery</TextBlock>
-                <TextBlock Style="{StaticResource ThemedTextBlock}">boot</TextBlock>
-                <TextBlock Style="{StaticResource ThemedTextBlock}">super</TextBlock>
-                <TextBlock Style="{StaticResource ThemedTextBlock}">vbmeta</TextBlock>
-                <TextBlock Style="{StaticResource ThemedTextBlock}" Text="{Binding Text, ElementName=textBox}"></TextBlock>
+                <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}">recovery</ComboBoxItem>
+                <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}">boot</ComboBoxItem>
+                <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}">super</ComboBoxItem>
+                <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}">vbmeta</ComboBoxItem>
+                <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}" Content="{Binding Text, ElementName=TextBox}"></ComboBoxItem>
             </ComboBox>
         </StackPanel>
         <StackPanel  Orientation="Horizontal" Margin="0,10,0,0" VerticalAlignment="Top">
@@ -58,7 +58,7 @@
                        VerticalAlignment="Center"
                        Text="{DynamicResource FfCustomPartition}">
             </TextBlock>
-            <TextBox x:Name="textBox" 
+            <TextBox x:Name="TextBox" 
                      Style="{StaticResource ThemedTextBox}" 
                      Margin="15,0,0,0" 
                      Width="100">Custom</TextBox>

@@ -199,7 +199,8 @@
                     <TextBlock Style="{DynamicResource ThemedTextBlock}"
                                HorizontalAlignment="Center"
                                FontSize="20" Margin="0,15,0,0">           
-                        <Hyperlink NavigateUri="https://github.com/maksimkh34/UniversalDeviceManager/tree/main" RequestNavigate="Hyperlink_OnRequestNavigate">
+                        <Hyperlink Foreground="{StaticResource ScbAccent}"
+                            NavigateUri="https://github.com/maksimkh34/UniversalDeviceManager/tree/main" RequestNavigate="Hyperlink_OnRequestNavigate">
                             Github
                         </Hyperlink>
                     </TextBlock>
