@@ -162,6 +162,7 @@ namespace UDM.Model
             InteractionService.InteractionService service = new(Cwd + FirstInstallScriptPath, Cwd + PathToEmbed);
             service.Run();
             LogService.LogService.Log(service.Read(), LogLevel.OuterServices);
+            Directory.CreateDirectory(Cwd + @"\config");
             File.Create(Cwd + InitFilePath);
         }
 
