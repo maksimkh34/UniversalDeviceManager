@@ -2,17 +2,36 @@
 * DIL is scripting language, which means that it consists of commands and vars.
 * Every new command starts with \r\n (newline), one command per line
 ## Commands
-* `fastboot_reboot [mode]`
+* `fastboot_reboot (mode)`
   Reboots device. Modes:
   * bootloader (fastboot)
   * recovery
   Empty mode means reboot into system.
 * `fastboot_check_bl`
   Determines whether the bootloader is locked. Result will be displayed in logs
-* `fastboot_flash [partition] [path to image]`
+* `fastboot_flash (partition) (path to image)`
   Flashes image to partition using fastboot.
 * `wait_for_bl`
   Waiting for selected device to boot into bootloader (fastboot)
+* `eget (path) (url)`
+  Downloads file from url to path.
+* `msg`
+  Displays all the text from `msg` to end of the line.
+* `wait_win`
+  Displays "Waiting for input window". Unlike `msg`, message in `wait_win` is localized.
+* `py_exec (cmd)`
+  *`in-dev* Executes python script.
+```
+py_exec script --args
+{
+  print
+  write (msg)
+  end
+}
+```
+* `print` - prints script output to logs
+* `write (msg)` - writes msg to script
+* `end` - sends end_wait signal to script *(InteractionService)*
   
 ## Vars
 * `%cwd%` - Current working directory *(where is running executable located)*
@@ -20,4 +39,18 @@
 Example:
 ```
 fastboot_flash boot %cwd%\boot.img
+```
+
+* `%askuser: [msg]%` - User input (displays dialog asking for user input with msg displayed) 
+  
+Example:
+```
+msg %askuser: [Input text will be displayed in the next window]%
+```
+
+* `%sid%` - Selected device ID
+  
+Example:
+```
+msg %sid%
 ```
