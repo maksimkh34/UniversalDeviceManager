@@ -7,13 +7,29 @@ using UDM.WPF.Dialogs;
 
 namespace UDM.WPF
 {
+    public class MessageWindow
+    {
+        private readonly MessageBoxWindow _window;
+
+        public MessageWindow(string message, string textBoxMessage = "$unfilled$")
+        {
+            _window = new MessageBoxWindow(message, textBoxMessage);
+        }
+
+        public void Show() => _window.Show();
+        public void ShowDialog() => _window.ShowDialog();
+        public void Close() => _window.Close();
+    }
+
     public partial class App
     {
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            MainModel.RegisterMainModel(ShowMessage, OpenPreDil, GetImagePath, (string)FindResource("MsgChangelog")!);
+            var pythonDownloadWindow = new MessageWindow("Downloading python...");
+            MainModel.RegisterMainModel(ShowMessage, OpenPreDil, GetImagePath, 
+                (string)FindResource("MsgChangelog")!, pythonDownloadWindow.Show, pythonDownloadWindow.Close);
             LogService.Logs.Clear();    // ???
             // включить логи уровня дебаг на релизной сборке
             // MainModel.SettingsStorage.Set(MainModel.SnForceDebugLogs, true);

@@ -3,6 +3,7 @@ v0.6-beta
 * Added reboot to EDL from Fastboot (may not work on new devices)
 * Fixed localization
 * Fixed disabled buttons displaying
+* Python embed will download (first launch)
 * Reworked Menu style
 
 * Fixed flashing error for paths containing certain characters

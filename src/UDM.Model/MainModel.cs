@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using System.IO.Compression;
+using System.Net;
 using UDM.Model.DIL;
 using UDM.Model.LogService;
 using UDM.Model.SettingsService;
@@ -62,27 +64,37 @@ namespace UDM.Model
         public const string ChangelogPath = @"\changelog";
         public const string InitFilePath = @"\config\init";
         public const string SettingsConfFilePath = @"\config\settings_storage.conf";
+        public const string FirstInstallScriptPath = @"\python\install.py";
+        public const string PythonEmbedTempPath = @"\python.embed";
+
         public const string PathToEmbed = @"\py_embed";
 
-        public const string FirstInstallScriptPath = @"\python\install.py";
+        public const string PythonUrl = "https://www.python.org/ftp/python/3.12.4/python-3.12.4-embed-amd64.zip";
 
         public delegate void ChangelogDialog(string titleText, string textboxText);
         public delegate bool? ExecuteCode();
         public delegate string GetPath();
 
+        public delegate void MsgWindowAction();
+
         public static bool ChangelogFound;
 
         public static ChangelogDialog? UiChangelogDialog;
         public static ExecuteCode? ModelExecuteCode;
+        public static MsgWindowAction? PythonDownloadMsgShow;
+        public static MsgWindowAction? PythonDownloadMsgClose;
         public static GetPath? GetImagePath;
         public static string? ChangelogTitle;
 
-        public static void RegisterMainModel(ChangelogDialog changelogDialog, ExecuteCode executeCode, GetPath getImagePath, string changelogTitle)
+        public static void RegisterMainModel(ChangelogDialog changelogDialog, ExecuteCode executeCode, GetPath getImagePath, 
+            string changelogTitle, MsgWindowAction pythonDownloadMsgShow, MsgWindowAction pythonDownloadMsgClose)
         {
             UiChangelogDialog = changelogDialog;
             ChangelogTitle = changelogTitle;
             ModelExecuteCode = executeCode;
             GetImagePath = getImagePath;
+            PythonDownloadMsgClose = pythonDownloadMsgClose;
+            PythonDownloadMsgShow = pythonDownloadMsgShow;
 
             // Do not forget to update SettingsViewModel! 
 
@@ -115,6 +127,8 @@ namespace UDM.Model
         public static void CheckStartup()
         {
             LogService.LogService.Log("CheckStartup Running!", LogLevel.Debug);
+
+            // Changelog
             if (File.Exists(Cwd + ChangelogPath))
             {
                 ChangelogFound = true;
@@ -122,7 +136,20 @@ namespace UDM.Model
                 File.Delete(Cwd + ChangelogPath);
             }
 
+            // python install
             if (File.Exists(Cwd + InitFilePath)) return;
+            if (!Directory.Exists(Cwd + PathToEmbed))
+            {
+                LogService.LogService.Log("Downloading python embed...", LogLevel.Info);
+                PythonDownloadMsgShow?.Invoke();
+
+                Task.Run(async () => await DownloadFile(Cwd + PythonEmbedTempPath, PythonUrl)).Wait();
+                ZipFile.ExtractToDirectory(Cwd + PythonEmbedTempPath, Cwd + PathToEmbed);
+                File.Delete(Cwd + PythonEmbedTempPath);
+                PythonDownloadMsgClose?.Invoke();
+                LogService.LogService.Log("Downloaded!", LogLevel.Info);
+            }
+
             LogService.LogService.Log("Execution python install...", LogLevel.Debug);
 
             InteractionService.InteractionService service = new(Cwd + FirstInstallScriptPath, Cwd + PathToEmbed);
@@ -148,6 +175,21 @@ namespace UDM.Model
         public static string ReplaceCodeWars(string code)
         {
             return code.Replace("%cwd%", Cwd);
+        }
+
+        public static async Task DownloadFile(string path, string url)
+        {
+            try
+            {
+                using var client = new HttpClient();
+                var response = await client.GetByteArrayAsync(url);
+                await File.WriteAllBytesAsync(path, response);
+
+            }
+            catch (Exception ex)
+            {
+                LogService.LogService.Log($"Error downloading from {url}: {ex.Message}", LogLevel.Error);
+            }
         }
     }
 }
