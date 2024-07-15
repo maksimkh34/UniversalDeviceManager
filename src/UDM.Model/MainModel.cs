@@ -4,6 +4,7 @@ using System.Net;
 using UDM.Model.DIL;
 using UDM.Model.LogService;
 using UDM.Model.SettingsService;
+using static UDM.Model.MainModel;
 
 namespace UDM.Model
 {
@@ -71,30 +72,37 @@ namespace UDM.Model
 
         public const string PythonUrl = "https://www.python.org/ftp/python/3.12.4/python-3.12.4-embed-amd64.zip";
 
-        public delegate void ChangelogDialog(string titleText, string textboxText);
+        public delegate void MsgDialog(string titleText, string textboxText);
+        public delegate void WaitForInputDialog();
         public delegate bool? ExecuteCode();
-        public delegate string GetPath();
+        public delegate string GetStrAction();
+        public delegate string GetStrActionMsg(string msg);
 
         public delegate void MsgWindowAction();
 
         public static bool ChangelogFound;
 
-        public static ChangelogDialog? UiChangelogDialog;
+        public static MsgDialog? UiMsgDialog;
         public static ExecuteCode? ModelExecuteCode;
         public static MsgWindowAction? PythonDownloadMsgShow;
         public static MsgWindowAction? PythonDownloadMsgClose;
-        public static GetPath? GetImagePath;
+        public static WaitForInputDialog? UiWaitForInputDialog;
+        public static GetStrAction? GetImagePath;
+        public static GetStrActionMsg? GetUserInput;
         public static string? ChangelogTitle;
 
-        public static void RegisterMainModel(ChangelogDialog changelogDialog, ExecuteCode executeCode, GetPath getImagePath, 
-            string changelogTitle, MsgWindowAction pythonDownloadMsgShow, MsgWindowAction pythonDownloadMsgClose)
+        public static void RegisterMainModel(MsgDialog msgDialog, ExecuteCode executeCode, GetStrAction getImageStrAction, 
+            string changelogTitle, MsgWindowAction pythonDownloadMsgShow, MsgWindowAction pythonDownloadMsgClose,
+            WaitForInputDialog waitForInputDialog, GetStrActionMsg getUserInput)
         {
-            UiChangelogDialog = changelogDialog;
+            UiMsgDialog = msgDialog;
             ChangelogTitle = changelogTitle;
             ModelExecuteCode = executeCode;
-            GetImagePath = getImagePath;
+            GetImagePath = getImageStrAction;
             PythonDownloadMsgClose = pythonDownloadMsgClose;
             PythonDownloadMsgShow = pythonDownloadMsgShow;
+            UiWaitForInputDialog = waitForInputDialog;
+            GetUserInput = getUserInput;
 
             // Do not forget to update SettingsViewModel! 
 
@@ -132,7 +140,7 @@ namespace UDM.Model
             if (File.Exists(Cwd + ChangelogPath))
             {
                 ChangelogFound = true;
-                UiChangelogDialog?.Invoke(ChangelogTitle ?? "Changelog", File.ReadAllText(Cwd + ChangelogPath));
+                UiMsgDialog?.Invoke(ChangelogTitle ?? "Changelog", File.ReadAllText(Cwd + ChangelogPath));
                 File.Delete(Cwd + ChangelogPath);
             }
 
@@ -174,7 +182,24 @@ namespace UDM.Model
 
         public static string ReplaceCodeWars(string code)
         {
-            return code.Replace("%cwd%", Cwd);
+            var result = code.Replace("%cwd%", Cwd);
+            // %askuser: [msg]%
+            while (result.Contains("askuser"))
+            {
+                var msg = GetBetween(result, "%askuser: [", "]%");
+                var userInput = GetUserInput?.Invoke(msg);
+                result = result.Replace($"%askuser: [{msg}]%", userInput);
+            }
+            return result;
+        }
+
+        public static string GetBetween(string strSource, string strStart, string strEnd)
+        {
+            if (!strSource.Contains(strStart) || !strSource.Contains(strEnd)) return "";
+            var start = strSource.IndexOf(strStart, 0, StringComparison.Ordinal) + strStart.Length;
+            var end = strSource.IndexOf(strEnd, start, StringComparison.Ordinal);
+            return strSource.Substring(start, end - start);
+
         }
 
         public static async Task DownloadFile(string path, string url)

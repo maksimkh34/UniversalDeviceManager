@@ -19,6 +19,7 @@
                        Text="{DynamicResource MsgWait}"></TextBlock>
             <Button Style="{DynamicResource ThemedButton}"
                     Margin="5"
+                    IsDefault="True"
                     Click="ButtonBase_OnClick"
                     Content="OK">
                 <Button.ToolTip>

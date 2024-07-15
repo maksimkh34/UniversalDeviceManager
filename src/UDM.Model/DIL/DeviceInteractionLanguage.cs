@@ -7,8 +7,9 @@ namespace UDM.Model.DIL
         public static void Execute(string script)
         {
             LogService.LogService.Log("Executing script... \n", LogLevel.Info);
-            foreach (var cmd in script.Split("\r\n"))
+            foreach (var pCmd in script.Split("\r\n"))
             {
+                var cmd = MainModel.ReplaceCodeWars(pCmd);
                 var instructions = cmd.Split(' ');
                 switch (instructions[0])
                 {
@@ -74,6 +75,47 @@ namespace UDM.Model.DIL
                         {
                             Thread.Sleep(1000);
                         }
+                        break;
+
+                    case "eget":
+                        var downloadFile = instructions[1];
+                        for (var i = 3; i < instructions.Length; i++)
+                        {
+                            downloadFile += " " + instructions[i];
+                        }
+
+                        var downloadPath = Path.GetDirectoryName(downloadFile);
+                        Directory.CreateDirectory(downloadPath);
+
+                        LogService.LogService.Log("Downloading " + downloadFile + "...", LogLevel.DILOutput);
+                        Task.Run(async () => await MainModel.DownloadFile(downloadFile, instructions[2])).Wait();
+                        if (File.Exists(downloadFile))
+                        {
+                            LogService.LogService.Log("Downloaded.", LogLevel.DILOutput);
+                        } else LogService.LogService.Log("File download error.", LogLevel.Error);
+
+                        break;
+
+                    case "msg":
+                        var msg = instructions[1];
+                        for (var i = 2; i < instructions.Length; i++)
+                        {
+                            msg += " " + instructions[i];
+                        }
+                        MainModel.UiMsgDialog?.Invoke("Console", msg);
+                        break;
+
+                    case "wait_win":
+                        MainModel.UiWaitForInputDialog?.Invoke();
+                        break;
+
+                    case "py_exec":
+                        var scriptPathArgs = instructions[1];
+                        for (var i = 2; i < instructions.Length; i++)
+                        {
+                            scriptPathArgs += " " + instructions[i];
+                        }
+
                         break;
 
                     default:

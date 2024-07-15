@@ -29,7 +29,8 @@ namespace UDM.WPF
 
             var pythonDownloadWindow = new MessageWindow("Downloading python...");
             MainModel.RegisterMainModel(ShowMessage, OpenPreDil, GetImagePath, 
-                (string)FindResource("MsgChangelog")!, pythonDownloadWindow.Show, pythonDownloadWindow.Close);
+                (string)FindResource("MsgChangelog")!, pythonDownloadWindow.Show, pythonDownloadWindow.Close,
+                ShowWaitForInputWindow, GetUserInput);
             LogService.Logs.Clear();    // ???
             // включить логи уровня дебаг на релизной сборке
             // MainModel.SettingsStorage.Set(MainModel.SnForceDebugLogs, true);
@@ -66,6 +67,11 @@ namespace UDM.WPF
         {
             var dialog = new PreDIL();
             return dialog.ShowDialog();
+        }
+
+        public static string GetUserInput(string message)
+        {
+            return string.Empty;
         }
 
         public static void ShutdownApp()
