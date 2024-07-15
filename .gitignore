@@ -457,3 +457,4 @@ $RECYCLE.BIN/
 /src/UDM.Model/LocalEnvVars.cs
 *.exe
 *.zip
+/cwd/config
