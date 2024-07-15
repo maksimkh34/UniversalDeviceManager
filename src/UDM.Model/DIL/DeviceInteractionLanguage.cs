@@ -41,7 +41,7 @@ namespace UDM.Model.DIL
                             return;
                         }
                         var checkCommand = $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} getvar unlocked";
-                        var checkOutput = SysCalls.Exec(MainModel.PathToFastboot, "fastboot.exe",
+                        var checkOutput = SysCalls.Exec(MainModel.PathToFastboot, MainModel.PathToFastboot + @"\fastboot.exe",
                             checkCommand);
                         if(checkOutput.ErrOutput == string.Empty)
                             LogService.LogService.Log(checkOutput.StdOutput.Split("\r\n")[0], LogLevel.DILOutput);
