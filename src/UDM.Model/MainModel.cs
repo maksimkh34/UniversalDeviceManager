@@ -10,6 +10,8 @@ namespace UDM.Model
         public static SettingsStorage SettingsStorage = new(Cwd + SettingsConfFilePath);
         public static SettingChanged? LangChanged;
 
+        public static Dictionary<string, string> Vars = new();
+
         public static bool IsDebugRelease
         {
             get
@@ -185,6 +187,8 @@ namespace UDM.Model
         {
             var result = code.Replace("%cwd%", Cwd)
                 .Replace("%sid%", ModelDeviceManager.SelectedDevice.Id);
+
+            result = Vars.Keys.Aggregate(result, (current, varName) => current.Replace(varName, Vars[varName]));
 
             while (result.Contains("askuser"))
             {

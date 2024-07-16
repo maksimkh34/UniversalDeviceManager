@@ -2,15 +2,17 @@ import os
 import sys
 
 sys.path.append(os.getcwd())
-from interaction import ir_write, ir_wait_for_input, ir_read_input
+import interaction as i
 
-ir_write("Log 1")
-pass
-ir_write("Log 2")
-pass
-ir_wait_for_input()
-pass
-ir_write("waited")
-pass
-inp = ir_read_input()
-ir_write(inp)
+i.write("Starting generator")
+i.wait_for_input()
+i.write("Enter your fastboot id")
+fastboot_id = i.read()
+i.write("Enter your device name")
+device_name = i.read()
+i.write(fastboot_id + ", " + device_name)
+# read
+# wait
+# write
+# write
+# read

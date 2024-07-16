@@ -135,7 +135,7 @@ namespace UDM.Model.DIL
                         service.Run();
                         foreach (var line in commands)
                         {
-                            var command = MainModel.ReplaceCodeWars(line);
+                            var command = MainModel.ReplaceCodeWars(line).Replace("\r", "");
                             for (var i = 0; i < scriptLines.Length; i++)
                             {
                                 if (!scriptLines[i].Contains(line.Replace("\r", ""))) continue;
@@ -153,12 +153,28 @@ namespace UDM.Model.DIL
                             {
                                 LogService.LogService.Log("Sending end_wait...", LogLevel.Debug);
                                 service.EndWait();
-                            } else if (command.StartsWith("write"))
+                            }
+                            else if (command.StartsWith("write_var_input"))
                             {
-                                var pyMsg = command.Replace("write ", "");
-                                LogService.LogService.Log("Writing " + pyMsg.Replace("\r", "") + "...", LogLevel.Debug);
+                                MainModel.Vars.Add(command.Replace("write_var_input ", ""), service.Read());
+                            }
+                            else if (command.StartsWith("write_var"))
+                            {
+                                var args = command.Split(' ');
+                                var varValuePy = "";
+                                for (var i = 3; i < args.Length; i++)
+                                {
+                                    varValuePy += " " + args[i];
+                                }
+                                MainModel.Vars.Add(args[1], varValuePy);
+                            }
+                            else if (command.StartsWith("write"))
+                            {
+                                var pyMsg = command.Replace("write ", "").Replace("\r", "");
+                                LogService.LogService.Log("Writing " + pyMsg + "...", LogLevel.Debug);
                                 service.Write(pyMsg);
-                            } else LogService.LogService.Log("Command was not recognized!", LogLevel.Error);
+                            } 
+                            else LogService.LogService.Log("Command was not recognized!", LogLevel.Error);
 
                         }
 
@@ -177,6 +193,16 @@ namespace UDM.Model.DIL
                             break;
                         }
 
+                        break;
+
+                    case "wv":
+                    case "write_var":
+                        var varValue = instructions[2];
+                        for (var i = 3; i < instructions.Length; i++)
+                        {
+                            varValue += " " + instructions[i];
+                        }
+                        MainModel.Vars.Add(instructions[1], varValue);
                         break;
 
                     default:

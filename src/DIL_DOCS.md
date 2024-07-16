@@ -1,5 +1,7 @@
 # Device Interaction Language Guide
 * DIL is scripting language, which means that it consists of commands and vars.
+* All vars should start with `$` char
+* To access var value just write its name (that's why they should start with `$`)
 * Every new command starts with \r\n (newline), one command per line
 ## Commands
 * `fastboot_reboot (mode)` \\\\ `fr (mode)`
@@ -27,10 +29,13 @@
   Displays all the text from `msg` to end of the line.
 * `wait_win` \\\\ `ww`
 
-  Displays "Waiting for input window". Unlike `msg`, message in `wait_win` is localized.
+  Displays all the text from `msg` to end of the line.
+* `write_var ($var_name)` \\\\ `wv`
+
+  Writes var value.
 * `py_exec (cmd)`
 
-  *in-dev* Executes python script.
+  Executes python script.
 ```
 py_exec script --args
 {
@@ -42,6 +47,8 @@ py_exec script --args
 * `print` - prints script output to logs
 * `display` - displays script output in new window
 * `write (msg)` - writes msg to script
+* `write_var ($var_name) (value)` - `write_var` during python execution
+* `write_var_input ($var_name)` - writes python output to var
 * `end` - sends end_wait signal to script *(InteractionService)*
   
 ## Vars
