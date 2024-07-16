@@ -32,8 +32,8 @@ namespace UDM.WPF.Dialogs
                 Title = "Save DIL Script",
                 DefaultExt = "dil",
                 Filter = "DIL Scripts (*.dil)|*.dil|All files (*.*)|*.*",
-                CheckFileExists = true,
-                CheckPathExists = true
+                CheckFileExists = false,
+                CheckPathExists = false
             };
             dialog.ShowDialog();
             try

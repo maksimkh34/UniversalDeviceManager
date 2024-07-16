@@ -1,0 +1,10 @@
+py_exec %cwd%\python\test.py
+{
+print
+end_wait
+print
+write %askuser: [Translate to python:]%
+display
+}
+
+

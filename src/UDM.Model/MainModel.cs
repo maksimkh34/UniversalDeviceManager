@@ -63,6 +63,7 @@ namespace UDM.Model
 
         public const string ChangelogPath = @"\changelog";
         public const string InitFilePath = @"\config\init";
+        public const string PythonWd = @"\python";
         public const string SettingsConfFilePath = @"\config\settings_storage.conf";
         public const string FirstInstallScriptPath = @"\python\install.py";
         public const string PythonEmbedTempPath = @"\python.embed";
@@ -182,7 +183,9 @@ namespace UDM.Model
 
         public static string ReplaceCodeWars(string code)
         {
-            var result = code.Replace("%cwd%", Cwd);
+            var result = code.Replace("%cwd%", Cwd)
+                .Replace("%sid%", ModelDeviceManager.SelectedDevice.Id);
+
             while (result.Contains("askuser"))
             {
                 var msg = GetBetween(result, "%askuser: [", "]%");

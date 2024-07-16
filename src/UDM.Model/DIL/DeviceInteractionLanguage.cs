@@ -7,12 +7,20 @@ namespace UDM.Model.DIL
         public static void Execute(string script)
         {
             LogService.LogService.Log("Executing script... \n", LogLevel.Info);
-            foreach (var pCmd in script.Split("\r\n"))
+            var scriptLines = script.Split("\r\n");
+            foreach (var pCmd in scriptLines)
             {
                 var cmd = MainModel.ReplaceCodeWars(pCmd);
                 var instructions = cmd.Split(' ');
                 switch (instructions[0])
                 {
+                    case "\r":
+                    case "\n":
+                    case "\r\n":
+                    case "":
+                        break;
+
+                    case "fr":
                     case "fastboot_reboot":
                         if (instructions.Length == 1)
                         {
@@ -34,6 +42,7 @@ namespace UDM.Model.DIL
                         }
                         break;
 
+                    case "fc":
                     case "fastboot_check_bl":
                         if (MainModel.ModelDeviceManager.SelectedDevice.Id == DeviceManager.Disconnected_id)
                         {
@@ -49,6 +58,7 @@ namespace UDM.Model.DIL
                             LogService.LogService.Log(checkOutput.ErrOutput, LogLevel.Error);
                         break;
 
+                    case "ff":
                     case "fastboot_flash":
                         if (MainModel.ModelDeviceManager.SelectedDevice.Id == DeviceManager.Disconnected_id)
                         {
@@ -70,6 +80,7 @@ namespace UDM.Model.DIL
 
                         break;
 
+                    case "wb":
                     case "wait_for_bl":
                         while (!MainModel.ModelDeviceManager.SelectedDeviceAlive())
                         {
@@ -85,7 +96,7 @@ namespace UDM.Model.DIL
                         }
 
                         var downloadPath = Path.GetDirectoryName(downloadFile);
-                        Directory.CreateDirectory(downloadPath);
+                        if (downloadPath != null) Directory.CreateDirectory(downloadPath);
 
                         LogService.LogService.Log("Downloading " + downloadFile + "...", LogLevel.DILOutput);
                         Task.Run(async () => await MainModel.DownloadFile(downloadFile, instructions[2])).Wait();
@@ -105,6 +116,7 @@ namespace UDM.Model.DIL
                         MainModel.UiMsgDialog?.Invoke("Console", msg);
                         break;
 
+                    case "ww":
                     case "wait_win":
                         MainModel.UiWaitForInputDialog?.Invoke();
                         break;
@@ -114,6 +126,55 @@ namespace UDM.Model.DIL
                         for (var i = 2; i < instructions.Length; i++)
                         {
                             scriptPathArgs += " " + instructions[i];
+                        }
+
+                        var pCommands = MainModel.GetBetween(string.Join("\r\n", scriptLines), "{", "}").Split("\n");
+                        var commands = pCommands.Where(t => t is not ("\r" or "")).ToList();
+
+                        var service = new InteractionService.InteractionService(scriptPathArgs, MainModel.Cwd + MainModel.PythonWd);
+                        service.Run();
+                        foreach (var line in commands)
+                        {
+                            var command = MainModel.ReplaceCodeWars(line);
+                            for (var i = 0; i < scriptLines.Length; i++)
+                            {
+                                if (!scriptLines[i].Contains(line.Replace("\r", ""))) continue;
+
+                                scriptLines[i] = scriptLines[i].Replace(line.Replace("\r", ""), command.Replace("\r", ""));
+                                break;
+                            }
+                            if (command.StartsWith("print"))
+                            {
+                                LogService.LogService.Log(service.Read(), LogLevel.OuterServices);
+                            } else if (command.StartsWith("display"))
+                            {
+                                MainModel.UiMsgDialog?.Invoke("Python console", service.Read());
+                            } else if (command.StartsWith("end"))
+                            {
+                                LogService.LogService.Log("Sending end_wait...", LogLevel.Debug);
+                                service.EndWait();
+                            } else if (command.StartsWith("write"))
+                            {
+                                var pyMsg = command.Replace("write ", "");
+                                LogService.LogService.Log("Writing " + pyMsg.Replace("\r", "") + "...", LogLevel.Debug);
+                                service.Write(pyMsg);
+                            } else LogService.LogService.Log("Command was not recognized!", LogLevel.Error);
+
+                        }
+
+                        // replacing script in code with newlines so its code will not be interpreted as new commands
+                        for (var i = 0; i < scriptLines.Length; i++)
+                        {
+                            if (scriptLines[i] != pCmd) continue;
+                            scriptLines[i] = "\r\n";
+                            scriptLines[i+1] = "\r\n";
+
+                            for (var j = i + 2; j < i + 3 + commands.Count; j++)
+                            {
+                                scriptLines[j] = "\r\n";
+                            }
+
+                            break;
                         }
 
                         break;

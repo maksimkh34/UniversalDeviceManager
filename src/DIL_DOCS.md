@@ -2,25 +2,35 @@
 * DIL is scripting language, which means that it consists of commands and vars.
 * Every new command starts with \r\n (newline), one command per line
 ## Commands
-* `fastboot_reboot (mode)`
+* `fastboot_reboot (mode)` \\\\ `fr (mode)`
+
   Reboots device. Modes:
   * bootloader (fastboot)
   * recovery
+  * EDL
+	
   Empty mode means reboot into system.
-* `fastboot_check_bl`
+* `fastboot_check_bl` \\\\ `fc`
+
   Determines whether the bootloader is locked. Result will be displayed in logs
-* `fastboot_flash (partition) (path to image)`
+* `fastboot_flash (partition) (path to image)` \\\\ `ff (partition) (path to image)`
+
   Flashes image to partition using fastboot.
-* `wait_for_bl`
+* `wait_for_bl` \\\\ `wb`
+
   Waiting for selected device to boot into bootloader (fastboot)
 * `eget (path) (url)`
+
   Downloads file from url to path.
 * `msg`
+
   Displays all the text from `msg` to end of the line.
-* `wait_win`
+* `wait_win` \\\\ `ww`
+
   Displays "Waiting for input window". Unlike `msg`, message in `wait_win` is localized.
 * `py_exec (cmd)`
-  *`in-dev* Executes python script.
+
+  *in-dev* Executes python script.
 ```
 py_exec script --args
 {
@@ -30,6 +40,7 @@ py_exec script --args
 }
 ```
 * `print` - prints script output to logs
+* `display` - displays script output in new window
 * `write (msg)` - writes msg to script
 * `end` - sends end_wait signal to script *(InteractionService)*
   
