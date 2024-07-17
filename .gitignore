@@ -458,3 +458,4 @@ $RECYCLE.BIN/
 *.exe
 *.zip
 /cwd/config
+/cwd/python/mtkclient/mtkclient-main
