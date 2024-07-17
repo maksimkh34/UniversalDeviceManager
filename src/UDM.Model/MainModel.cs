@@ -150,22 +150,11 @@ namespace UDM.Model
             if (File.Exists(Cwd + InitFilePath)) return;
 
             LogService.LogService.Log("Executing first install...", LogLevel.Debug);
-            //CurrentScriptCode = File.ReadAllText(Cwd + FirstInstallDILScriptPath);
-            //AutoExecuteCode?.Invoke();
 
             CurrentScriptCode = File.ReadAllText(Cwd + FirstInstallDILScriptPath);
             AutoExecuteCode?.Invoke();
 
-            /*
-            InteractionService.InteractionService service = new(Cwd + FirstInstallScriptPath, Cwd + @"\python");
-            service.Run();
-            LogService.LogService.Log(service.Read(), LogLevel.OuterServices);
-            service.EndWait();
-            service.WaitProc();
-            LogService.LogService.Log(service.ReadErr(), LogLevel.OuterServices);
-            Directory.CreateDirectory(Cwd + @"\config");
-            */
-            //File.Create(Cwd + InitFilePath);
+            File.Create(Cwd + InitFilePath);
         }
 
         public static bool ValidateLogPath(object value)

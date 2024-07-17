@@ -223,7 +223,15 @@ namespace UDM.Model.DIL
                     case "unzip":
                         var zipFile = instructions[1];
                         var extractPath = string.Join(" ", instructions[2..]);
-                        System.IO.Compression.ZipFile.ExtractToDirectory(zipFile, extractPath);
+                        try
+                        {
+                            System.IO.Compression.ZipFile.ExtractToDirectory(zipFile, extractPath);
+                        }
+                        catch (IOException)
+                        {
+                            Directory.Delete(extractPath, true);
+                            System.IO.Compression.ZipFile.ExtractToDirectory(zipFile, extractPath);
+                        }
                         break;
                     default:
                         LogService.LogService.Log("Unknown command: " + cmd, LogLevel.Error);

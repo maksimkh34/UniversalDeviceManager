@@ -9,8 +9,9 @@
     <PackageIcon>udm_mini.png</PackageIcon>
     <StartupObject>UDM.WPF.App</StartupObject>
     <ApplicationIcon>Assets\Icons\UDM.multi.ico</ApplicationIcon>
-    <UseWindowsForms>True</UseWindowsForms>
+    <UseWindowsForms>False</UseWindowsForms>
     <Configurations>Debug;Release;Preelease</Configurations>
+    <AssemblyName>UniversalDeviceManager</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
