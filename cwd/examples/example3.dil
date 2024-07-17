@@ -1,0 +1,12 @@
+py_exec %cwd%\python\test.py
+{
+print
+end_wait
+print
+write %sid%
+print
+write %askuser: [Enter your device name]%
+write_var_input $out
+}
+msg $out
+

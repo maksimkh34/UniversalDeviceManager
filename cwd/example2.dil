@@ -1,4 +1,0 @@
-msg Downloading python...
-eget %cwd%\downloads\python3.12.4.zip https://www.python.org/ftp/python/3.12.4/python-3.12.4-embed-amd64.zip
-msg Downloaded!
-wait_win

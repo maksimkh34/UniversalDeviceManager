@@ -1,0 +1,5 @@
+fastboot_reboot bootloader
+wait_for_bl
+fastboot_check_bl
+fastboot_flash boot %cwd%\boot.img
+fastboot_reboot

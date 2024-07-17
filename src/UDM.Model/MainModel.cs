@@ -1,4 +1,5 @@
 ﻿using System.IO.Compression;
+using System.Net;
 using UDM.Model.DIL;
 using UDM.Model.LogService;
 using UDM.Model.SettingsService;
@@ -68,17 +69,15 @@ namespace UDM.Model
         public const string PythonWd = @"\python";
         public const string SettingsConfFilePath = @"\config\settings_storage.conf";
         public const string FirstInstallScriptPath = @"\python\install.py";
-        public const string PythonEmbedTempPath = @"\python.embed";
-
-        public const string PathToEmbed = @"\py_embed";
-
-        public const string PythonUrl = "https://www.python.org/ftp/python/3.12.4/python-3.12.4-embed-amd64.zip";
+        // ReSharper disable once InconsistentNaming
+        public const string FirstInstallDILScriptPath = @"\install.dil";
+        public static readonly string PathToPython = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Programs\Python\Python312-32\python.exe";
 
         public delegate void MsgDialog(string titleText, string textboxText);
         public delegate void WaitForInputDialog();
         public delegate bool? ExecuteCode();
         public delegate string GetStrAction();
-        public delegate string GetStrActionMsg(string msg);
+        public delegate string? GetStrActionMsg(string msg);
 
         public delegate void MsgWindowAction();
 
@@ -86,6 +85,7 @@ namespace UDM.Model
 
         public static MsgDialog? UiMsgDialog;
         public static ExecuteCode? ModelExecuteCode;
+        public static ExecuteCode? AutoExecuteCode;
         public static MsgWindowAction? PythonDownloadMsgShow;
         public static MsgWindowAction? PythonDownloadMsgClose;
         public static WaitForInputDialog? UiWaitForInputDialog;
@@ -93,13 +93,14 @@ namespace UDM.Model
         public static GetStrActionMsg? GetUserInput;
         public static string? ChangelogTitle;
 
-        public static void RegisterMainModel(MsgDialog msgDialog, ExecuteCode executeCode, GetStrAction getImageStrAction, 
+        public static void RegisterMainModel(MsgDialog msgDialog, ExecuteCode executeCode, ExecuteCode autoExecuteCode, GetStrAction getImageStrAction, 
             string changelogTitle, MsgWindowAction pythonDownloadMsgShow, MsgWindowAction pythonDownloadMsgClose,
             WaitForInputDialog waitForInputDialog, GetStrActionMsg getUserInput)
         {
             UiMsgDialog = msgDialog;
             ChangelogTitle = changelogTitle;
             ModelExecuteCode = executeCode;
+            AutoExecuteCode = autoExecuteCode;
             GetImagePath = getImageStrAction;
             PythonDownloadMsgClose = pythonDownloadMsgClose;
             PythonDownloadMsgShow = pythonDownloadMsgShow;
@@ -108,23 +109,22 @@ namespace UDM.Model
 
             // Do not forget to update SettingsViewModel! 
 
-            MainModel.SettingsStorage.Register(new Setting(SnForceDebugLogs,
+            SettingsStorage.Register(new Setting(SnForceDebugLogs,
                 false, typeof(bool),
                 null, null, null,
                 "StForceDebugLogs", false, null));
 
-            MainModel.SettingsStorage.Register(new Setting(SnCurrentLanguage,
+            SettingsStorage.Register(new Setting(SnCurrentLanguage,
                 Languages[0], typeof(string),
-                null, null, MainModel.LangChanged,
+                null, null, LangChanged,
                 "StCurrentLanguage", true, Languages));
 
-            MainModel.SettingsStorage.Register(new Setting(SnLogPath,
+            SettingsStorage.Register(new Setting(SnLogPath,
                 Cwd + @"\Logs.log", typeof(string),
                 ValidateLogPath, null, null,
                 "StLogPath", false, null));
 
-            MainModel.
-                        SettingsStorage.LoadSettings();
+            SettingsStorage.LoadSettings();
         }
 
         public static string[] Languages = { "en-US", "ru-RU" };
@@ -148,25 +148,24 @@ namespace UDM.Model
 
             // python install
             if (File.Exists(Cwd + InitFilePath)) return;
-            if (!Directory.Exists(Cwd + PathToEmbed))
-            {
-                LogService.LogService.Log("Downloading python embed...", LogLevel.Info);
-                PythonDownloadMsgShow?.Invoke();
 
-                Task.Run(async () => await DownloadFile(Cwd + PythonEmbedTempPath, PythonUrl)).Wait();
-                ZipFile.ExtractToDirectory(Cwd + PythonEmbedTempPath, Cwd + PathToEmbed);
-                File.Delete(Cwd + PythonEmbedTempPath);
-                PythonDownloadMsgClose?.Invoke();
-                LogService.LogService.Log("Downloaded!", LogLevel.Info);
-            }
+            LogService.LogService.Log("Executing first install...", LogLevel.Debug);
+            //CurrentScriptCode = File.ReadAllText(Cwd + FirstInstallDILScriptPath);
+            //AutoExecuteCode?.Invoke();
 
-            LogService.LogService.Log("Execution python install...", LogLevel.Debug);
+            CurrentScriptCode = File.ReadAllText(Cwd + FirstInstallDILScriptPath);
+            AutoExecuteCode?.Invoke();
 
-            InteractionService.InteractionService service = new(Cwd + FirstInstallScriptPath, Cwd + PathToEmbed);
+            /*
+            InteractionService.InteractionService service = new(Cwd + FirstInstallScriptPath, Cwd + @"\python");
             service.Run();
             LogService.LogService.Log(service.Read(), LogLevel.OuterServices);
+            service.EndWait();
+            service.WaitProc();
+            LogService.LogService.Log(service.ReadErr(), LogLevel.OuterServices);
             Directory.CreateDirectory(Cwd + @"\config");
-            File.Create(Cwd + InitFilePath);
+            */
+            //File.Create(Cwd + InitFilePath);
         }
 
         public static bool ValidateLogPath(object value)
@@ -185,7 +184,9 @@ namespace UDM.Model
 
         public static string ReplaceCodeWars(string code)
         {
-            var result = code.Replace("%cwd%", Cwd)
+            var result = code
+                .Replace("%pyexecutable%", PathToPython)
+                .Replace("%cwd%", Cwd)
                 .Replace("%sid%", ModelDeviceManager.SelectedDevice.Id);
 
             result = Vars.Keys.Aggregate(result, (current, varName) => current.Replace(varName, Vars[varName]));
@@ -208,14 +209,12 @@ namespace UDM.Model
 
         }
 
-        public static async Task DownloadFile(string path, string url)
+        public static void DownloadFile(string path, string url)
         {
             try
             {
-                using var client = new HttpClient();
-                var response = await client.GetByteArrayAsync(url);
-                await File.WriteAllBytesAsync(path, response);
-
+                var webClient = new WebClient();
+                webClient.DownloadFile(new Uri(url), path);
             }
             catch (Exception ex)
             {

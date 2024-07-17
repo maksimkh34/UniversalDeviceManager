@@ -21,7 +21,9 @@
 * `wait_for_bl` \\\\ `wb`
 
   Waiting for selected device to boot into bootloader (fastboot)
-* `eget (path) (url)`
+* `iget (path) (url)`
+  
+	* flag `--overwrite-if-exists` (or `-oie`) overwrites download file if exists
 
   Downloads file from url to path.
 * `msg`

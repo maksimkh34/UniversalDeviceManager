@@ -8,14 +8,9 @@ using UDM.WPF.Dialogs;
 
 namespace UDM.WPF
 {
-    public class MessageWindow
+    public class MessageWindow(string message, string textBoxMessage = "$unfilled$")
     {
-        private readonly MessageBoxWindow _window;
-
-        public MessageWindow(string message, string textBoxMessage = "$unfilled$")
-        {
-            _window = new MessageBoxWindow(message, textBoxMessage);
-        }
+        private readonly MessageBoxWindow _window = new(message, textBoxMessage);
 
         public void Show() => _window.Show();
         public void ShowDialog() => _window.ShowDialog();
@@ -29,9 +24,17 @@ namespace UDM.WPF
             base.OnStartup(e);
 
             var pythonDownloadWindow = new MessageWindow("Downloading python...");
-            MainModel.RegisterMainModel(ShowMessage, OpenPreDil, GetImagePath, 
-                (string)FindResource("MsgChangelog")!, pythonDownloadWindow.Show, pythonDownloadWindow.Close,
-                ShowWaitForInputWindow, GetUserInput);
+            MainModel.RegisterMainModel(
+                msgDialog: ShowMessage,
+                executeCode: OpenPreDil,
+                autoExecuteCode: AutoOpenPreDil,
+                getImageStrAction: GetImagePath,
+                changelogTitle: (string)FindResource("MsgChangelog")!,
+                pythonDownloadMsgShow: pythonDownloadWindow.Show,
+                pythonDownloadMsgClose: pythonDownloadWindow.Close,
+                waitForInputDialog: ShowWaitForInputWindow,
+                getUserInput: GetUserInput
+                );
             LogService.Logs.Clear();    // ???
             // включить логи уровня дебаг на релизной сборке
             // MainModel.SettingsStorage.Set(MainModel.SnForceDebugLogs, true);
@@ -68,6 +71,14 @@ namespace UDM.WPF
         {
             var dialog = new PreDIL();
             return dialog.ShowDialog();
+        }
+
+        public static bool? AutoOpenPreDil()
+        {
+            var dialog = new PreDIL();
+            dialog.Show();
+            ((PreDILViewModel)dialog.DataContext).ExecNow();
+            return true;
         }
 
         public static string? GetUserInput(string message)

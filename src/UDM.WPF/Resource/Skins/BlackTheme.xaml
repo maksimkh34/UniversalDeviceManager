@@ -231,10 +231,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBoxItem">
                     <Border Name="border"
-                        BorderThickness="2"
+                        BorderThickness="1"
                         Padding="2"
                         BorderBrush="{StaticResource ScbBackground}"
-                        CornerRadius="2"
+                        CornerRadius="1"
                         Background="{StaticResource ScbBackground}">
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                       VerticalAlignment="Center" />
@@ -245,24 +245,24 @@
                                 <Condition Property="IsMouseOver" Value="True"/>
                                 <Condition Property="IsSelected" Value="True"/>
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ScbForeground}" />
-                            <Setter TargetName="border" Property="Background" Value="Black" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ScbBorder}" />
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ScbDarkBackground}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver" Value="True"/>
                                 <Condition Property="IsSelected" Value="False"/>
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ScbAccent}" />
-                            <Setter TargetName="border" Property="Background" Value="Black" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ScbBorder}" />
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ScbBackgroundMouseOver}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver" Value="False"/>
                                 <Condition Property="IsSelected" Value="True"/>
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ScbForeground}" />
-                            <Setter TargetName="border" Property="Background" Value="{StaticResource ScbBackground}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ScbBorder}" />
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ScbAccent}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

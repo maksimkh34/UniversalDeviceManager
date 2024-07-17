@@ -19,6 +19,11 @@ namespace UDM.Core.ViewModels
             }
         }
 
+        public void ExecNow()
+        {
+            ExecuteDILScript.Execute(ScriptCode);
+        }
+
         public ICommand ExecuteDILScript { get; } = new DelegateCommand(Execution.ExecuteScriptCodeFunction, Execution.CanExecuteScriptCode, closeWindowAction);
     }
 }

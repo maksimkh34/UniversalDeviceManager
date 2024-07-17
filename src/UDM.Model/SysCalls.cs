@@ -9,9 +9,9 @@ namespace UDM.Model
     {
         public static OsType OsType = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? OsType.Linux : OsType.Win;
 
-        public static ExecutionResult Exec(string path, string filename, string args)
+        public static ExecutionResult Exec(string wd, string filename, string args)
         {
-            LogService.LogService.Log("Executing " + path + "\\" + filename + " " + args, LogLevel.Debug);
+            LogService.LogService.Log("Executing " + filename + " " + args, LogLevel.Debug);
 
             switch (OsType)
             {
@@ -26,7 +26,7 @@ namespace UDM.Model
 
                     p.StartInfo.Arguments = args;
                     p.StartInfo.FileName = filename;
-                    p.StartInfo.WorkingDirectory = path;
+                    p.StartInfo.WorkingDirectory = wd;
 
                     p.Start();
                     p.WaitForExit();

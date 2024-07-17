@@ -2,10 +2,7 @@ import sys
 
 
 def wait_for_input():
-    if input() == "$$end_wait$$":
-        return
-    else:
-        raise Exception("Got input while waiting for end_wait")
+    return input() == "$$end_wait$$"
 
 
 def write(msg):
@@ -14,3 +11,12 @@ def write(msg):
 
 def read():
     return input()
+
+
+def start_proc():
+    sys.stdout.write("$$start_proc$$")
+
+
+def end_proc():
+    sys.stdout.write("$$end_proc$$")
+

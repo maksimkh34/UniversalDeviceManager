@@ -88,7 +88,7 @@
                 Margin="10,10,10,10">
             <Button.CommandParameter>
                 <MultiBinding Converter="{StaticResource Converter}">
-                    <Binding ElementName="FlashModeComboBox" Path="SelectedItem.Text"></Binding>
+                    <Binding ElementName="FlashModeComboBox" Path="SelectedItem.Content"></Binding>
                     <Binding Path="SelectedImagePath"></Binding>
                 </MultiBinding>
             </Button.CommandParameter>

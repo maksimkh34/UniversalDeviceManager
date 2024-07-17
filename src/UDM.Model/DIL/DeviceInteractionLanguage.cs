@@ -88,31 +88,31 @@ namespace UDM.Model.DIL
                         }
                         break;
 
-                    case "eget":
+                    case "iget":
                         var downloadFile = instructions[1];
-                        for (var i = 3; i < instructions.Length; i++)
+
+                        if (cmd.Contains("--overwrite-if-exists") || cmd.Contains("-oie"))
                         {
-                            downloadFile += " " + instructions[i];
+                            if(File.Exists(downloadFile)) File.Delete(downloadFile);
                         }
+                        else if (File.Exists(downloadFile)) break;
 
                         var downloadPath = Path.GetDirectoryName(downloadFile);
                         if (downloadPath != null) Directory.CreateDirectory(downloadPath);
 
                         LogService.LogService.Log("Downloading " + downloadFile + "...", LogLevel.DILOutput);
-                        Task.Run(async () => await MainModel.DownloadFile(downloadFile, instructions[2])).Wait();
+                        MainModel.DownloadFile(downloadFile, instructions[2]);
                         if (File.Exists(downloadFile))
                         {
                             LogService.LogService.Log("Downloaded.", LogLevel.DILOutput);
-                        } else LogService.LogService.Log("File download error.", LogLevel.Error);
+                        } else {LogService.LogService.Log("File download error.", LogLevel.Error);
+                            return;
+                        }
 
                         break;
 
                     case "msg":
-                        var msg = instructions[1];
-                        for (var i = 2; i < instructions.Length; i++)
-                        {
-                            msg += " " + instructions[i];
-                        }
+                        var msg = string.Join(" ", instructions[1..]);
                         MainModel.UiMsgDialog?.Invoke("Console", msg);
                         break;
 
@@ -205,6 +205,26 @@ namespace UDM.Model.DIL
                         MainModel.Vars.Add(instructions[1], varValue);
                         break;
 
+                    case "log":
+                        LogService.LogService.Log(cmd.Replace("log ", ""), LogLevel.Info);
+                        break;
+
+                    case "cmdexec":
+                        var wd = instructions[1];
+                        var execCmd = string.Join(" ", instructions[2..]);
+                        var split = execCmd.Split(' ');
+                        SysCalls.Exec(wd, split[0], string.Join(" ", split[1..]));
+                        break;
+
+                    case "rem":
+                        File.Delete(cmd.Replace("rem ", ""));
+                        break;
+
+                    case "unzip":
+                        var zipFile = instructions[1];
+                        var extractPath = string.Join(" ", instructions[2..]);
+                        System.IO.Compression.ZipFile.ExtractToDirectory(zipFile, extractPath);
+                        break;
                     default:
                         LogService.LogService.Log("Unknown command: " + cmd, LogLevel.Error);
                         return;

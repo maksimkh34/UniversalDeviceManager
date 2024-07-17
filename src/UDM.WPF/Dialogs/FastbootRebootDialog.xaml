@@ -49,7 +49,7 @@
         <Button Style="{StaticResource ThemedButton}" 
                 Command="{Binding ApplyCommand}"
                 x:Name="ApplyButton"
-                CommandParameter="{Binding SelectedItem.Text, ElementName=RebootModeComboBox}"
+                CommandParameter="{Binding SelectedItem.Content, ElementName=RebootModeComboBox}"
                 Margin="10,10,10,10"
                 Content="{DynamicResource FrApply}">
         </Button>

@@ -16,7 +16,7 @@ public static class LogService
                 if(logMsg != "") Log(logMsg, level);
             }
         }
-        else if (!message.StartsWith('\0') && message != "") Logs.Add(new LogEntry(message.Replace("\n", "\t"), level));
+        else if (!message.StartsWith('\0') && message != "" && message[..5] != "\0\0\0\0\0") Logs.Add(new LogEntry(message.Replace("\0", "").Replace("\t", " ").Replace("\n", "\t").Replace("\r", "\t"), level));
     }
 
     public static void Save(string filename)
