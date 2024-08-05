@@ -9,6 +9,9 @@
 
     <system:String x:Key="PredilSave">Save</system:String>
 
+    <system:String x:Key="MwSideloadFlash">Flash ZIP</system:String>
+    <system:String x:Key="SideloadArchive">Archive</system:String>
+
     <system:String x:Key="MwScript">Script</system:String>
     <system:String x:Key="MwScriptNew">New</system:String>
     <system:String x:Key="MwScriptEdit">Edit</system:String>

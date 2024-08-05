@@ -25,7 +25,11 @@ namespace UDM.Model.Commands
             }
         }
 
-        public static bool ActiveDeviceConnected(object param) => MainModel.ModelDeviceManager.ActiveDeviceConnected();
+        public static bool ActiveDeviceConnected(object param)
+        {
+            return MainModel.ModelDeviceManager.ActiveDeviceConnected() &&
+                   MainModel.ModelDeviceManager.ActiveDeviceType == DeviceConnectionType.fastboot;
+        }
 
         public static void ExecuteCode(object param)
         {

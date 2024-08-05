@@ -80,6 +80,14 @@
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
                 </MenuItem>
+
+                <MenuItem Header="Sideload"
+                          Style="{DynamicResource ThemedMenuItem}">
+                    <MenuItem Header="{DynamicResource MwSideloadFlash}"
+                              Click="Menu_SideloadFlash"
+                              Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+                </MenuItem>
             </Menu>
 
             <Grid DockPanel.Dock="Bottom">

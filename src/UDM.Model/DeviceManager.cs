@@ -15,6 +15,7 @@ namespace UDM.Model
         public const string Disconnected_id = "disconnected_id";
 
         public ObservableCollection<DeviceConnection> DeviceConnections = new();
+        public DeviceConnectionType ActiveDeviceType => SelectedDevice.Type;
 
         private readonly DeviceConnection _connection = new();
 
@@ -38,7 +39,7 @@ namespace UDM.Model
             }
         }
 
-        public bool SelectedDeviceAlive() => SysCalls.Exec(MainModel.PathToFastboot, MainModel.PathToFastboot + @"\fastboot.exe", "devices").ErrOutput
+        public bool SelectedDeviceAlive() => SysCalls.Exec(MainModel.PathToPlatformtools, MainModel.PathToPlatformtools + @"\fastboot.exe", "devices").ErrOutput
             .Contains(SelectedDevice.Id);
 
         public bool DeviceConnected(string id)
@@ -51,10 +52,28 @@ namespace UDM.Model
         public void UpdateFastbootDevices()
         {
             LogService.LogService.Log("Updating fastboot devices", LogLevel.Debug);
-            var fastbootResult = SysCalls.Exec(MainModel.PathToFastboot, MainModel.PathToFastboot + @"\fastboot.exe", "devices");
+            var fastbootResult = SysCalls.Exec(MainModel.PathToPlatformtools, MainModel.PathToPlatformtools + @"\fastboot.exe", "devices");
             foreach (var device in fastbootResult.ErrOutput.Split("\r\n"))
             {
                 if (device == "") continue;
+                var parsedDevice = DeviceConnection.Parse(device);
+                LogService.LogService.Log("New device: " + parsedDevice.DeviceToStr, LogLevel.Debug);
+                DeviceConnections.Add(parsedDevice);
+            }
+
+            if (!DeviceConnected(SelectedDevice.Id))
+            {
+                SelectedDevice = new DeviceConnection();
+            }
+        }
+
+        public void UpdateSideloadDevices()
+        {
+            LogService.LogService.Log("Updating sideload devices", LogLevel.Debug);
+            var commandResult = SysCalls.Exec(MainModel.PathToPlatformtools, MainModel.PathToPlatformtools + @"\adb.exe", "devices");
+            foreach (var device in commandResult.ErrOutput.Split("\r\n"))
+            {
+                if (device is "" or "List of devices attached") continue;
                 var parsedDevice = DeviceConnection.Parse(device);
                 LogService.LogService.Log("New device: " + parsedDevice.DeviceToStr, LogLevel.Debug);
                 DeviceConnections.Add(parsedDevice);
@@ -70,6 +89,7 @@ namespace UDM.Model
         {
             DeviceConnections.Clear();
             UpdateFastbootDevices();
+            UpdateSideloadDevices();
         }
 
         public void Disconnect(string id)
@@ -157,7 +177,8 @@ namespace UDM.Model
     {
         fastboot,
         ADB,
-        Sideload,
+        sideload,
+        recovery,
         BROM,
         EDL,
         Disconnected

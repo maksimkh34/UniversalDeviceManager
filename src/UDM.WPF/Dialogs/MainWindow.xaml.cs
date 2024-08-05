@@ -98,5 +98,10 @@ namespace UDM.WPF.Dialogs
         {
             LogTextBox.ScrollToEnd();
         }
+
+        private void Menu_SideloadFlash(object sender, RoutedEventArgs e)
+        {
+            new SideloadFlashDialog().ShowDialog();
+        }
     }
 }

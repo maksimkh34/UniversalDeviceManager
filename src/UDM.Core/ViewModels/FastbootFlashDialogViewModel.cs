@@ -45,7 +45,7 @@ public class FastbootFlashDialogViewModel(Action closeWindowAction) : BaseViewMo
 
     public static bool ActiveDeviceConnectedAndImgSelected(object param)
     {
-        if (!MainModel.ModelDeviceManager.ActiveDeviceConnected()) return false;
+        if (!MainModel.ModelDeviceManager.ActiveDeviceConnected() || MainModel.ModelDeviceManager.ActiveDeviceType != DeviceConnectionType.fastboot) return false;
         if (param is not IEnumerable<string> list) return false;
         return list.ElementAt(1) != MainModel.ImageNotSelected;
     }

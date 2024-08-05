@@ -37,7 +37,7 @@ namespace UDM.Model
             }
         }
 
-        public static string PathToFastboot
+        public static string PathToPlatformtools
         {
             get
             {
@@ -91,10 +91,11 @@ namespace UDM.Model
         public static MsgWindowAction? PythonDownloadMsgClose;
         public static WaitForInputDialog? UiWaitForInputDialog;
         public static GetStrAction? GetImagePath;
+        public static GetStrAction? GetArchivePath;
         public static GetStrActionMsg? GetUserInput;
         public static string? ChangelogTitle;
 
-        public static void RegisterMainModel(MsgDialog msgDialog, ExecuteCode executeCode, ExecuteCode autoExecuteCode, GetStrAction getImageStrAction, 
+        public static void RegisterMainModel(MsgDialog msgDialog, ExecuteCode executeCode, ExecuteCode autoExecuteCode, GetStrAction getImageStrAction, GetStrAction getArchiveStrAction,
             string changelogTitle, MsgWindowAction pythonDownloadMsgShow, MsgWindowAction pythonDownloadMsgClose,
             WaitForInputDialog waitForInputDialog, GetStrActionMsg getUserInput)
         {
@@ -103,6 +104,7 @@ namespace UDM.Model
             ModelExecuteCode = executeCode;
             AutoExecuteCode = autoExecuteCode;
             GetImagePath = getImageStrAction;
+            GetArchivePath = getArchiveStrAction;
             PythonDownloadMsgClose = pythonDownloadMsgClose;
             PythonDownloadMsgShow = pythonDownloadMsgShow;
             UiWaitForInputDialog = waitForInputDialog;
