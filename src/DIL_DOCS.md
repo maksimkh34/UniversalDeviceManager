@@ -18,6 +18,10 @@
 
   Determines whether the bootloader is locked. Result will be displayed in logs.
 
+* `sideload (file)` \\\\ `sl`
+
+  Sideloads provided zip file to device.
+
   
 * `fastboot_flash (partition) (path to image)` \\\\ `ff (partition) (path to image)`
 
