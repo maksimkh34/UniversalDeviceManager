@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using UDM.Model;
+using UDM.Model.Commands;
 using UDM.Model.LogService;
 
 namespace UDM.Core.ViewModels
@@ -17,5 +18,8 @@ namespace UDM.Core.ViewModels
         public DeviceConnection Connection => MainModel.ModelDeviceManager.SelectedDevice;
 
         #endregion Properties
+
+        public static DelegateCommand InstallPythonCommand { get; } =
+            new(CommonCommands.InstallPython, DelegateCommand.DefaultCanExecute);
     }
 }

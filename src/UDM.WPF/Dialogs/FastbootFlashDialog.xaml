@@ -49,7 +49,7 @@
                 <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}">boot</ComboBoxItem>
                 <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}">super</ComboBoxItem>
                 <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}">vbmeta</ComboBoxItem>
-                <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}" Content="{Binding Text, ElementName=textBox}"></ComboBoxItem>
+                <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}" Content="{Binding Text, ElementName=TextBox}"></ComboBoxItem>
             </ComboBox>
         </StackPanel>
         <StackPanel  Orientation="Horizontal" Margin="0,10,0,0" VerticalAlignment="Top">

@@ -3,8 +3,10 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <system:String x:Key="MwBarTitle">Меню</system:String>
 
-    <system:String x:Key="MwEdit">Редактировать</system:String>
+    <system:String x:Key="MwEdit">Опции</system:String>
     <system:String x:Key="MwEditSettings">Настройки</system:String>
+    <system:String x:Key="MwEditInstallPython">Установить Python</system:String>
+
 
     <system:String x:Key="PredilSave">Сохранить</system:String>
 

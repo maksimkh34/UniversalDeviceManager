@@ -70,7 +70,8 @@ namespace UDM.Model
         public const string SettingsConfFilePath = @"\config\settings_storage.conf";
         public const string FirstInstallScriptPath = @"\python\install.py";
         // ReSharper disable once InconsistentNaming
-        public const string FirstInstallDILScriptPath = @"\install.dil";
+        public const string FirstInstallDILScriptPath = @"\script\install.dil";
+        public const string InstallPythonScriptPath = @"\script\py_installer.dil";
         public static readonly string PathToPython = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Programs\Python\Python312-32\python.exe";
 
         public delegate void MsgDialog(string titleText, string textboxText);
@@ -202,7 +203,9 @@ namespace UDM.Model
         {
             try
             {
+#pragma warning disable SYSLIB0014
                 var webClient = new WebClient();
+#pragma warning restore SYSLIB0014
                 webClient.DownloadFile(new Uri(url), path);
             }
             catch (Exception ex)

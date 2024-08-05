@@ -141,7 +141,7 @@ namespace UDM.Model
 
         public string DeviceToStr => Type == DeviceConnectionType.Disconnected ? "Disconnected" : (Id + $"\t({Type})");
 
-        public ICommand DisconnectCommand { get; } = new DelegateCommand(DeviceCommands.DisconnectDevice, DelegateCommand.DefaultCanExecute);
+        public ICommand DisconnectCommand { get; } = new DelegateCommand(CommonCommands.DisconnectDevice, DelegateCommand.DefaultCanExecute);
 
         public ICommand SelectCommand { get; } = new DelegateCommand(DeviceCommands.SelectDevice, DelegateCommand.DefaultCanExecute);
 

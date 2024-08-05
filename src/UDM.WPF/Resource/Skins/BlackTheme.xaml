@@ -232,7 +232,7 @@
                 <ControlTemplate TargetType="ComboBoxItem">
                     <Border Name="border"
                         BorderThickness="1"
-                        Padding="2"
+                        Padding="5,2,2,2"
                         BorderBrush="{StaticResource ScbBackground}"
                         CornerRadius="1"
                         Background="{StaticResource ScbBackground}">

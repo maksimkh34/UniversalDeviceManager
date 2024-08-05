@@ -45,6 +45,10 @@
                               Click="MenuItem_OnClick"
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
+                    <MenuItem Header="{DynamicResource MwEditInstallPython}"
+                              Command="{Binding InstallPythonCommand}"
+                              Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
                 </MenuItem>
 
                 <MenuItem Header="{DynamicResource MwScript}"

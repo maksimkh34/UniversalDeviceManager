@@ -17,14 +17,6 @@ namespace UDM.Model.Commands
             MainModel.ModelDeviceManager.UpdateDevices();
         }
 
-        public static void DisconnectDevice(object param)
-        {
-            if (param is string id)
-            {
-                MainModel.ModelDeviceManager.Disconnect(id);
-            }
-        }
-
         public static void SelectDevice(object param)
         {
             if (param is string id)
