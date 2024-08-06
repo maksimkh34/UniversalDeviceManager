@@ -35,6 +35,10 @@
 
   Waiting for selected device to boot into bootloader (fastboot)
 
+* `wait_for_recovery` \\\\ `wr`
+
+  Waiting for selected device to boot into recovery (fastboot)
+
   
 * `iget (path) (url)`
   
