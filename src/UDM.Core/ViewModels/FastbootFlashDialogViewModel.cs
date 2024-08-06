@@ -9,8 +9,8 @@ public class FastbootFlashDialogViewModel(Action closeWindowAction) : BaseViewMo
 {
     public ICommand BrowseCommand { get; } = new DelegateCommand(BrowseAction, DelegateCommand.DefaultCanExecute);
     public ICommand ApplyCommand { get; set; } = new DelegateCommand(FlashAction, ActiveDeviceConnectedAndImgSelected, closeWindowAction);
-    private bool _isCustomSelected;
 
+    private bool _isCustomSelected;
     public bool IsCustomSelected
     {
         get => _isCustomSelected;
@@ -18,6 +18,30 @@ public class FastbootFlashDialogViewModel(Action closeWindowAction) : BaseViewMo
         {
             if (_isCustomSelected == value) return;
             _isCustomSelected = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _disableVerity;
+    public bool DisableVerity
+    {
+        get => _disableVerity;
+        set
+        {
+            if (_disableVerity == value) return;
+            _disableVerity = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _disableVerification;
+    public bool DisableVerification
+    {
+        get => _disableVerification;
+        set
+        {
+            if (_disableVerification == value) return;
+            _disableVerification = value;
             OnPropertyChanged();
         }
     }
@@ -49,10 +73,14 @@ public class FastbootFlashDialogViewModel(Action closeWindowAction) : BaseViewMo
         IEnumerable<string> enumerable = list as string[] ?? list.ToArray();
         var partition = enumerable.ElementAt(0);
         var imgPath = enumerable.ElementAt(1);
+        var disableVerity = enumerable.ElementAt(2) == "True";
+        var disableVerification = enumerable.ElementAt(3) == "True";
 
-        MainModel.CurrentScriptCode = $"fastboot_flash {partition} {imgPath}";
+        MainModel.CurrentScriptCode = $"fastboot_flash {partition} " +
+                                      $"{(disableVerity ? Model.DIL.DeviceInteractionLanguage.FastbootFlash_DisableVerity_Flag + " " : "")}" +
+                                      $"{(disableVerification ? Model.DIL.DeviceInteractionLanguage.FastbootFlash_DisableVerification_Flag + " " : "")}" +
+                                      $"{imgPath}";
         MainModel.ModelExecuteCode?.Invoke();
-        // fastboot_flash recovery recovery.img
     }
 
     public static bool ActiveDeviceConnectedAndImgSelected(object param)

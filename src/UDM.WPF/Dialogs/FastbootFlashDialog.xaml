@@ -65,6 +65,25 @@
                      Margin="15,0,0,0" 
                      Width="100">Custom</TextBox>
         </StackPanel>
+        <Expander Margin="15,10,0,0">
+            <Expander.Header>
+                <TextBlock Style="{StaticResource ThemedTextBlock}">Flags</TextBlock>
+            </Expander.Header>
+            <StackPanel>
+                <CheckBox Margin="15,10,0,0" IsChecked="{Binding DisableVerity}">
+                    <CheckBox.Content>
+                        <TextBlock Style="{DynamicResource ThemedTextBlock}" Margin="3,0,0,0">
+                            --disable-verity
+                        </TextBlock>
+                    </CheckBox.Content>
+                </CheckBox>
+                <CheckBox Margin="15,10,0,0"  IsChecked="{Binding DisableVerification}">
+                    <TextBlock Style="{DynamicResource ThemedTextBlock}" Margin="3,0,0,0">
+                        --disable-verification
+                    </TextBlock>
+                </CheckBox>
+            </StackPanel>
+        </Expander>
         <StackPanel  Orientation="Horizontal" Margin="0,10,0,0" VerticalAlignment="Top">
             <TextBlock Style="{StaticResource ThemedTextBlock}" 
                        Margin="15,0,0,0" 
@@ -92,6 +111,8 @@
                 <MultiBinding Converter="{StaticResource Converter}">
                     <Binding ElementName="FlashModeComboBox" Path="SelectedItem.Content"></Binding>
                     <Binding Path="SelectedImagePath"></Binding>
+                    <Binding Path="DisableVerity"></Binding>
+                    <Binding Path="DisableVerification"></Binding>
                 </MultiBinding>
             </Button.CommandParameter>
         </Button>
