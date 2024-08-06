@@ -3,7 +3,7 @@
 * All vars should start with `$` char
 * To access var value just write its name (that's why they should start with `$`)
 * Comment lines starts with `#`
-* Every new command starts with \r\n (newline), one command per line (except `py_exec`)
+* Every new command starts with `\r\n` (newline), one command per line (except `py_exec`)
 ## Commands
 * `fastboot_reboot (mode)` \\\\ `fr (mode)`
 
