@@ -19,6 +19,10 @@
 
   Determines whether the bootloader is locked. Result will be displayed in logs.
 
+* `select (id)`
+
+  Sets selected device's id to `(id)`
+
 * `sideload (file)` \\\\ `sl`
 
   Sideloads provided zip file to device.
