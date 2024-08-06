@@ -12,6 +12,7 @@
     <Window.Resources>
         <converters:FastbootFlashMultiBindingConverter x:Key="Converter"></converters:FastbootFlashMultiBindingConverter>
         <converters:FastbootFlashPathShorter x:Key="Shorter"></converters:FastbootFlashPathShorter>
+        <converters:FlashTypeCustomValueConverter x:Key="IndexToBoolConverter" />
     </Window.Resources>
     <StackPanel VerticalAlignment="Stretch">
         <titlebar:Titlebar VerticalAlignment="Top"
@@ -41,7 +42,7 @@
             </TextBlock>
             <Grid Width="15"></Grid>
             <ComboBox Style="{StaticResource ThemedComboBox}" 
-                      SelectedIndex="0" 
+                      SelectedIndex="{Binding IsCustomSelected, Converter={StaticResource IndexToBoolConverter}}" 
                       x:Name="FlashModeComboBox"
                       Width="152" 
                       Height="24">
@@ -59,6 +60,7 @@
                        Text="{DynamicResource FfCustomPartition}">
             </TextBlock>
             <TextBox x:Name="TextBox" 
+                     IsEnabled="{Binding IsCustomSelected}"
                      Style="{StaticResource ThemedTextBox}" 
                      Margin="15,0,0,0" 
                      Width="100">Custom</TextBox>

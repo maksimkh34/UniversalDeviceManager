@@ -9,6 +9,18 @@ public class FastbootFlashDialogViewModel(Action closeWindowAction) : BaseViewMo
 {
     public ICommand BrowseCommand { get; } = new DelegateCommand(BrowseAction, DelegateCommand.DefaultCanExecute);
     public ICommand ApplyCommand { get; set; } = new DelegateCommand(FlashAction, ActiveDeviceConnectedAndImgSelected, closeWindowAction);
+    private bool _isCustomSelected;
+
+    public bool IsCustomSelected
+    {
+        get => _isCustomSelected;
+        set
+        {
+            if (_isCustomSelected == value) return;
+            _isCustomSelected = value;
+            OnPropertyChanged();
+        }
+    }
 
     private string _selectedImagePath = MainModel.ImageNotSelected;
     public string SelectedImagePath

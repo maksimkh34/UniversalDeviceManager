@@ -1,9 +1,13 @@
 ﻿using UDM.Model.LogService;
+// ReSharper disable InconsistentNaming
 
 namespace UDM.Model.DIL
 {
     public static class DeviceInteractionLanguage
     {
+        public const string FastbootFlash_DisableVerity_Flag = "-dt";
+        public const string FastbootFlash_DisableVerification_Flag = "-df";
+
         public static void Execute(string script)
         {
             LogService.LogService.Log("Executing script... \n", LogLevel.Info);
@@ -82,12 +86,32 @@ namespace UDM.Model.DIL
                             return;
                         }
 
-                        var path = instructions[2];
-                        for (var i = 3; i < instructions.Length; i++)
+                        var pathStartIndex = 2;
+
+                        var dt = false;
+                        var df = false;
+                        try {
+                            // if there are -dt or -df flags on 3 and 4 place, path to img starts from 4 or 5 instruction
+                            if (instructions[2] is FastbootFlash_DisableVerity_Flag or FastbootFlash_DisableVerification_Flag)
+                            {
+                                pathStartIndex += 1;
+                                if (instructions[2] == FastbootFlash_DisableVerity_Flag) dt = true;
+                                else df = true;
+                            }
+                            if (instructions[3] is FastbootFlash_DisableVerity_Flag or FastbootFlash_DisableVerification_Flag)
+                            {
+                                pathStartIndex += 1;
+                                if (instructions[3] == FastbootFlash_DisableVerity_Flag) dt = true;
+                                else df = true;
+                            }
+                        } catch(IndexOutOfRangeException) { }
+
+                        var path = instructions[pathStartIndex];
+                        for (var i = pathStartIndex + 1; i < instructions.Length; i++)
                         {
                             path += " " + instructions[i];
                         }
-                        var flashCommand = $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} flash {instructions[1]} \"{path}\"";
+                        var flashCommand = $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} {(dt ? "--disable-verity " : "")}{(df ? "--disable-verification " : "")}flash {instructions[1]} \"{path}\"";
                         var flashOutput = SysCalls.Exec(MainModel.PathToPlatformtools, "fastboot.exe",
                             flashCommand);
                         if(flashOutput.StdOutput != "")

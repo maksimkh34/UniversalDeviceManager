@@ -90,6 +90,7 @@ namespace UDM.Model
             DeviceConnections.Clear();
             UpdateFastbootDevices();
             UpdateSideloadDevices();
+            if(DeviceConnections.Count == 1) SelectedDevice = DeviceConnections[0];
         }
 
         public void Disconnect(string id)
@@ -156,7 +157,15 @@ namespace UDM.Model
 
         public static DeviceConnection Parse(string unparsed)
         {
-            return new DeviceConnection(unparsed.Split('\t')[0], Enum.Parse<DeviceConnectionType>(unparsed.Split('\t')[1]));
+            try
+            {
+                return new DeviceConnection(unparsed.Split('\t')[0],
+                    Enum.Parse<DeviceConnectionType>(unparsed.Split('\t')[1]));
+            }
+            catch (System.ArgumentException)
+            {
+                return new DeviceConnection();
+            }
         }
 
         public string DeviceToStr => Type == DeviceConnectionType.Disconnected ? "Disconnected" : (Id + $"\t({Type})");

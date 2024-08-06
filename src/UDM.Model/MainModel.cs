@@ -141,6 +141,7 @@ namespace UDM.Model
         {
             LogService.LogService.Log("CheckStartup Running!", LogLevel.Debug);
 
+            Directory.CreateDirectory(Cwd + @"\config");
             // Changelog
             if (File.Exists(Cwd + ChangelogPath))
             {

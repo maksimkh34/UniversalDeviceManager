@@ -55,6 +55,14 @@ namespace UDM.InteractionService
             return string.Join("", buffer);
         }
 
+        // ReSharper disable once InconsistentNaming
+        public string GetDILCode()
+        {
+            var code = File.ReadAllText(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\UniversalDeviceManager\python_pipe.dil");
+            File.Delete("python_pipe.dil");
+            return code;
+        }
+
         public string ReadErr()
         {
             if (!_running) throw new Exception("Interaction session is not running");
