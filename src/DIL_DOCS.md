@@ -23,9 +23,12 @@
   Sideloads provided zip file to device.
 
   
-* `fastboot_flash (partition) (path to image)` \\\\ `ff (partition) (path to image)`
+* `fastboot_flash (partition) {flags} (path to image)` \\\\ `ff (partition) (path to image)`
 
   Flashes image to partition using fastboot.
+
+  	* flag `-dt` => `--disable-verity`
+  	* flag `-df` => `--disable-verification`
 
   
 * `wait_for_bl` \\\\ `wb`
