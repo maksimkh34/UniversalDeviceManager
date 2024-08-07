@@ -1,0 +1,16 @@
+write_war $asksideload Press Apply update -> Apply from ADB
+
+fastboot_reboot recovery
+wait_for_recovery
+msg $asksideload
+sideload %cwd%\script\mi11t_crdroid\firmware.zip
+adb_reboot recovery
+wait_for_recovery
+msg Factory reset
+msg $asksideload
+sideload %cwd%\script\mi11t_crdroid\crdroid.zip
+adb_reboot recovery
+msg $asksideload
+sideload %cwd%\script\mi11t_crdroid\magisk.zip
+msg $asksideload
+sideload %cwd%\script\mi11t_crdroid\gapps.zip

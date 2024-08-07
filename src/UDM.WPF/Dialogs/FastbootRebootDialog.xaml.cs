@@ -16,7 +16,7 @@ namespace UDM.WPF.Dialogs
 
         private void FastbootRebootDialog_OnLoaded(object sender, RoutedEventArgs e)
         {
-            var dataContext = new FastbootRebootDialogViewModel(Close);
+            var dataContext = new FastbootRebootViewModel(Close);
             DataContext = dataContext;
             ActiveDeviceTextBox.Text += MainModel.ModelDeviceManager.SelectedDevice.Id + ")";
         }

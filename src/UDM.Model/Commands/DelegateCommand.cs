@@ -16,7 +16,8 @@ namespace UDM.Model.Commands
         public void Execute(object? parameter)
         {
             openAction(parameter!);
-            closeWindow?.Invoke();
+            try {closeWindow?.Invoke();}
+            catch(System.ComponentModel.Win32Exception){ }
         }
     }
 }

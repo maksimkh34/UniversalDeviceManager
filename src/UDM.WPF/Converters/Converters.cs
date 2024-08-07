@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Documents;
+using UDM.Model;
 using UDM.Model.LogService;
 
 namespace UDM.WPF.Converters
@@ -39,13 +40,13 @@ namespace UDM.WPF.Converters
         }
     }
 
-    public class FastbootFlashPathShorter : IValueConverter
+    public class PathShorter : IValueConverter
     {
         public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is string pathValue)
             {
-                return pathValue.Length > 30 ? "..." + pathValue[^27..] : pathValue;
+                return pathValue.Length > MainModel.MaxPathLength ? "..." + pathValue[^(MainModel.MaxPathLength-3)..] : pathValue;
             }
 
             return "value_type_error";

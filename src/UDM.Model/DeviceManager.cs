@@ -185,7 +185,7 @@ namespace UDM.Model
     public enum DeviceConnectionType
     {
         fastboot,
-        ADB,
+        adb,
         sideload,
         recovery,
         BROM,

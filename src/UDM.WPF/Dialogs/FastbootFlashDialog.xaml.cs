@@ -9,7 +9,7 @@ namespace UDM.WPF.Dialogs
     /// </summary>
     public partial class FastbootFlashDialog
     {
-        private FastbootFlashDialogViewModel? _dataContext;
+        private FastbootFlashViewModel? _dataContext;
 
         public FastbootFlashDialog()
         {
@@ -18,10 +18,10 @@ namespace UDM.WPF.Dialogs
 
         private void FastbootFlashDialog_OnLoaded(object sender, RoutedEventArgs e)
         {
-            _dataContext = new FastbootFlashDialogViewModel(Close);
+            _dataContext = new FastbootFlashViewModel(Close);
             DataContext = _dataContext;
             ActiveDeviceTextBox.Text += MainModel.ModelDeviceManager.SelectedDevice.Id + ")";
-            FastbootFlashDialogViewModel.Updater = UpdatePath;
+            FastbootFlashViewModel.Updater = UpdatePath;
         }
 
         public void UpdatePath(string path)

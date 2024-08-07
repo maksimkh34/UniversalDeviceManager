@@ -14,6 +14,8 @@ namespace UDM.Model.DIL
             var scriptLines = script.Split("\r\n");
             foreach (var pCmd in scriptLines)
             {
+                MainModel.ModelDeviceManager.UpdateDevices();
+
                 var cmd = MainModel.ReplaceCodeWars(pCmd);
                 var instructions = cmd.Split(' ');
                 switch (instructions[0])
@@ -22,6 +24,15 @@ namespace UDM.Model.DIL
                     case "\n":
                     case "\r\n":
                     case "":
+                        break;
+
+                    case "#":
+                        continue;
+
+                    case "select":
+                        var deviceId = instructions[1];
+                        MainModel.ModelDeviceManager.SelectedDevice = new DeviceConnection(deviceId,
+                            MainModel.ModelDeviceManager.SelectedDevice.Type);
                         break;
 
                     case "fr":
@@ -46,10 +57,40 @@ namespace UDM.Model.DIL
                         }
                         break;
 
+                    case "ar":
+                    case "adb_reboot":
+                        if (MainModel.ModelDeviceManager.ActiveDeviceType != DeviceConnectionType.adb)
+                        {
+                            LogService.LogService.Log("Device is not in adb mode! ", LogLevel.Error);
+                            return;
+                        }
+
+                        var aRebootCommand = $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} reboot {instructions[1]}";
+                        var aRebootOutput = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe",
+                            aRebootCommand);
+                        if (aRebootOutput.StdOutput == string.Empty)
+                        {
+                            LogService.LogService.Log(aRebootOutput.ErrOutput, LogLevel.Error);
+                        }
+                        else
+                        {
+                            LogService.LogService.Log(aRebootOutput.StdOutput, LogLevel.DILOutput);
+                        }
+                        break;
+
                     case "sl":
                     case "sideload":
+                        if (MainModel.ModelDeviceManager.ActiveDeviceType != DeviceConnectionType.sideload)
+                        {
+                            LogService.LogService.Log("Device is not in Sideload mode! ", LogLevel.Error);
+                            return;
+                        }
                         var archive = instructions[1];
-                        var sideloadCommand = $" -s {MainModel.ModelDeviceManager.SelectedDevice.Id} sideload {archive}";
+                        for (var i = 2; i < instructions.Length; i++)
+                        {
+                            archive += " " + instructions[i];
+                        }
+                        var sideloadCommand = $" -s {MainModel.ModelDeviceManager.SelectedDevice.Id} sideload \"{archive}\"";
                         var sideloadOutput = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe",
                             sideloadCommand);
                         if (sideloadOutput.StdOutput == string.Empty)
@@ -124,6 +165,15 @@ namespace UDM.Model.DIL
                     case "wait_for_bl":
                         while (!MainModel.ModelDeviceManager.SelectedDeviceAlive())
                         {
+                            Thread.Sleep(1000);
+                        }
+                        break;
+
+                    case "wr":
+                    case "wait_for_recovery":
+                        while (MainModel.ModelDeviceManager.ActiveDeviceType != DeviceConnectionType.recovery)
+                        {
+                            MainModel.ModelDeviceManager.UpdateDevices();
                             Thread.Sleep(1000);
                         }
                         break;

@@ -4,7 +4,7 @@ using UDM.Model.Commands;
 
 namespace UDM.Core.ViewModels
 {
-    public class SideloadFlashDialogViewModel(Action closeWindowAction) : BaseViewModel
+    public class SideloadFlashViewModel(Action closeWindowAction) : BaseViewModel
     {
         public ICommand ApplyCommand { get; set; } = new DelegateCommand(FlashAction, ActiveDeviceConnectedAndZipSelected, closeWindowAction);
         public ICommand BrowseCommand { get; } = new DelegateCommand(BrowseAction, DelegateCommand.DefaultCanExecute);

@@ -3,6 +3,14 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <system:String x:Key="MwBarTitle">Меню</system:String>
 
+    <system:String x:Key="Win32ExceptionMsg" xml:space="preserve">
+
+    Это - Win32Exception, которое порождают внешние процессы.
+    Эта ошибка не обязательно критическая, она может произойти из-за некорректного ответа девайса 
+    (или результата sideload), так что внимательно прочтите сообщение ошибки, и завершите приложение самостоятельно
+    (при необходимости)
+</system:String>
+
     <system:String x:Key="MwEdit">Опции</system:String>
     <system:String x:Key="MwEditSettings">Настройки</system:String>
     <system:String x:Key="MwEditInstallPython">Установить Python</system:String>
@@ -19,6 +27,7 @@
 
     <system:String x:Key="MwFastboot">Fastboot</system:String>
     <system:String x:Key="MwFastbootFlash">Прошить</system:String>
+    <system:String x:Key="MwFlashFullRom">Прошить полностью</system:String>
     <system:String x:Key="MwFastbootReboot">Перезагрузить</system:String>
     <system:String x:Key="MwFastbootCheckBl">Проверить статус загрузчика</system:String>
 
@@ -37,7 +46,10 @@
     <system:String x:Key="FfImage">Образ</system:String>
     <system:String x:Key="FfBrowse">Выбрать...</system:String>
     <system:String x:Key="FfApply">Прошить</system:String>
-    
+
+    <system:String x:Key="FfrRom">Прошивка</system:String>
+    <system:String x:Key="FfrMode">Режим</system:String>
+
     <system:String x:Key="FrTitle">Перезагрузка (Fastboot)</system:String>
     <system:String x:Key="FrMode">Режим</system:String>
     <system:String x:Key="FrDevice">Устройство</system:String>

@@ -9,7 +9,7 @@ namespace UDM.WPF.Dialogs
     /// </summary>
     public partial class SideloadFlashDialog : Window
     {
-        private SideloadFlashDialogViewModel? _dataContext;
+        private SideloadFlashViewModel? _dataContext;
 
         public SideloadFlashDialog()
         {
@@ -18,10 +18,10 @@ namespace UDM.WPF.Dialogs
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            _dataContext = new SideloadFlashDialogViewModel(Close);
+            _dataContext = new SideloadFlashViewModel(Close);
             DataContext = _dataContext;
             ActiveDeviceTextBox.Text += MainModel.ModelDeviceManager.SelectedDevice.Id + ")";
-            SideloadFlashDialogViewModel.Updater = UpdatePath;
+            SideloadFlashViewModel.Updater = UpdatePath;
         }
 
         public void UpdatePath(string path)

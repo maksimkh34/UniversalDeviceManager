@@ -12,7 +12,7 @@
         Title="FastbootFlashDialog" >
 
     <Window.Resources>
-        <converters:FastbootFlashPathShorter x:Key="Shorter"></converters:FastbootFlashPathShorter>
+        <converters:PathShorter x:Key="Shorter"></converters:PathShorter>
     </Window.Resources>
     <Grid>
         <StackPanel VerticalAlignment="Stretch">

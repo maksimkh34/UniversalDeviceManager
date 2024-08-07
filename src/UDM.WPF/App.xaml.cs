@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Threading;
 using UDM.Core.ViewModels;
 using UDM.Model;
@@ -131,10 +132,15 @@ namespace UDM.WPF
             var msg2 = e.Exception.GetType() + ": " + e.Exception.Message;
             LogService.Log(msg1, LogLevel.Fatal);
             LogService.Log(msg2, LogLevel.Fatal);
-            LogService.Save((string)(MainModel.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log"));
 
             e.Handled = true;
+            if (e.Exception is System.ComponentModel.Win32Exception)
+            {
+                ShowMessage("Warning!", msg2 + FindResource("Win32ExceptionMsg"));
+                return;
+            }
 
+            LogService.Save((string)(MainModel.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log"));
             ShowMessage(msg1, msg2);
 
             Environment.Exit(0);

@@ -5,7 +5,7 @@ using UDM.Model.Commands;
 
 namespace UDM.Core.ViewModels;
 
-public class FastbootFlashDialogViewModel(Action closeWindowAction) : BaseViewModel
+public class FastbootFlashViewModel(Action closeWindowAction) : BaseViewModel
 {
     public ICommand BrowseCommand { get; } = new DelegateCommand(BrowseAction, DelegateCommand.DefaultCanExecute);
     public ICommand ApplyCommand { get; set; } = new DelegateCommand(FlashAction, ActiveDeviceConnectedAndImgSelected, closeWindowAction);

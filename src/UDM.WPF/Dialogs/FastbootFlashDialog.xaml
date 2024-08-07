@@ -8,10 +8,11 @@
         xmlns:titlebar="clr-namespace:UDM.WPF.Controls.Titlebar"
         Style="{StaticResource ThemedWindow}"
         mc:Ignorable="d"
+        MinWidth="250"
         Title="FastbootFlashDialog">
     <Window.Resources>
         <converters:FastbootFlashMultiBindingConverter x:Key="Converter"></converters:FastbootFlashMultiBindingConverter>
-        <converters:FastbootFlashPathShorter x:Key="Shorter"></converters:FastbootFlashPathShorter>
+        <converters:PathShorter x:Key="Shorter"></converters:PathShorter>
         <converters:FlashTypeCustomValueConverter x:Key="IndexToBoolConverter" />
     </Window.Resources>
     <StackPanel VerticalAlignment="Stretch">
@@ -21,39 +22,37 @@
                            DockPanel.Dock="Top"
                            Header="{DynamicResource FfTitle}">
         </titlebar:Titlebar>
-        <StackPanel Orientation="Horizontal" Margin="0,10,10,0" VerticalAlignment="Top">
+        <DockPanel Margin="0,10,0,0" VerticalAlignment="Top">
             <TextBlock Style="{StaticResource ThemedTextBlock}" 
                        Margin="15,0,0,0" 
+                       DockPanel.Dock="Left"
                        VerticalAlignment="Center"
                        Text="{DynamicResource FfDevice}">
             </TextBlock>
-            <Grid Width="15"></Grid>
             <TextBox Style="{StaticResource ThemedTextBox}" 
                      Height="26" 
-                     Width="160" 
+                     HorizontalAlignment="Stretch"
                      IsEnabled="False"
-                     x:Name="ActiveDeviceTextBox">Active (</TextBox>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="0,10,0,0" VerticalAlignment="Top">
+                     x:Name="ActiveDeviceTextBox" Margin="15,0,15,0">Active (</TextBox>
+        </DockPanel>
+        <DockPanel Margin="0,10,0,0" VerticalAlignment="Top">
             <TextBlock Style="{StaticResource ThemedTextBlock}" 
                        Margin="15,0,0,0" 
                        VerticalAlignment="Center"
                        Text="{DynamicResource FfFlashTo}">
             </TextBlock>
-            <Grid Width="15"></Grid>
             <ComboBox Style="{StaticResource ThemedComboBox}" 
                       SelectedIndex="{Binding IsCustomSelected, Converter={StaticResource IndexToBoolConverter}}" 
                       x:Name="FlashModeComboBox"
-                      Width="152" 
-                      Height="24">
+                      Height="24" Margin="15,0,15,0">
                 <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}">recovery</ComboBoxItem>
                 <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}">boot</ComboBoxItem>
                 <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}">super</ComboBoxItem>
                 <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}">vbmeta</ComboBoxItem>
                 <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}" Content="{Binding Text, ElementName=TextBox}"></ComboBoxItem>
             </ComboBox>
-        </StackPanel>
-        <StackPanel  Orientation="Horizontal" Margin="0,10,0,0" VerticalAlignment="Top">
+        </DockPanel>
+        <DockPanel Margin="0,10,0,0" VerticalAlignment="Top">
             <TextBlock Style="{StaticResource ThemedTextBlock}" 
                        Margin="15,0,0,0" 
                        VerticalAlignment="Center"
@@ -62,9 +61,9 @@
             <TextBox x:Name="TextBox" 
                      IsEnabled="{Binding IsCustomSelected}"
                      Style="{StaticResource ThemedTextBox}" 
-                     Margin="15,0,0,0" 
-                     Width="100">Custom</TextBox>
-        </StackPanel>
+                     Margin="15,0,15,0" 
+                     HorizontalAlignment="Stretch">Custom</TextBox>
+        </DockPanel>
         <Expander Margin="15,10,0,0">
             <Expander.Header>
                 <TextBlock Style="{StaticResource ThemedTextBlock}">Flags</TextBlock>
@@ -84,19 +83,19 @@
                 </CheckBox>
             </StackPanel>
         </Expander>
-        <StackPanel  Orientation="Horizontal" Margin="0,10,0,0" VerticalAlignment="Top">
+        <DockPanel Margin="0,10,0,0" VerticalAlignment="Top">
             <TextBlock Style="{StaticResource ThemedTextBlock}" 
                        Margin="15,0,0,0" 
                        VerticalAlignment="Center"
                        Text="{DynamicResource FfImage}">
             </TextBlock>
             <Button Style="{StaticResource ThemedButton}" 
-                    Margin="15,0,0,0" 
-                    Width="116"
+                    Margin="15,0,15,0" 
+                    HorizontalAlignment="Stretch"
                     Command="{Binding BrowseCommand}"
                     Content="{DynamicResource FfBrowse}">
             </Button>
-        </StackPanel>
+        </DockPanel>
         <TextBlock Margin="15,10,15,0"
                    Text="{Binding SelectedImagePath, Converter={StaticResource Shorter}}" 
                    HorizontalAlignment="Stretch">

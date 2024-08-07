@@ -61,8 +61,12 @@ namespace UDM.Model
         public const string SnLogPath = nameof(SnLogPath);
         public const string SnCurrentLanguage = nameof(SnCurrentLanguage);
 
+        // In GUI, there are shorters (if path more than this value, it will start
+        // with "..." and last (MaxPathLength-3) symbols of provided path
+        public static int MaxPathLength = 35;
+
         public const string NoCodeExecutedDefaultMsg = "No code is being executed.";
-        public const string ImageNotSelected = "Image not selected";
+        public const string ImageNotSelected = "File not selected";
 
         public const string ChangelogPath = @"\changelog";
         public const string InitFilePath = @"\config\init";

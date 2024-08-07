@@ -3,6 +3,13 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <system:String x:Key="MwBarTitle">Menu</system:String>
 
+    <system:String x:Key="Win32ExceptionMsg" xml:space="preserve">
+
+    This exception is Win32Exception, that being thrown by outer process.
+    That error is not exactly fatal, this could happen because of invalid device response (or bad sideload return),
+    so carefully read the exception message and kill the app by yourself if needed (after closing this window app will run ignoring this exception).
+    </system:String>
+
     <system:String x:Key="MwEdit">Options</system:String>
     <system:String x:Key="MwEditSettings">Settings</system:String>
     <system:String x:Key="MwEditInstallPython">Install Python</system:String>
@@ -20,6 +27,7 @@
     <system:String x:Key="MwFastboot">Fastboot</system:String>
     <system:String x:Key="MwFastbootFlash">Flash</system:String>
     <system:String x:Key="MwFastbootReboot">Reboot</system:String>
+    <system:String x:Key="MwFlashFullRom">Flash full ROM</system:String>
     <system:String x:Key="MwFastbootCheckBl">Check BL status</system:String>
 
     <system:String x:Key="DialogUnhandledExceptionMsg">Unhandled exception captured. Logs will be saved to</system:String>
@@ -37,12 +45,15 @@
     <system:String x:Key="FfImage">Image</system:String>
     <system:String x:Key="FfBrowse">Browse...</system:String>
     <system:String x:Key="FfApply">Flash</system:String>
-    
+
+    <system:String x:Key="FfrRom">ROM</system:String>
+    <system:String x:Key="FfrMode">Mode</system:String>
+
     <system:String x:Key="FrTitle">Reboot (Fastboot)</system:String>
     <system:String x:Key="FrMode">Reboot to</system:String>
     <system:String x:Key="FrDevice">Device</system:String>
     <system:String x:Key="FrApply">Reboot</system:String>
-    
+
     <system:String x:Key="MsgTitle">Warning</system:String>
     <system:String x:Key="MsgInfo">Check logs to get more info</system:String>
     <system:String x:Key="MsgWait">Waiting for input...</system:String>
