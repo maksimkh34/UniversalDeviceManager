@@ -2,7 +2,8 @@
 * DIL is scripting language, which means that it consists of commands and vars.
 * All vars should start with `$` char
 * To access var value just write its name (that's why they should start with `$`)
-* Every new command starts with \r\n (newline), one command per line (except `py_exec`)
+* Comment lines starts with `#`
+* Every new command starts with `\r\n` (newline), one command per line (except `py_exec`)
 ## Commands
 * `fastboot_reboot (mode)` \\\\ `fr (mode)`
 
@@ -18,19 +19,30 @@
 
   Determines whether the bootloader is locked. Result will be displayed in logs.
 
+* `select (id)`
+
+  Sets selected device's id to `(id)`
+
 * `sideload (file)` \\\\ `sl`
 
   Sideloads provided zip file to device.
 
   
-* `fastboot_flash (partition) (path to image)` \\\\ `ff (partition) (path to image)`
+* `fastboot_flash (partition) {flags} (path to image)` \\\\ `ff (partition) (path to image)`
 
   Flashes image to partition using fastboot.
+
+  	* flag `-dt` => `--disable-verity`
+  	* flag `-df` => `--disable-verification`
 
   
 * `wait_for_bl` \\\\ `wb`
 
   Waiting for selected device to boot into bootloader (fastboot)
+
+* `wait_for_recovery` \\\\ `wr`
+
+  Waiting for selected device to boot into recovery (fastboot)
 
   
 * `iget (path) (url)`
