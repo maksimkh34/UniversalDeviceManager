@@ -142,3 +142,18 @@ Example:
 ```
 cmdexec %cwd% %pyexecutable% exit()
 ```
+
+## If statement
+```
+if (expr1)=(expr2)
+begin
+	(code if expression is true)
+else
+	(code if expression is false)
+end
+```
+* `expr1`'s and `expr2`'s string representations will be matched.
+* Next to expression there should be minimum of 3 lines: `begin`, `else` and `end`.
+* If needed, place your DIL code between those keywords.
+* **Do not** separate `expr1`, `=` and `expr2`! It must be exactly `expr1=expr2`
+* But remember. you still can use spaces inside `expr1` and `expr2`

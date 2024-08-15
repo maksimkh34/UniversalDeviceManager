@@ -74,6 +74,42 @@ namespace UDM.Model.DIL
                         }
                         break;
 
+                    case "if":
+                        var expression = instructions[2];
+                        for(int i = 3; i < instructions.Length; i++)
+                        {
+                            expression += " " + instructions[i];
+                        }
+
+                        var expressionList = expression.Split('=');
+                        if(expressionList.Length != 2)
+                        {
+                            MainModel.UiMsgDialog?.Invoke("Error", "Invalid expression: " + expression + ". " + expressionList.Length + " equals found (expect 2)");
+                        }
+
+                        bool expressionValue = expressionList[0].ToString() == expressionList[1].ToString();
+
+                        var codeIfTrue = MainModel.GetBetween(string.Join("\r\n", scriptLines), "begin", "else");
+                        var codeIfFalse = MainModel.GetBetween(string.Join("\r\n", scriptLines), "else", "end");
+
+                        if (expressionValue) Execute(codeIfTrue);
+                        else Execute(codeIfFalse);
+
+                        // replace if statement code so DIL will not execute it
+                        for(int i = 0; i < scriptLines.Length; i++)
+                        {
+                            if (scriptLines[i] == "begin")
+                            {
+                                while (scriptLines[i] != "end")
+                                {
+                                    scriptLines[i] = "\r\n"; i += 1;
+                                }
+                                scriptLines[i] = "\r\n"; break;
+                            }
+                        }
+
+                        break;
+
                     case "fr":
                     case "fastboot_reboot":
                         if (instructions.Length == 1)

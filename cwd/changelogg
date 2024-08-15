@@ -1,3 +1,5 @@
 Features:
 * Enhanced fastboot flash menu
 * First connected device is selected
+* Flash full rom option
+* if statement in DIL (example 4)

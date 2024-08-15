@@ -1,0 +1,7 @@
+if  %askuser: [Input 1]%=%askuser: [Input 2]%
+begin
+msg Equals!
+else
+msg Not eqals!
+end
+msg Done!
