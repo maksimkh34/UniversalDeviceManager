@@ -46,7 +46,7 @@ public class FastbootFlashViewModel(Action closeWindowAction) : BaseViewModel
         }
     }
 
-    private string _selectedImagePath = MainModel.ImageNotSelected;
+    private string _selectedImagePath = MainModel.FileNotSelected;
     public string SelectedImagePath
     {
         get => _selectedImagePath;
@@ -87,7 +87,7 @@ public class FastbootFlashViewModel(Action closeWindowAction) : BaseViewModel
     {
         if (!MainModel.ModelDeviceManager.ActiveDeviceConnected() || MainModel.ModelDeviceManager.ActiveDeviceType != DeviceConnectionType.fastboot) return false;
         if (param is not IEnumerable<string> list) return false;
-        return list.ElementAt(1) != MainModel.ImageNotSelected;
+        return list.ElementAt(1) != MainModel.FileNotSelected;
     }
 
     public delegate void PathUpdater(string path);

@@ -31,6 +31,7 @@ namespace UDM.WPF
                 autoExecuteCode: AutoOpenPreDil,
                 getImageStrAction: GetImagePath,
                 getArchiveStrAction: GetArchivePath,
+                getFolderStrAction: GetFolderPath,
                 changelogTitle: (string)FindResource("MsgChangelog")!,
                 pythonDownloadMsgShow: pythonDownloadWindow.Show,
                 pythonDownloadMsgClose: pythonDownloadWindow.Close,
@@ -79,11 +80,23 @@ namespace UDM.WPF
                 AddExtension = true,
                 DefaultExt = "zip",
                 Filter = "ZIP archive (*.zip)|*.zip|All files (*.*)|*.*",
-                Title = "Select archive to flash"
+                Title = "Select archive"
             };
             dialog.ShowDialog();
 
             return dialog.FileName;
+        }
+
+        public static string GetFolderPath()
+        {
+            var dialog = new Microsoft.Win32.OpenFolderDialog
+            {
+                Multiselect = false,
+                Title = "Select folder"
+            };
+            dialog.ShowDialog();
+
+            return dialog.FolderName;
         }
 
         public static bool? OpenPreDil()

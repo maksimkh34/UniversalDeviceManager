@@ -1,5 +1,5 @@
 wv $clpath %cwd%\python\downloads\mtkclient.zip
-msg Don't forget to install Python! (Options->Install Python)
+msg If you get unhandled exception on installation, install Python (Options->Install Python) and remove config folder
 log Installing MTKClient...
 iget $clpath https://github.com/bkerler/mtkclient/archive/refs/heads/main.zip
 unzip $clpath %cwd%\python\mtkclient\

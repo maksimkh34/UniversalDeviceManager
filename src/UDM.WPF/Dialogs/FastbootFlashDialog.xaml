@@ -11,7 +11,7 @@
         MinWidth="250"
         Title="FastbootFlashDialog">
     <Window.Resources>
-        <converters:FastbootFlashMultiBindingConverter x:Key="Converter"></converters:FastbootFlashMultiBindingConverter>
+        <converters:MultiBindingToStrListConverter x:Key="Converter"></converters:MultiBindingToStrListConverter>
         <converters:PathShorter x:Key="Shorter"></converters:PathShorter>
         <converters:FlashTypeCustomValueConverter x:Key="IndexToBoolConverter" />
     </Window.Resources>

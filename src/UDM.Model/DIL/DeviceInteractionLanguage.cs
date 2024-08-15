@@ -35,6 +35,45 @@ namespace UDM.Model.DIL
                             MainModel.ModelDeviceManager.SelectedDevice.Type);
                         break;
 
+                    case "flash_rom":
+                        var type = instructions[1];
+                        var fullFlashPath = instructions[2];
+                        for (var i = 3; i < instructions.Length; i++)
+                        {
+                            fullFlashPath += " " + instructions[i];
+                        }
+
+                        var pathToBat = fullFlashPath + "\\";
+                        switch (type)
+                        {
+                            case "-f":
+                                pathToBat += "flash_all.bat";
+                                break;
+                            case "-l":
+                                pathToBat += "flash_all_lock.bat";
+                                break;
+                            case "-k":
+                                pathToBat += "flash_all_except_data_storage.bat";
+                                break;
+                            case "-d":
+                                MainModel.UiMsgDialog?.Invoke("Error", "Invalid flashing mode specifed. Flashing in clean type...");
+                                pathToBat += "flash_all.bat";
+                                break;
+                        }
+
+                        var fullFlashOutput = SysCalls.Exec(fullFlashPath, pathToBat,
+                            "");
+
+                        if (fullFlashOutput.StdOutput == string.Empty)
+                        {
+                            LogService.LogService.Log(fullFlashOutput.ErrOutput, LogLevel.Error);
+                        }
+                        else
+                        {
+                            LogService.LogService.Log(fullFlashOutput.StdOutput, LogLevel.DILOutput);
+                        }
+                        break;
+
                     case "fr":
                     case "fastboot_reboot":
                         if (instructions.Length == 1)

@@ -27,7 +27,7 @@ namespace UDM.WPF.Converters
         }
     }
 
-    public class FastbootFlashMultiBindingConverter : IMultiValueConverter
+    public class MultiBindingToStrListConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {

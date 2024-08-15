@@ -9,7 +9,7 @@ namespace UDM.Core.ViewModels
         public ICommand ApplyCommand { get; set; } = new DelegateCommand(FlashAction, ActiveDeviceConnectedAndZipSelected, closeWindowAction);
         public ICommand BrowseCommand { get; } = new DelegateCommand(BrowseAction, DelegateCommand.DefaultCanExecute);
 
-        private string _selectedArchivePath = MainModel.ImageNotSelected;
+        private string _selectedArchivePath = MainModel.FileNotSelected;
         public string SelectedArchivePath
         {
             get => _selectedArchivePath;
@@ -34,7 +34,7 @@ namespace UDM.Core.ViewModels
         {
             if (!MainModel.ModelDeviceManager.ActiveDeviceConnected()) return false;
             if (obj is not string str) return false;
-            return str != MainModel.ImageNotSelected;
+            return str != MainModel.FileNotSelected;
         }
 
         private static void FlashAction(object obj)

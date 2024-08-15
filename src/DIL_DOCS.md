@@ -23,6 +23,16 @@
 
   Sets selected device's id to `(id)`
 
+* `flash_rom (type) (path)`
+	
+  Flashes rom to device (like MiFlash do)
+
+  * `type`
+	* `-f` - flash and wipe
+	* `-l` - flash and lock
+	* `-k` - keep user files
+	* `-d` - do not flash (do not pass in code)
+
 * `sideload (file)` \\\\ `sl`
 
   Sideloads provided zip file to device.

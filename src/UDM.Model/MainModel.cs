@@ -66,7 +66,7 @@ namespace UDM.Model
         public static int MaxPathLength = 35;
 
         public const string NoCodeExecutedDefaultMsg = "No code is being executed.";
-        public const string ImageNotSelected = "File not selected";
+        public const string FileNotSelected = "File not selected";
 
         public const string ChangelogPath = @"\changelog";
         public const string InitFilePath = @"\config\init";
@@ -96,10 +96,12 @@ namespace UDM.Model
         public static WaitForInputDialog? UiWaitForInputDialog;
         public static GetStrAction? GetImagePath;
         public static GetStrAction? GetArchivePath;
+        public static GetStrAction? GetFolderPath;
         public static GetStrActionMsg? GetUserInput;
         public static string? ChangelogTitle;
 
-        public static void RegisterMainModel(MsgDialog msgDialog, ExecuteCode executeCode, ExecuteCode autoExecuteCode, GetStrAction getImageStrAction, GetStrAction getArchiveStrAction,
+        public static void RegisterMainModel(MsgDialog msgDialog, ExecuteCode executeCode, ExecuteCode autoExecuteCode,
+            GetStrAction getImageStrAction, GetStrAction getArchiveStrAction, GetStrAction getFolderStrAction,
             string changelogTitle, MsgWindowAction pythonDownloadMsgShow, MsgWindowAction pythonDownloadMsgClose,
             WaitForInputDialog waitForInputDialog, GetStrActionMsg getUserInput)
         {
@@ -109,6 +111,7 @@ namespace UDM.Model
             AutoExecuteCode = autoExecuteCode;
             GetImagePath = getImageStrAction;
             GetArchivePath = getArchiveStrAction;
+            GetFolderPath = getFolderStrAction;
             PythonDownloadMsgClose = pythonDownloadMsgClose;
             PythonDownloadMsgShow = pythonDownloadMsgShow;
             UiWaitForInputDialog = waitForInputDialog;

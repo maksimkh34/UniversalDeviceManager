@@ -81,7 +81,7 @@
                     </MenuItem>
 
                     <MenuItem Header="{DynamicResource MwFlashFullRom}"
-                              Click="Menu_FastbootCheckBootloader_Click"
+                              Click="Menu_FlashFullRom_Click"
                               Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
                 </MenuItem>

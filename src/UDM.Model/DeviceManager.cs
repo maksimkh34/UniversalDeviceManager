@@ -14,6 +14,8 @@ namespace UDM.Model
     {
         public const string Disconnected_id = "disconnected_id";
 
+        public const bool EmulateDevice = true;
+
         public ObservableCollection<DeviceConnection> DeviceConnections = new();
         public DeviceConnectionType ActiveDeviceType => SelectedDevice.Type;
 
@@ -90,6 +92,9 @@ namespace UDM.Model
             DeviceConnections.Clear();
             UpdateFastbootDevices();
             UpdateSideloadDevices();
+            if (DeviceConnections.Count == 0 && EmulateDevice && MainModel.IsDebugRelease) {
+                DeviceConnections.Add(new DeviceConnection("emulator", DeviceConnectionType.fastboot));
+            }
             if(DeviceConnections.Count == 1) SelectedDevice = DeviceConnections[0];
         }
 

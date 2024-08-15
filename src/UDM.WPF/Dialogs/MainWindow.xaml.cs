@@ -103,5 +103,10 @@ namespace UDM.WPF.Dialogs
         {
             new SideloadFlashDialog().ShowDialog();
         }
+
+        private void Menu_FlashFullRom_Click(object sender, RoutedEventArgs e)
+        {
+            new FlashFullRomDialog().ShowDialog();
+        }
     }
 }

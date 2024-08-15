@@ -6,19 +6,35 @@
         xmlns:local="clr-namespace:UDM.WPF.Dialogs"
         xmlns:titlebar="clr-namespace:UDM.WPF.Controls.Titlebar"
         mc:Ignorable="d"
+        Loaded="Window_Loaded"
         xmlns:converters="clr-namespace:UDM.WPF.Converters"
         Style="{StaticResource ThemedWindow}"
         Title="FlashFullRomDialog">
     <Window.Resources>
         <converters:PathShorter x:Key="Shorter"></converters:PathShorter>
+        <converters:MultiBindingToStrListConverter x:Key="FullRomConverter"></converters:MultiBindingToStrListConverter>
     </Window.Resources>
     <StackPanel>
+        
         <titlebar:Titlebar VerticalAlignment="Top"
                            CanMinimize="False"
                            CanRestoreSize="False"
                            DockPanel.Dock="Top"
                            Header="{DynamicResource MwFlashFullRom}">
         </titlebar:Titlebar>
+        <DockPanel Margin="0,10,0,0" VerticalAlignment="Top">
+            <TextBlock Style="{StaticResource ThemedTextBlock}" 
+               Margin="15,0,0,0" 
+               DockPanel.Dock="Left"
+               VerticalAlignment="Center"
+               Text="{DynamicResource FfDevice}">
+            </TextBlock>
+            <TextBox Style="{StaticResource ThemedTextBox}" 
+             Height="26" 
+             HorizontalAlignment="Stretch"
+             IsEnabled="False"
+             x:Name="ActiveDeviceTextBox" Margin="15,0,15,0">Active (</TextBox>
+        </DockPanel>
         <DockPanel  Margin="0,10,15,0" VerticalAlignment="Top">
             <TextBlock Style="{StaticResource ThemedTextBlock}" 
                        Margin="15,0,0,0" 
@@ -35,7 +51,7 @@
             </Button>
         </DockPanel>
         <TextBlock Margin="15,10,15,0"
-                   Text="{Binding SelectedImagePath, Converter={StaticResource Shorter}}" 
+                   Text="{Binding SelectedRomPath, Converter={StaticResource Shorter}}" 
                    HorizontalAlignment="Stretch">
 
         </TextBlock>
@@ -58,6 +74,16 @@
                 <ComboBoxItem Style="{StaticResource ThemedComboBoxItem}">Keep user files</ComboBoxItem>
             </ComboBox>
         </DockPanel>
-        <Button Style="{StaticResource ThemedButton}" Margin="15,10,15,10">Flash</Button>
+        <Button Style="{StaticResource ThemedButton}" 
+                Margin="15,10,15,10"
+                Content="Flash"
+                Command="{Binding ApplyCommand}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource FullRomConverter}">
+                    <Binding Path="SelectedRomPath"/>
+                    <Binding ElementName="FlashModeComboBox" Path="SelectedItem.Content"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
     </StackPanel>
 </Window>
