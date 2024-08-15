@@ -20,7 +20,7 @@ namespace UDM.WPF.Dialogs
         {
             _dataContext = new FastbootFlashViewModel(Close);
             DataContext = _dataContext;
-            ActiveDeviceTextBox.Text += MainModel.ModelDeviceManager.SelectedDevice.Id + ")";
+            ActiveDeviceTextBox.Text += MainModel.ModelDeviceManager.ActiveDevice.Id + ")";
             FastbootFlashViewModel.Updater = UpdatePath;
         }
 

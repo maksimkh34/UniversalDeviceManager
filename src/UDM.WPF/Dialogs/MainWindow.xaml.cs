@@ -72,6 +72,19 @@ namespace UDM.WPF.Dialogs
             new PreDIL().Show();
         }
 
+        private void Menu_UpdatePartitionsClick(object sender, RoutedEventArgs e)
+        {
+            if (!MainModel.ModelDeviceManager.IsActiveDeviceConnected() || MainModel.ModelDeviceManager.ActiveDeviceType != DeviceConnectionType.adb)
+                MainModel.UiMsgDialog?.Invoke("Error", "Device must in ADB mode!");
+
+            MainModel.ModelDeviceManager.ActiveDevice.UpdatePartitions();
+            if(MainModel.ModelDeviceManager.ActiveDevice.IsPartitioned)
+            {
+                MainModel.UiMsgDialog?.Invoke("OK", "Partitions table updated! ");
+                LogService.Log("Found partitions: " + MainModel.ModelDeviceManager.ActiveDevice.Partitions.Count, LogLevel.Debug);
+            } else MainModel.UiMsgDialog?.Invoke("Error", "Error updating partiotins table!");
+        }
+
         private void Menu_FastbootFlash_Click(object sender, RoutedEventArgs e)
         {
             new FastbootFlashDialog().ShowDialog();

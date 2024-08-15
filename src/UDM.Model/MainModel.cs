@@ -187,7 +187,7 @@ namespace UDM.Model
             var result = code
                 .Replace("%pyexecutable%", PathToPython)
                 .Replace("%cwd%", Cwd)
-                .Replace("%sid%", ModelDeviceManager.SelectedDevice.Id);
+                .Replace("%sid%", ModelDeviceManager.ActiveDevice.Id);
 
             result = Vars.Keys.Aggregate(result, (current, varName) => current.Replace(varName, Vars[varName]));
 

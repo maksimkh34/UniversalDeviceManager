@@ -15,7 +15,7 @@ namespace UDM.Core.ViewModels
 
         public ICommand UpdateDevicesCommand => Model.Commands.DeviceCommands.UpdateDevicesCommand;
 
-        public DeviceConnection Connection => MainModel.ModelDeviceManager.SelectedDevice;
+        public DeviceConnection Connection => MainModel.ModelDeviceManager.ActiveDevice;
 
         #endregion Properties
 

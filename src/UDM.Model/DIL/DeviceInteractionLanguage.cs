@@ -11,6 +11,7 @@ namespace UDM.Model.DIL
         public static void Execute(string script)
         {
             LogService.LogService.Log("Executing script... \n", LogLevel.Info);
+            while (script.StartsWith(' ')) script = script.Substring(1);
             var scriptLines = script.Split("\r\n");
             foreach (var pCmd in scriptLines)
             {
@@ -31,8 +32,8 @@ namespace UDM.Model.DIL
 
                     case "select":
                         var deviceId = instructions[1];
-                        MainModel.ModelDeviceManager.SelectedDevice = new DeviceConnection(deviceId,
-                            MainModel.ModelDeviceManager.SelectedDevice.Type);
+                        MainModel.ModelDeviceManager.ActiveDevice = new DeviceConnection(deviceId,
+                            MainModel.ModelDeviceManager.ActiveDevice.Type);
                         break;
 
                     case "flash_rom":
@@ -64,13 +65,13 @@ namespace UDM.Model.DIL
                         var fullFlashOutput = SysCalls.Exec(fullFlashPath, pathToBat,
                             "");
 
-                        if (fullFlashOutput.StdOutput == string.Empty)
+                        if (fullFlashOutput.ErrOutput == string.Empty)
                         {
-                            LogService.LogService.Log(fullFlashOutput.ErrOutput, LogLevel.Error);
+                            LogService.LogService.Log(fullFlashOutput.StdOutput, LogLevel.Error);
                         }
                         else
                         {
-                            LogService.LogService.Log(fullFlashOutput.StdOutput, LogLevel.DILOutput);
+                            LogService.LogService.Log(fullFlashOutput.ErrOutput, LogLevel.DILOutput);
                         }
                         break;
 
@@ -118,17 +119,17 @@ namespace UDM.Model.DIL
                         }
 
                         var rebootCommand = instructions.ElementAt(1) == "EDL" ?
-                            $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} oem edl" :
-                            $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} reboot {instructions[1]}";
+                            $"-s {MainModel.ModelDeviceManager.ActiveDevice.Id} oem edl" :
+                            $"-s {MainModel.ModelDeviceManager.ActiveDevice.Id} reboot {instructions[1]}";
                         var rebootOutput = SysCalls.Exec(MainModel.PathToPlatformtools, "fastboot.exe",
                             rebootCommand);
-                        if (rebootOutput.StdOutput == string.Empty)
+                        if (rebootOutput.ErrOutput == string.Empty)
                         {
-                            LogService.LogService.Log(rebootOutput.ErrOutput, LogLevel.Error);
+                            LogService.LogService.Log(rebootOutput.StdOutput, LogLevel.Error);
                         }
                         else
                         {
-                            LogService.LogService.Log(rebootOutput.StdOutput, LogLevel.DILOutput);
+                            LogService.LogService.Log(rebootOutput.ErrOutput, LogLevel.DILOutput);
                         }
                         break;
 
@@ -140,16 +141,16 @@ namespace UDM.Model.DIL
                             return;
                         }
 
-                        var aRebootCommand = $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} reboot {instructions[1]}";
+                        var aRebootCommand = $"-s {MainModel.ModelDeviceManager.ActiveDevice.Id} reboot {instructions[1]}";
                         var aRebootOutput = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe",
                             aRebootCommand);
-                        if (aRebootOutput.StdOutput == string.Empty)
+                        if (aRebootOutput.ErrOutput == string.Empty)
                         {
-                            LogService.LogService.Log(aRebootOutput.ErrOutput, LogLevel.Error);
+                            LogService.LogService.Log(aRebootOutput.StdOutput, LogLevel.Error);
                         }
                         else
                         {
-                            LogService.LogService.Log(aRebootOutput.StdOutput, LogLevel.DILOutput);
+                            LogService.LogService.Log(aRebootOutput.ErrOutput, LogLevel.DILOutput);
                         }
                         break;
 
@@ -165,38 +166,38 @@ namespace UDM.Model.DIL
                         {
                             archive += " " + instructions[i];
                         }
-                        var sideloadCommand = $" -s {MainModel.ModelDeviceManager.SelectedDevice.Id} sideload \"{archive}\"";
+                        var sideloadCommand = $" -s {MainModel.ModelDeviceManager.ActiveDevice.Id} sideload \"{archive}\"";
                         var sideloadOutput = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe",
                             sideloadCommand);
-                        if (sideloadOutput.StdOutput == string.Empty)
+                        if (sideloadOutput.ErrOutput == string.Empty)
                         {
-                            LogService.LogService.Log(sideloadOutput.ErrOutput, LogLevel.Error);
+                            LogService.LogService.Log(sideloadOutput.StdOutput, LogLevel.Error);
                         }
                         else
                         {
-                            LogService.LogService.Log(sideloadOutput.StdOutput, LogLevel.DILOutput);
+                            LogService.LogService.Log(sideloadOutput.ErrOutput, LogLevel.DILOutput);
                         }
                         break;
 
                     case "fc":
                     case "fastboot_check_bl":
-                        if (MainModel.ModelDeviceManager.SelectedDevice.Id == DeviceManager.Disconnected_id)
+                        if (MainModel.ModelDeviceManager.ActiveDevice.Id == DeviceManager.Disconnected_id)
                         {
                             LogService.LogService.Log("Device is not connected!", LogLevel.Error);
                             return;
                         }
-                        var checkCommand = $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} getvar unlocked";
+                        var checkCommand = $"-s {MainModel.ModelDeviceManager.ActiveDevice.Id} getvar unlocked";
                         var checkOutput = SysCalls.Exec(MainModel.PathToPlatformtools, MainModel.PathToPlatformtools + @"\fastboot.exe",
                             checkCommand);
-                        if(checkOutput.ErrOutput == string.Empty)
-                            LogService.LogService.Log(checkOutput.StdOutput.Split("\r\n")[0], LogLevel.DILOutput);
+                        if(checkOutput.StdOutput == string.Empty)
+                            LogService.LogService.Log(checkOutput.ErrOutput.Split("\r\n")[0], LogLevel.DILOutput);
                         else
-                            LogService.LogService.Log(checkOutput.ErrOutput, LogLevel.Error);
+                            LogService.LogService.Log(checkOutput.StdOutput, LogLevel.Error);
                         break;
 
                     case "ff":
                     case "fastboot_flash":
-                        if (MainModel.ModelDeviceManager.SelectedDevice.Id == DeviceManager.Disconnected_id)
+                        if (MainModel.ModelDeviceManager.ActiveDevice.Id == DeviceManager.Disconnected_id)
                         {
                             LogService.LogService.Log("Device is not connected!", LogLevel.Error);
                             return;
@@ -227,18 +228,18 @@ namespace UDM.Model.DIL
                         {
                             path += " " + instructions[i];
                         }
-                        var flashCommand = $"-s {MainModel.ModelDeviceManager.SelectedDevice.Id} {(dt ? "--disable-verity " : "")}{(df ? "--disable-verification " : "")}flash {instructions[1]} \"{path}\"";
+                        var flashCommand = $"-s {MainModel.ModelDeviceManager.ActiveDevice.Id} {(dt ? "--disable-verity " : "")}{(df ? "--disable-verification " : "")}flash {instructions[1]} \"{path}\"";
                         var flashOutput = SysCalls.Exec(MainModel.PathToPlatformtools, "fastboot.exe",
                             flashCommand);
-                        if(flashOutput.StdOutput != "")
-                            LogService.LogService.Log(flashOutput.StdOutput, LogLevel.DILOutput);
-                        else LogService.LogService.Log(flashOutput.ErrOutput, LogLevel.Error);
+                        if(flashOutput.ErrOutput != "")
+                            LogService.LogService.Log(flashOutput.ErrOutput, LogLevel.DILOutput);
+                        else LogService.LogService.Log(flashOutput.StdOutput, LogLevel.Error);
 
                         break;
 
                     case "wb":
                     case "wait_for_bl":
-                        while (!MainModel.ModelDeviceManager.SelectedDeviceAlive())
+                        while (!MainModel.ModelDeviceManager.ActiveDeviceAlive())
                         {
                             Thread.Sleep(1000);
                         }

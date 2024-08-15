@@ -32,7 +32,7 @@ namespace UDM.Core.ViewModels
 
         private static bool ActiveDeviceConnectedAndZipSelected(object obj)
         {
-            if (!MainModel.ModelDeviceManager.ActiveDeviceConnected()) return false;
+            if (!MainModel.ModelDeviceManager.IsActiveDeviceConnected()) return false;
             if (obj is not string str) return false;
             return str != MainModel.FileNotSelected;
         }

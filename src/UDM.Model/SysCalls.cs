@@ -19,7 +19,7 @@ namespace UDM.Model
                     var p = new Process();
                     p.StartInfo.UseShellExecute = false;
 
-                    p.StartInfo.RedirectStandardError = true; 
+                    p.StartInfo.RedirectStandardError = true;
                     p.StartInfo.RedirectStandardOutput = true;
 
                     p.StartInfo.CreateNoWindow = true;
@@ -31,10 +31,39 @@ namespace UDM.Model
                     p.Start();
                     p.WaitForExit();
 
-                    var stdOutput = p.StandardError.ReadToEnd();
-                    var errOutput = p.StandardOutput.ReadToEnd();
+                    var stdOutput = p.StandardOutput.ReadToEnd();
+                    var errOutput = p.StandardError.ReadToEnd();
 
-                    return new ExecutionResult(new[] { stdOutput, errOutput });
+                    return new ExecutionResult(new[] { errOutput, stdOutput });
+
+                case OsType.Linux:
+                    throw new NotImplementedException();
+                default:
+                    throw new InvalidEnumArgumentException();
+            }
+        }
+
+        public static string ExecAndRead(string wd, string filename, string args)
+        {
+            LogService.LogService.Log("Executing " + filename + " " + args, LogLevel.Debug);
+
+            switch (OsType)
+            {
+                case OsType.Win:
+                    var p = new Process();
+                    p.StartInfo.UseShellExecute = false;
+
+                    p.StartInfo.RedirectStandardError = true;
+                    p.StartInfo.RedirectStandardOutput = true;
+
+                    p.StartInfo.CreateNoWindow = true;
+
+                    p.StartInfo.Arguments = args;
+                    p.StartInfo.FileName = filename;
+                    p.StartInfo.WorkingDirectory = wd;
+
+                    p.Start();
+                    return p.StandardOutput.ReadToEnd();
 
                 case OsType.Linux:
                     throw new NotImplementedException();
@@ -52,7 +81,7 @@ namespace UDM.Model
 
     public class ExecutionResult(IReadOnlyList<string> data)
     {
-        public string StdOutput => data[0];
-        public string ErrOutput => data[1];
+        public string ErrOutput => data[0];
+        public string StdOutput => data[1];
     }
 }

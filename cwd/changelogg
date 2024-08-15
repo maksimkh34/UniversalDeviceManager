@@ -3,3 +3,5 @@ Features:
 * First connected device is selected
 * Flash full rom option
 * if statement in DIL (example 4)
+* Now you can add spaces at the begin of the line (DIL)
+* Fixed stdout//stderr namings

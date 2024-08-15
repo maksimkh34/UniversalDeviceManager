@@ -63,7 +63,7 @@ namespace UDM.Core.ViewModels
         public static bool ActiveDeviceConnectedAndRomSelected(object param)
         {
             return true;
-            if (!MainModel.ModelDeviceManager.ActiveDeviceConnected() || MainModel.ModelDeviceManager.ActiveDeviceType != DeviceConnectionType.fastboot) return false;
+            if (!MainModel.ModelDeviceManager.IsActiveDeviceConnected() || MainModel.ModelDeviceManager.ActiveDeviceType != DeviceConnectionType.fastboot) return false;
             if (param is not IEnumerable<string> list) return false;
             return list.ElementAt(1) != MainModel.FileNotSelected;
         }
