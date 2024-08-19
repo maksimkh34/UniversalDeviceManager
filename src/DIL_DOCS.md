@@ -96,6 +96,10 @@
 
   Executes `execCmd` with working directory `wd`.
 
+* `adb_backup (block) (output path)`
+
+  Backups provided block to output path on PC **(use with %getblock ...%)**
+
 * `py_exec (cmd)`
 
   Executes python script.
@@ -141,6 +145,13 @@ msg %sid%
 Example:
 ```
 cmdexec %cwd% %pyexecutable% exit()
+```
+
+* `%getblock partition%` - returns block locaton of partition by name
+  
+Example:
+```
+msg %getblock recovery%
 ```
 
 ## If statement

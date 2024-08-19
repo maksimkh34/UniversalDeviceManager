@@ -197,6 +197,18 @@ namespace UDM.Model
                 var userInput = GetUserInput?.Invoke(msg);
                 result = result.Replace($"%askuser: [{msg}]%", userInput);
             }
+
+            while (result.Contains("getblock"))
+            {
+                var partition = GetBetween(result, "%getblock ", "%");
+                var replaced = "";
+                ModelDeviceManager.ActiveDevice.UpdatePartitions();
+                foreach (var pair in ModelDeviceManager.ActiveDevice.Partitions)
+                {
+                    if(pair.Key == partition) replaced = pair.Value;
+                }
+                result = result.Replace($"%getblock {partition}%", replaced);
+            }
             return result;
         }
 
