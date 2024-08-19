@@ -52,13 +52,17 @@
                 </MenuItem>
                 <MenuItem Header="ADB"
                           Style="{DynamicResource ThemedMenuItem}">
-                    <MenuItem Header="Update partitions"
-          Click="Menu_UpdatePartitionsClick"
-          Style="{DynamicResource ThemedMenuItem}">
-                    </MenuItem>
-                        <MenuItem Header="Backup partitions"
-                          Click="MenuItem_Click"
+                    <MenuItem Header="Update partitions table"
+                          Click="Menu_UpdatePartitionsClick"
                           Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+                    <MenuItem Header="Backup partitions"
+      Click="Menu_BackupPartitionsADB"
+      Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+                    <MenuItem Header="Restore partitions"
+      Click="Menu_RestorePartitionsADB"
+      Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
                 </MenuItem>
 

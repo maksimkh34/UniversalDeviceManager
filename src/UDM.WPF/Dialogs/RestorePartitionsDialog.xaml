@@ -1,0 +1,51 @@
+﻿<Window x:Class="UDM.WPF.Dialogs.RestorePartitionsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UDM.WPF.Dialogs"
+        Loaded="Window_Loaded"
+        xmlns:viewmodels="clr-namespace:UDM.Core.ViewModels;assembly=UDM.Core"
+        xmlns:titlebar="clr-namespace:UDM.WPF.Controls.Titlebar"
+        mc:Ignorable="d"
+        xmlns:converters="clr-namespace:UDM.WPF.Converters"
+        Style="{StaticResource ThemedWindow}"
+        d:DataContext="{d:DesignInstance Type=viewmodels:RestorePartitionsViewModel}"
+        MinWidth="230"
+        Title="RestorePartitionsDialog">
+    <Window.Resources>
+        <converters:PathToFilename x:Key="PathToFilename"/>
+        <DataTemplate x:Key="ImagesTemplate">
+            <TextBlock Text="{Binding Converter={StaticResource PathToFilename}}" Style="{StaticResource ThemedTextBlock}"/>
+        </DataTemplate>
+
+    </Window.Resources>
+    
+    <StackPanel>
+        <titlebar:Titlebar Header="Restore partitions"></titlebar:Titlebar>
+        <DockPanel>
+            <Button Style="{StaticResource ThemedButton}" 
+                    CommandParameter="{Binding PartitionsList}"
+                    Command="{Binding BrowsePartitions}"
+                    Margin="10"
+                    DockPanel.Dock="Top">
+                Select partitions
+            </Button>
+            <ListBox Height="100"
+                     DockPanel.Dock="Top"
+                     Style="{StaticResource ThemedListBox}"
+                     ItemTemplate="{StaticResource ImagesTemplate}"
+                     ItemsSource="{Binding PartitionsList}"
+                     Margin="10,0,10,10">
+                
+            </ListBox>
+            <Button Style="{StaticResource ThemedButton}" 
+                    Margin="10,0,10,10"
+                    Command="{Binding ApplyCommand}"
+                    CommandParameter="{Binding PartitionsList}"
+                    DockPanel.Dock="Top">
+                Flash
+            </Button>
+        </DockPanel>
+    </StackPanel>
+</Window>

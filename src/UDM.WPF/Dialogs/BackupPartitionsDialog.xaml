@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:titlebar="clr-namespace:UDM.WPF.Controls.Titlebar"
         xmlns:local="clr-namespace:UDM.WPF.Dialogs"
+        xmlns:converters="clr-namespace:UDM.WPF.Converters"
         xmlns:vm="clr-namespace:UDM.Core.ViewModels;assembly=UDM.Core"
         Loaded="Window_Loaded"
         mc:Ignorable="d"

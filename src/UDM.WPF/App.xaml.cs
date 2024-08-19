@@ -30,6 +30,7 @@ namespace UDM.WPF
                 executeCode: OpenPreDil,
                 autoExecuteCode: AutoOpenPreDil,
                 getImageStrAction: GetImagePath,
+                getFilesAction: GetFilesAction,
                 getArchiveStrAction: GetArchivePath,
                 getFolderStrAction: GetFolderPath,
                 changelogTitle: (string)FindResource("MsgChangelog")!,
@@ -85,6 +86,23 @@ namespace UDM.WPF
             dialog.ShowDialog();
 
             return dialog.FileName;
+        }
+
+        public static string[] GetFilesAction()
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Multiselect = true,
+                ReadOnlyChecked = false,
+                CheckFileExists = false,
+                AddExtension = true,
+                DefaultExt = "zip",
+                Filter = "ZIP archive (*.zip)|*.zip|All files (*.*)|*.*",
+                Title = "Select archive"
+            };
+            dialog.ShowDialog();
+
+            return dialog.FileNames;
         }
 
         public static string GetFolderPath()

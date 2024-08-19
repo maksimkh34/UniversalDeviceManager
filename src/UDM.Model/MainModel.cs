@@ -83,6 +83,7 @@ namespace UDM.Model
         public delegate bool? ExecuteCode();
         public delegate string GetStrAction();
         public delegate string? GetStrActionMsg(string msg);
+        public delegate string[] GetFilesDelegate();
 
         public delegate void MsgWindowAction();
 
@@ -98,10 +99,11 @@ namespace UDM.Model
         public static GetStrAction? GetArchivePath;
         public static GetStrAction? GetFolderPath;
         public static GetStrActionMsg? GetUserInput;
+        public static GetFilesDelegate? GetFiles;
         public static string? ChangelogTitle;
 
         public static void RegisterMainModel(MsgDialog msgDialog, ExecuteCode executeCode, ExecuteCode autoExecuteCode,
-            GetStrAction getImageStrAction, GetStrAction getArchiveStrAction, GetStrAction getFolderStrAction,
+            GetStrAction getImageStrAction, GetStrAction getArchiveStrAction, GetStrAction getFolderStrAction, GetFilesDelegate getFilesAction,
             string changelogTitle, MsgWindowAction pythonDownloadMsgShow, MsgWindowAction pythonDownloadMsgClose,
             WaitForInputDialog waitForInputDialog, GetStrActionMsg getUserInput)
         {
@@ -112,6 +114,7 @@ namespace UDM.Model
             GetImagePath = getImageStrAction;
             GetArchivePath = getArchiveStrAction;
             GetFolderPath = getFolderStrAction;
+            GetFiles = getFilesAction;
             PythonDownloadMsgClose = pythonDownloadMsgClose;
             PythonDownloadMsgShow = pythonDownloadMsgShow;
             UiWaitForInputDialog = waitForInputDialog;

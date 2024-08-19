@@ -123,9 +123,14 @@ namespace UDM.WPF.Dialogs
             new FlashFullRomDialog().ShowDialog();
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void Menu_BackupPartitionsADB(object sender, RoutedEventArgs e)
         {
             new BackupPartitionsDialog().ShowDialog();
+        }
+
+        private void Menu_RestorePartitionsADB(object sender, RoutedEventArgs e)
+        {
+            new RestorePartitionsDialog().ShowDialog();
         }
     }
 }

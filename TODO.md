@@ -10,7 +10,9 @@
 * restore adb backup
 * Select all in backup
 * Deselect partition 
+* При вызове UI-Диалогов, которые передаются во VIewModel, передается также локализированное сообщение
 * update partitions in dil
 * handle device not in adb mode
+* commands check
 * auto update partitions
-* Если путь 35+ символов ничего не отодвигается до края окна (flashdialogи)
+* fix file not found

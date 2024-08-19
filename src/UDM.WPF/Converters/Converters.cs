@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using System.Windows.Data;
 using System.Windows.Documents;
 using UDM.Model;
@@ -50,6 +51,24 @@ namespace UDM.WPF.Converters
             }
 
             return "value_type_error";
+        }
+
+        public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class PathToFilename : IValueConverter
+    {
+        public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        {
+            if (value is string pathValue)
+            {
+                return Path.GetFileName(pathValue);
+            }
+
+            return "";
         }
 
         public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
