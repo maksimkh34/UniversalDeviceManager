@@ -1,0 +1,46 @@
+﻿<Window x:Class="UDM.WPF.Dialogs.BackupPartitionsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:titlebar="clr-namespace:UDM.WPF.Controls.Titlebar"
+        xmlns:local="clr-namespace:UDM.WPF.Dialogs"
+        xmlns:vm="clr-namespace:UDM.Core.ViewModels;assembly=UDM.Core"
+        Loaded="Window_Loaded"
+        mc:Ignorable="d"
+        Style="{StaticResource ThemedWindow}"
+        Title="BackupPartitionsDialog">
+    <Window.DataContext>
+        <vm:BackupPartitionsViewModel></vm:BackupPartitionsViewModel>
+    </Window.DataContext>
+    <StackPanel>
+        <titlebar:Titlebar Header="Backup (ADB)"></titlebar:Titlebar>
+        <TextBlock Style="{StaticResource ThemedTextBlock}"
+                   FontSize="14"
+                   HorizontalAlignment="Center"
+                   Margin="10,10,10,5"
+                   Text="Select partitions to backup">
+        </TextBlock>
+        <DockPanel>
+            <ComboBox Style="{StaticResource ThemedComboBox}"
+                      DockPanel.Dock="Top"
+                      Margin="10,0,10,10">
+                
+            </ComboBox>
+            <TextBlock Style="{StaticResource ThemedTextBlock}"
+                       DockPanel.Dock="Top"
+                FontSize="14"
+                HorizontalAlignment="Center"
+                Margin="10,0,10,5"
+                Text="Partitions to backup">
+            </TextBlock>
+            <ListBox DockPanel.Dock="Top"
+                     Style="{StaticResource ThemedListBox}" Margin="10,5,10,0">
+                <TextBlock Style="{StaticResource ThemedTextBlock}"></TextBlock>
+            </ListBox>
+            <Button Style="{StaticResource ThemedButton}" Margin="5,10,5,5">
+                Apply
+            </Button>
+        </DockPanel>
+    </StackPanel>
+</Window>

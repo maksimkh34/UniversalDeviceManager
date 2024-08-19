@@ -53,8 +53,12 @@
                 <MenuItem Header="ADB"
                           Style="{DynamicResource ThemedMenuItem}">
                     <MenuItem Header="Update partitions"
-                              Click="Menu_UpdatePartitionsClick"
-                              Style="{DynamicResource ThemedMenuItem}">
+          Click="Menu_UpdatePartitionsClick"
+          Style="{DynamicResource ThemedMenuItem}">
+                    </MenuItem>
+                        <MenuItem Header="Backup partitions"
+                          Click="MenuItem_Click"
+                          Style="{DynamicResource ThemedMenuItem}">
                     </MenuItem>
                 </MenuItem>
 

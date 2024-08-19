@@ -111,9 +111,10 @@ namespace UDM.Model
             UpdateFastbootDevices();
             UpdateSideloadDevices();
             if (DeviceConnections.Count == 0 && EmulateDevice && MainModel.IsDebugRelease) {
-                DeviceConnections.Add(new DeviceConnection("emulator", DeviceConnectionType.fastboot));
+                DeviceConnections.Add(new DeviceConnection("emulator", DeviceConnectionType.adb));
             }
             if(DeviceConnections.Count == 1) ActiveDevice = DeviceConnections[0];
+            if (ActiveDevice.Type == DeviceConnectionType.adb) ActiveDevice.UpdatePartitions();
         }
 
         public void Disconnect(string id)
