@@ -160,6 +160,7 @@ namespace UDM.Model.DIL
                         var devBlock = instructions[1];
                         var outPath = instructions[2];
 
+                        SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"shell mkdir /sdcard/UDMBackups/");
                         var shellResult = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"shell \"dd if={devBlock} of=/sdcard/UDMBackups/{Path.GetFileName(outPath)}\"");
                         var pullResult = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"pull /sdcard/UDMBackups/{Path.GetFileName(outPath)} {outPath}");
                         if (shellResult.ErrOutput == string.Empty)

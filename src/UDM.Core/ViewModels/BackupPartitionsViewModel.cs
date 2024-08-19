@@ -41,7 +41,8 @@ namespace UDM.Core.ViewModels
                 foreach (var partition in partitions) { 
                     foreach(var pair in MainModel.ModelDeviceManager.ActiveDevice.Partitions)
                     {
-                        if (pair.Key == partition) scriptCode += $"adb_backup {pair.Value} {savePath}\\{pair.Value.Split("/")[^1]}_{pair.Key}.img\r\n";
+                        if (pair.Key == partition) scriptCode += $"adb_backup {pair.Value.Replace("\n", "").Replace("\r", "")}" +
+                                $" {savePath}\\{pair.Value.Split("/")[^1].Replace("\n", "").Replace("\r", "")}_{pair.Key.Replace("\n", "").Replace("\r", "")}.img\r\n";
                     }
                 }
 

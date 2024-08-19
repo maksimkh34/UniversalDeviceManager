@@ -172,7 +172,7 @@ namespace UDM.Model
 
                 foreach (var part in input.Split('\n'))
                 {
-                    if (string.IsNullOrEmpty(part)) continue;
+                    if (string.IsNullOrEmpty(part) || part.Contains("total")) continue;
 
                     var split = part.Split(' ');
                     var block = split[^1];
@@ -201,7 +201,7 @@ namespace UDM.Model
     {
         public void UpdatePartitions()
         {
-            if(Type != DeviceConnectionType.adb) throw new OperationCanceledException("Device is not in ADB mode. ");
+            if(Type != DeviceConnectionType.adb && Type != DeviceConnectionType.recovery) throw new OperationCanceledException("Device is not in ADB mode. ");
 
             var result = SysCalls.ExecAndRead(MainModel.PathToPlatformtools, "adb.exe", "shell \"cd /dev/block/by-name && ls -l\"");
             if (result == null) { 

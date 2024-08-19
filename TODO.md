@@ -5,6 +5,10 @@
 * условия if DIL (без python не устанавливается mktclient)
 * FlashFullRom не обновляет canexecutechanged
 * логи 
+* restore adb backup
+* Select all in backup
+* handle device not in adb mode
+* auto update partitions
 * ListBox selection style
 * обновить структуру проекта в readme.md
 * Если путь 35+ символов ничего не отодвигается до края окна (flashdialogи)

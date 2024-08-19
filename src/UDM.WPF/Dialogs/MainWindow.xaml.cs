@@ -74,7 +74,8 @@ namespace UDM.WPF.Dialogs
 
         private void Menu_UpdatePartitionsClick(object sender, RoutedEventArgs e)
         {
-            if (!MainModel.ModelDeviceManager.IsActiveDeviceConnected() || MainModel.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.adb)
+            if (!MainModel.ModelDeviceManager.IsActiveDeviceConnected() || 
+                (MainModel.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.adb && MainModel.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.recovery))
                 MainModel.UiMsgDialog?.Invoke("Error", "Device must in ADB mode!");
 
             MainModel.ModelDeviceManager.ActiveDevice.UpdatePartitions();
