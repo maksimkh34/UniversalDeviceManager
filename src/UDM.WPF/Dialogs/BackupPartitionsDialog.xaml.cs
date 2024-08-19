@@ -21,7 +21,7 @@ namespace UDM.WPF.Dialogs
     /// </summary>
     public partial class BackupPartitionsDialog : Window
     {
-        BackupPartitionsViewModel _viewModel = new();
+        BackupPartitionsViewModel? _viewModel;
         public BackupPartitionsDialog()
         {
             InitializeComponent();
@@ -29,6 +29,7 @@ namespace UDM.WPF.Dialogs
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            _viewModel = new(Close);
             if(_viewModel.BeforeSelectPartitions.Count == 0)
             {
                 App.ShowMessage("Select ADB -> Update partitions");
@@ -36,6 +37,15 @@ namespace UDM.WPF.Dialogs
             }
 
             DataContext = _viewModel;
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                _viewModel?.SelectPartition(e.AddedItems[0]?.ToString());
+            }
+            catch (IndexOutOfRangeException) { }
         }
     }
 }

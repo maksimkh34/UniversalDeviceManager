@@ -17,8 +17,6 @@ namespace UDM.Model
         public const bool EmulateDevice = true;
 
         public ObservableCollection<DeviceConnection> DeviceConnections = new();
-        public DeviceConnectionType ActiveDeviceType => ActiveDevice.Type;
-
         private readonly DeviceConnection _connection = new();
 
         public DeviceConnection ActiveDevice
@@ -158,9 +156,44 @@ namespace UDM.Model
 
         public static Dictionary<string, string> GetPartitions(string input)
         {
-            var result = new Dictionary<string, string>();
-            result.Add("boot_a", "/dev/block/sdc32");
-            return result;
+            if(MainModel.ModelDeviceManager.ActiveDevice.Id == "emulator")
+            {
+                var result = new Dictionary<string, string>
+                {
+                    { "boot_a", "/dev/block/sdc32" },
+                    { "boot_b", "/dev/block/sdc33" },
+                    { "test_part", "/dev/block/sdc34" }
+                };
+                return result;
+            }
+            else
+            {
+                var partitions = new Dictionary<string, string>();
+
+                foreach (var part in input.Split('\n'))
+                {
+                    if (string.IsNullOrEmpty(part)) continue;
+
+                    var split = part.Split(' ');
+                    var block = split[^1];
+                    var name = split[^3];
+
+                    partitions[name] = block;
+                }
+
+                return partitions;
+            }
+        }
+
+        public void BackupPartitions(Dictionary<string, string> blocks, string SavePath)
+        {
+            foreach (var block in blocks)
+            {
+                var shortName = block.Value.Split("/")[^1];
+                MainModel.ModelExecuteCode?.Invoke();
+                SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"shell \"dd if={block.Value} of=/sdcard/UDMBackups/{shortName}_{block.Key}.img\"");
+                SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"pull /sdcard/UDMBackups/{shortName}_{block.Key}.img {SavePath}" + @$"\{shortName}_{block.Key}.img");
+            }
         }
     }
 

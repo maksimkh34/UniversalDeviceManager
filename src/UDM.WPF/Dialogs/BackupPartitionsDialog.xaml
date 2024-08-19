@@ -10,9 +10,12 @@
         mc:Ignorable="d"
         Style="{StaticResource ThemedWindow}"
         Title="BackupPartitionsDialog">
-    <Window.DataContext>
-        <vm:BackupPartitionsViewModel></vm:BackupPartitionsViewModel>
-    </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate x:Key="PartitionDataTemplate">
+            <TextBlock Text="{Binding}" Style="{StaticResource ThemedTextBlock}"/>
+        </DataTemplate>
+    </Window.Resources>
+
     <StackPanel>
         <titlebar:Titlebar Header="Backup (ADB)"></titlebar:Titlebar>
         <TextBlock Style="{StaticResource ThemedTextBlock}"
@@ -23,9 +26,12 @@
         </TextBlock>
         <DockPanel>
             <ComboBox Style="{StaticResource ThemedComboBox}"
+                      SelectedValue="{Binding SelectedPartition}"
+                      SelectionChanged="ComboBox_SelectionChanged"
+                      ItemsSource="{Binding BeforeSelectPartitions}"
                       DockPanel.Dock="Top"
                       Margin="10,0,10,10">
-                
+
             </ComboBox>
             <TextBlock Style="{StaticResource ThemedTextBlock}"
                        DockPanel.Dock="Top"
@@ -35,12 +41,16 @@
                 Text="Partitions to backup">
             </TextBlock>
             <ListBox DockPanel.Dock="Top"
-                     Style="{StaticResource ThemedListBox}" Margin="10,5,10,0">
-                <TextBlock Style="{StaticResource ThemedTextBlock}"></TextBlock>
+                     Style="{StaticResource ThemedListBox}" 
+                     ItemTemplate="{StaticResource PartitionDataTemplate}"
+                     ItemsSource="{Binding AfterSelectPartitions}"
+                     Margin="10,5,10,0">
             </ListBox>
-            <Button Style="{StaticResource ThemedButton}" Margin="5,10,5,5">
-                Apply
-            </Button>
+            <Button Command="{Binding ApplyCommand}"
+                    CommandParameter="{Binding AfterSelectPartitions}"
+                    Margin="10" 
+                    Style="{StaticResource ThemedButton}">Apply</Button>
         </DockPanel>
+
     </StackPanel>
 </Window>

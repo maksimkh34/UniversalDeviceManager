@@ -1,4 +1,5 @@
-﻿using UDM.Model.LogService;
+﻿using System.Security.Cryptography.X509Certificates;
+using UDM.Model.LogService;
 // ReSharper disable InconsistentNaming
 
 namespace UDM.Model.DIL
@@ -135,7 +136,7 @@ namespace UDM.Model.DIL
 
                     case "ar":
                     case "adb_reboot":
-                        if (MainModel.ModelDeviceManager.ActiveDeviceType != DeviceConnectionType.adb)
+                        if (MainModel.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.adb)
                         {
                             LogService.LogService.Log("Device is not in adb mode! ", LogLevel.Error);
                             return;
@@ -154,9 +155,36 @@ namespace UDM.Model.DIL
                         }
                         break;
 
+                    case "adb_backup":
+                        // adb_backup {pair.Value} {savePath}\\{pair.Value.Split("/")[^1]}_{pair.Key}.img\n
+                        var devBlock = instructions[1];
+                        var outPath = instructions[2];
+
+                        var shellResult = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"shell \"dd if={devBlock} of=/sdcard/UDMBackups/{Path.GetFileName(outPath)}\"");
+                        var pullResult = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"pull /sdcard/UDMBackups/{Path.GetFileName(outPath)} {outPath}");
+                        if (shellResult.ErrOutput == string.Empty)
+                        {
+                            LogService.LogService.Log(shellResult.StdOutput, LogLevel.Error);
+                        }
+                        else
+                        {
+                            LogService.LogService.Log(shellResult.ErrOutput, LogLevel.DILOutput);
+                        }
+
+                        if (pullResult.ErrOutput == string.Empty)
+                        {
+                            LogService.LogService.Log(pullResult.StdOutput, LogLevel.Error);
+                        }
+                        else
+                        {
+                            LogService.LogService.Log(pullResult.ErrOutput, LogLevel.DILOutput);
+                        }
+
+                        break;
+
                     case "sl":
                     case "sideload":
-                        if (MainModel.ModelDeviceManager.ActiveDeviceType != DeviceConnectionType.sideload)
+                        if (MainModel.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.sideload)
                         {
                             LogService.LogService.Log("Device is not in Sideload mode! ", LogLevel.Error);
                             return;
@@ -247,7 +275,7 @@ namespace UDM.Model.DIL
 
                     case "wr":
                     case "wait_for_recovery":
-                        while (MainModel.ModelDeviceManager.ActiveDeviceType != DeviceConnectionType.recovery)
+                        while (MainModel.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.recovery)
                         {
                             MainModel.ModelDeviceManager.UpdateDevices();
                             Thread.Sleep(1000);
