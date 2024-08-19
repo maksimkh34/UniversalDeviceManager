@@ -26,7 +26,7 @@ UDM is an application for automating and simplifying smartphone flashing. The ki
 
 ## Project structure
 ```
-├── UniversalDeviceManager **(root)**
+├── UniversalDeviceManager (root)
     ├── cwd
     │   ├── fastboot - fastboot tools
     │   │
@@ -34,12 +34,21 @@ UDM is an application for automating and simplifying smartphone flashing. The ki
     │   │   ├── init - first start indicator
     │   │   └── settings_storage.conf - settings database
     │   │
-    │   ├── python - python scripts
-    │   │   └── install.py - first launch script
+    │   ├── examples - DIL examples
     │   │
-    │   ├── example.dil - example DIL script (do NOT use!)
-    │   ├── UniversalDeviceManager.exe - Executable
+    │   ├── python - python scripts
+    │   │   ├── downloads - UDM downloads
+    │   ├── interaction.py - python script, used to interact with DIL
+    │   │   ├── test.py - example script
+    │   │   └── test.py.md - docs to example script│   │   ├── mtkclient
+    │   │
+    │   ├── script - DIL scripts
+    │   │   ├── install.dil - first launch (installation) script
+    │   │   └── py_installer.dil - python installer
+    │   │
+    │   ├── UniversalDeviceManager.exe - executable
     │   └── changelog - contains changelog for app to display
+    │   └── Logs.log - app logs. Attach this file then reporting a bug
     │
     └── src
 ```
