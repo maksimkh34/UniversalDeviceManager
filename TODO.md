@@ -16,3 +16,4 @@
 * commands check
 * auto update partitions
 * fix file not found
+* изменить обводку выделеных элементов

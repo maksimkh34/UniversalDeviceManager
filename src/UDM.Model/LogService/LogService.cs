@@ -8,6 +8,10 @@ public static class LogService
 
     public static void Log(string message, LogLevel level)
     {
+        while (message.Length < 5)
+        {
+            message += '\0';
+        }
         if (!(MainModel.IsDebugRelease || (bool)(MainModel.SettingsStorage.GetValue(MainModel.SnForceDebugLogs) ?? false)) && level == LogLevel.Debug) return;
         if (message.Contains("\r\n"))
         {
