@@ -7,12 +7,13 @@
 * многопоточность для нормального вывода информации
 * блочить файлы конфига до закрытия программы
 * условия if DIL (без python не устанавливается mktclient)
+* review if
 * restore adb backup
-* Select all in backup
+* Select all in backup + find by filter
 * Deselect partition 
-* При вызове UI-Диалогов, которые передаются во VIewModel, передается также локализированное сообщение
+* При вызове UI-Диалогов, которые передаются во VIewModel, передается также локализированное сообщение - gvand?
 * update partitions in dil
 * handle device not in adb mode
-* commands check
 * auto update partitions
-* fix file not found
+* fix file not found - gvand
+* заполнить пространство снизу

@@ -39,7 +39,7 @@ namespace UDM.Model
             }
         }
 
-        public bool ActiveDeviceAlive() => SysCalls.Exec(MainModel.PathToPlatformtools, MainModel.PathToPlatformtools + @"\fastboot.exe", "devices").StdOutput
+        public bool ActiveDeviceAlive() => SysCalls.Exec(MainModel.PathToPlatformtools, "fastboot.exe", "devices").StdOutput
             .Contains(ActiveDevice.Id);
 
         public bool DeviceConnected(string id)
@@ -52,7 +52,7 @@ namespace UDM.Model
         public void UpdateFastbootDevices()
         {
             LogService.LogService.Log("Updating fastboot devices", LogLevel.Debug);
-            var fastbootResult = SysCalls.Exec(MainModel.PathToPlatformtools, MainModel.PathToPlatformtools + @"\fastboot.exe", "devices");
+            var fastbootResult = SysCalls.Exec(MainModel.PathToPlatformtools, "fastboot.exe", "devices");
             foreach (var device in fastbootResult.StdOutput.Split("\r\n"))
             {
                 if (device == "") continue;
@@ -70,7 +70,7 @@ namespace UDM.Model
         public void UpdateSideloadDevices()
         {
             LogService.LogService.Log("Updating sideload devices", LogLevel.Debug);
-            var commandResult = SysCalls.Exec(MainModel.PathToPlatformtools, MainModel.PathToPlatformtools + @"\adb.exe", "devices");
+            var commandResult = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", "devices");
             foreach (var device in commandResult.StdOutput.Split("\r\n"))
             {
                 if (device is "" or "List of devices attached") continue;
@@ -88,7 +88,7 @@ namespace UDM.Model
         public void UpdateADBDevices()
         {
             LogService.LogService.Log("Updating adb devices", LogLevel.Debug);
-            var commandResult = SysCalls.Exec(MainModel.PathToPlatformtools, MainModel.PathToPlatformtools + @"\adb.exe", "devices");
+            var commandResult = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", "devices");
             foreach (var device in commandResult.StdOutput.Split("\r\n"))
             {
                 if (device is "" or "List of devices attached") continue;

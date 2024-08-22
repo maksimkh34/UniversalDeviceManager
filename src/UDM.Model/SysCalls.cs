@@ -11,6 +11,7 @@ namespace UDM.Model
 
         public static ExecutionResult Exec(string wd, string filename, string args)
         {
+            filename = wd + "\\"+ filename;
             LogService.LogService.Log("Executing " + filename + " " + args, LogLevel.Debug);
 
             switch (OsType)

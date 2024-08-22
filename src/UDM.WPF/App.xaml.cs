@@ -98,7 +98,7 @@ namespace UDM.WPF
                 AddExtension = true,
                 DefaultExt = "zip",
                 Filter = "ZIP archive (*.zip)|*.zip|All files (*.*)|*.*",
-                Title = "Select archive"
+                Title = "Select files"
             };
             dialog.ShowDialog();
 
