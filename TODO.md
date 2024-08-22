@@ -17,3 +17,5 @@
 * auto update partitions
 * fix file not found - gvand
 * заполнить пространство снизу
+* fix file not found
+* изменить обводку выделеных элементов
