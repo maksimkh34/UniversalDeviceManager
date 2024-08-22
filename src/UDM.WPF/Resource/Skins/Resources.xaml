@@ -7,11 +7,13 @@
     <SolidColorBrush x:Key="ScbBackgroundPressed">#373A60</SolidColorBrush>
     <SolidColorBrush x:Key="ScbBlueBackground">#21252B</SolidColorBrush>
     <SolidColorBrush x:Key="ScbBorder">#585d5e</SolidColorBrush>
+    <SolidColorBrush x:Key="ScbBorderMouseOver">#888d8e</SolidColorBrush>
     <SolidColorBrush x:Key="ScbDarkBackground">#121314</SolidColorBrush>
     <SolidColorBrush x:Key="ScbForeground">#d7d7d9</SolidColorBrush>
     <SolidColorBrush x:Key="ScbSecondaryForeground">#989899</SolidColorBrush>
     <SolidColorBrush x:Key="ScbLink">#4ca6ff</SolidColorBrush>
-    <SolidColorBrush x:Key="ScbAccent">#8386a9</SolidColorBrush>
+    <SolidColorBrush x:Key="ScbAccent">#9F96E5</SolidColorBrush>
+    <SolidColorBrush x:Key="ScbLightAccent">#CEC5E5</SolidColorBrush>
     <SolidColorBrush x:Key="ScbDisabledForeground">#FFA4A4A4</SolidColorBrush>
     <SolidColorBrush x:Key="ScbDisabledBackground">#FF181B1F</SolidColorBrush>
 

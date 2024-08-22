@@ -69,7 +69,7 @@
                 <TextBlock Style="{StaticResource ThemedTextBlock}">Flags</TextBlock>
             </Expander.Header>
             <StackPanel>
-                <CheckBox Style="{DynamicResource ThemedCheckBox}" IsChecked="True" Margin="15,10,0,0" >
+                <CheckBox Style="{DynamicResource ThemedCheckBox}" IsChecked="{Binding DisableVerity}" Margin="15,10,0,0" >
                     <CheckBox.Content>
                         <TextBlock Style="{DynamicResource ThemedTextBlock}" Margin="3,0,0,0">
                             --disable-verity
