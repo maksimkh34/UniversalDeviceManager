@@ -147,7 +147,7 @@ namespace UDM.WPF
         public static void ShutdownApp()
         {
             LogService.Save((string)(MainModel.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log"));
-            MainModel.SettingsStorage.SaveSettings();
+            MainModel.ExitMainModel();
             Environment.Exit(0);
         }
 

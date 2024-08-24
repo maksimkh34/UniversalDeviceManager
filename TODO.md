@@ -6,7 +6,6 @@
 * ListBox selection style - gvand
 * многопоточность для нормального вывода информации
 * блочить файлы конфига до закрытия программы
-* условия if DIL (без python не устанавливается mktclient)
 * review if
 * restore adb backup
 * Select all in backup + find by filter

@@ -7,5 +7,6 @@ Features:
 * Now you can add spaces at the begin of the line (DIL)
 * Fixed stdout//stderr namings
 * Added checkbox and expander style
+* Python installation prompt
 Fixed:
 * Logger fix

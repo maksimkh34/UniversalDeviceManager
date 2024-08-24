@@ -102,6 +102,17 @@ namespace UDM.Model
         public static GetFilesDelegate? GetFiles;
         public static string? ChangelogTitle;
 
+        public static FileStream? ConfigFileLock;
+        public static FileStream? InitFileLock;
+
+        public static void ExitMainModel()
+        {
+            SettingsStorage.SaveSettings();
+
+            InitFileLock?.Close();
+            ConfigFileLock?.Close();
+        }
+
         public static void RegisterMainModel(MsgDialog msgDialog, ExecuteCode executeCode, ExecuteCode autoExecuteCode,
             GetStrAction getImageStrAction, GetStrAction getArchiveStrAction, GetStrAction getFolderStrAction, GetFilesDelegate getFilesAction,
             string changelogTitle, MsgWindowAction pythonDownloadMsgShow, MsgWindowAction pythonDownloadMsgClose,
@@ -119,6 +130,11 @@ namespace UDM.Model
             PythonDownloadMsgShow = pythonDownloadMsgShow;
             UiWaitForInputDialog = waitForInputDialog;
             GetUserInput = getUserInput;
+
+            try { 
+                InitFileLock = File.Open(Cwd + InitFilePath, FileMode.Open);
+                ConfigFileLock = File.Open(Cwd + SettingsConfFilePath, FileMode.Open);
+            } catch (FileNotFoundException) { }
 
             // Do not forget to update SettingsViewModel! 
 
