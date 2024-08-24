@@ -52,7 +52,6 @@ namespace UDM.WPF
             UpdateLang(new SettingChangedContext("", MainModel.SettingsStorage.GetValue(MainModel.SnCurrentLanguage) ?? "en-US"));
 
             LogService.Log(FindResource("MsgHello")?.ToString() ?? "lang_err", LogLevel.Info);
-            LogService.Log("1234", LogLevel.Info);
         }
 
         public static string GetImagePath()

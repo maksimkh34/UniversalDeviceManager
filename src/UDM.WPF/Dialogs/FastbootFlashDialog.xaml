@@ -64,7 +64,7 @@
                      Margin="15,0,15,0" 
                      HorizontalAlignment="Stretch">Custom</TextBox>
         </DockPanel>
-        <Expander Margin="15,10,0,0">
+        <Expander Template="{DynamicResource ThemedExpander}" Margin="15,10,0,0">
             <Expander.Header>
                 <TextBlock Style="{StaticResource ThemedTextBlock}">Flags</TextBlock>
             </Expander.Header>
