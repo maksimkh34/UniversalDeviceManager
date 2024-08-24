@@ -1,5 +1,10 @@
+msg Skip next window only if you have Python installed (and listed in your path). In any other case, Select Y
+if %askuser: [Type 'Y' to install python]%=Y
+begin
+dil %cwd%\script\py_installer.dil
+else
+end
 wv $clpath %cwd%\python\downloads\mtkclient.zip
-msg If you get unhandled exception on installation, install Python (Options->Install Python) and remove config folder
 log Installing MTKClient...
 iget $clpath https://github.com/bkerler/mtkclient/archive/refs/heads/main.zip
 unzip $clpath %cwd%\python\mtkclient\

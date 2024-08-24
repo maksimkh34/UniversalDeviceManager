@@ -76,9 +76,17 @@ namespace UDM.Model.DIL
                         }
                         break;
 
+                    case "dil":
+                        var scriptPath = instructions[1];
+                        for (int i = 2; i < instructions.Length; i++)
+                        {
+                            scriptPath += " " + instructions[i];
+                        }
+                        Execute(File.ReadAllText(scriptPath));
+                        break;
                     case "if":
-                        var expression = instructions[2];
-                        for(int i = 3; i < instructions.Length; i++)
+                        var expression = instructions[1];
+                        for(int i = 2; i < instructions.Length; i++)
                         {
                             expression += " " + instructions[i];
                         }
@@ -89,12 +97,12 @@ namespace UDM.Model.DIL
                             MainModel.UiMsgDialog?.Invoke("Error", "Invalid expression: " + expression + ". " + expressionList.Length + " equals found (expect 2)");
                         }
 
-                        bool expressionValue = expressionList[0].ToString() == expressionList[1].ToString();
+                        bool expressionResult = expressionList[0].ToString() == expressionList[1].ToString();
 
                         var codeIfTrue = MainModel.GetBetween(string.Join("\r\n", scriptLines), "begin", "else");
                         var codeIfFalse = MainModel.GetBetween(string.Join("\r\n", scriptLines), "else", "end");
 
-                        if (expressionValue) Execute(codeIfTrue);
+                        if (expressionResult) Execute(codeIfTrue);
                         else Execute(codeIfFalse);
 
                         // replace if statement code so DIL will not execute it

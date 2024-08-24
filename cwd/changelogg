@@ -6,4 +6,6 @@ Features:
 * partitions backup (from adb)
 * Now you can add spaces at the begin of the line (DIL)
 * Fixed stdout//stderr namings
-Fixed logger
+* Added checkbox and expander style
+Fixed:
+* Logger fix

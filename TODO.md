@@ -1,5 +1,5 @@
 * добавить проверку кол-ва аргументов команды - gvand
-* стили для chechbox и expander - gvand
+* стилиь (шаблон) для expander - gvand
 * Шрифт - gvand
 * FlashFullRom не обновляет canexecutechanged - gvand
 * логи - gvand
@@ -11,11 +11,10 @@
 * restore adb backup
 * Select all in backup + find by filter
 * Deselect partition 
+* Windows titles
 * При вызове UI-Диалогов, которые передаются во VIewModel, передается также локализированное сообщение - gvand?
 * update partitions in dil
 * handle device not in adb mode
 * auto update partitions
-* fix file not found - gvand
 * заполнить пространство снизу
-* fix file not found
 * изменить обводку выделеных элементов
