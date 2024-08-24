@@ -90,7 +90,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Ellipse x:Name="circle" Fill="{StaticResource ScbDarkBackground}" HorizontalAlignment="Center" Height="19" Stroke="{StaticResource ScbBorder}" VerticalAlignment="Center" Width="19"/>
-                            <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="{StaticResource ScbForeground}" SnapsToDevicePixels="false" StrokeThickness="2" VerticalAlignment="Center"/>
+                            <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="{StaticResource ScbAccent}" SnapsToDevicePixels="false" StrokeThickness="2" VerticalAlignment="Center"/>
                             <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
@@ -112,7 +112,7 @@
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Stroke" TargetName="circle" Value="{StaticResource ScbBorder}"/>
                             <Setter Property="Fill" TargetName="circle" Value="{StaticResource ScbDarkBackground}"/>
-                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource ScbForeground}"/>
+                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource ScbAccent}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -140,7 +140,7 @@
                                     </TransformGroup>
                                 </Grid.LayoutTransform>
                                 <Ellipse x:Name="circle" Fill="{StaticResource ScbDarkBackground}" HorizontalAlignment="Center" Height="19" Stroke="{StaticResource ScbBorder}" VerticalAlignment="Center" Width="19"/>
-                                <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="{StaticResource ScbForeground}" SnapsToDevicePixels="false" StrokeThickness="2" VerticalAlignment="Center"/>
+                                <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="{StaticResource ScbAccent}" SnapsToDevicePixels="false" StrokeThickness="2" VerticalAlignment="Center"/>
                             </Grid>
                             <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
                         </Grid>
@@ -163,7 +163,7 @@
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Stroke" TargetName="circle" Value="{StaticResource ScbBorder}"/>
                             <Setter Property="Fill" TargetName="circle" Value="{StaticResource ScbDarkBackground}"/>
-                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource ScbForeground}"/>
+                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource ScbAccent}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -191,7 +191,7 @@
                                     </TransformGroup>
                                 </Grid.LayoutTransform>
                                 <Ellipse x:Name="circle" Fill="{StaticResource ScbDarkBackground}" HorizontalAlignment="Center" Height="19" Stroke="{StaticResource ScbBorder}" VerticalAlignment="Center" Width="19"/>
-                                <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="{StaticResource ScbForeground}" SnapsToDevicePixels="false" StrokeThickness="2" VerticalAlignment="Center"/>
+                                <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="{StaticResource ScbAccent}" SnapsToDevicePixels="false" StrokeThickness="2" VerticalAlignment="Center"/>
                             </Grid>
                             <ContentPresenter HorizontalAlignment="Center" Margin="0,4,0,0" RecognizesAccessKey="True" Grid.Row="1" SnapsToDevicePixels="True" VerticalAlignment="Top"/>
                         </Grid>
@@ -214,7 +214,7 @@
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Stroke" TargetName="circle" Value="{StaticResource ScbBorder}"/>
                             <Setter Property="Fill" TargetName="circle" Value="{StaticResource ScbDarkBackground}"/>
-                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource ScbForeground}"/>
+                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource ScbAccent}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -242,7 +242,7 @@
                                     </TransformGroup>
                                 </Grid.LayoutTransform>
                                 <Ellipse x:Name="circle" Fill="{StaticResource ScbDarkBackground}" HorizontalAlignment="Center" Height="19" Stroke="{StaticResource ScbBorder}" VerticalAlignment="Center" Width="19"/>
-                                <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="{StaticResource ScbForeground}" SnapsToDevicePixels="false" StrokeThickness="2" VerticalAlignment="Center"/>
+                                <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="{StaticResource ScbAccent}" SnapsToDevicePixels="false" StrokeThickness="2" VerticalAlignment="Center"/>
                             </Grid>
                             <ContentPresenter HorizontalAlignment="Center" Margin="0,4,0,0" RecognizesAccessKey="True" Grid.Row="1" SnapsToDevicePixels="True" VerticalAlignment="Top"/>
                         </Grid>
@@ -265,7 +265,7 @@
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Stroke" TargetName="circle" Value="{StaticResource ScbBorder}"/>
                             <Setter Property="Fill" TargetName="circle" Value="{StaticResource ScbDarkBackground}"/>
-                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource ScbForeground}"/>
+                            <Setter Property="Stroke" TargetName="arrow" Value="{StaticResource ScbAccent}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
