@@ -107,10 +107,9 @@ namespace UDM.Model
 
         public static void ExitMainModel()
         {
-            SettingsStorage.SaveSettings();
-
             InitFileLock?.Close();
             ConfigFileLock?.Close();
+            SettingsStorage.SaveSettings();
         }
 
         public static void RegisterMainModel(MsgDialog msgDialog, ExecuteCode executeCode, ExecuteCode autoExecuteCode,
@@ -153,7 +152,9 @@ namespace UDM.Model
                 ValidateLogPath, null, null,
                 "StLogPath", false, null));
 
+            ConfigFileLock?.Close();
             SettingsStorage.LoadSettings();
+            ConfigFileLock = File.Open(Cwd + SettingsConfFilePath, FileMode.Open);
         }
 
         public static string[] Languages = { "en-US", "ru-RU" };
