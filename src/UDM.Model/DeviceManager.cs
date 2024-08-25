@@ -120,7 +120,7 @@ namespace UDM.Model
             UpdateDevices();
             if (!DeviceConnected(id))
             {
-                MainModel.ModelDeviceManager.UpdateDevices(); return;
+                MainModelStatic.ModelDeviceManager.UpdateDevices(); return;
             }
 
             foreach (var device in DeviceConnections)
@@ -142,7 +142,7 @@ namespace UDM.Model
             UpdateDevices();
             if (!DeviceConnected(id))
             {
-                MainModel.ModelDeviceManager.UpdateDevices(); return;
+                MainModelStatic.ModelDeviceManager.UpdateDevices(); return;
             }
 
             foreach (var device in DeviceConnections)
@@ -156,7 +156,7 @@ namespace UDM.Model
 
         public static Dictionary<string, string> GetPartitions(string input)
         {
-            if(MainModel.ModelDeviceManager.ActiveDevice.Id == "emulator")
+            if(MainModelStatic.ModelDeviceManager.ActiveDevice.Id == "emulator")
             {
                 var result = new Dictionary<string, string>
                 {
@@ -190,7 +190,7 @@ namespace UDM.Model
             foreach (var block in blocks)
             {
                 var shortName = block.Value.Split("/")[^1];
-                MainModel.ModelExecuteCode?.Invoke();
+                MainModelStatic.ModelExecuteCode?.Invoke();
                 SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"shell \"dd if={block.Value} of=/sdcard/UDMBackups/{shortName}_{block.Key}.img\"");
                 SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"pull /sdcard/UDMBackups/{shortName}_{block.Key}.img {SavePath}" + @$"\{shortName}_{block.Key}.img");
             }
@@ -201,7 +201,11 @@ namespace UDM.Model
     {
         public void UpdatePartitions()
         {
-            if(Type != DeviceConnectionType.adb && Type != DeviceConnectionType.recovery) throw new OperationCanceledException("Device is not in ADB mode. ");
+            if(Type != DeviceConnectionType.adb && Type != DeviceConnectionType.recovery)
+            {
+                LogService.LogService.Log("Device is not in adb mode! ", LogLevel.Error);
+                return;
+            }
 
             var result = SysCalls.ExecAndRead(MainModel.PathToPlatformtools, "adb.exe", "shell \"cd /dev/block/by-name && ls -l\"");
             if (result == null) { 

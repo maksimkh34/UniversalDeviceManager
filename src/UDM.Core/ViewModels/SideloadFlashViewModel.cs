@@ -22,7 +22,7 @@ namespace UDM.Core.ViewModels
 
         private static void BrowseAction(object obj)
         {
-            var path = MainModel.GetArchivePath?.Invoke();
+            var path = MainModelStatic.UiDialogManager?.GetFile("Select archive to sideload", "ZIP Archive (*.zip)|*.zip|All files (*.*)|*.*");
             if (path is not null && path != "")
             {
                 Updater?.Invoke(path);
@@ -32,7 +32,7 @@ namespace UDM.Core.ViewModels
 
         private static bool ActiveDeviceConnectedAndZipSelected(object obj)
         {
-            if (!MainModel.ModelDeviceManager.IsActiveDeviceConnected()) return false;
+            if (!MainModelStatic.ModelDeviceManager.IsActiveDeviceConnected()) return false;
             if (obj is not string str) return false;
             return str != MainModel.FileNotSelected;
         }
@@ -42,7 +42,7 @@ namespace UDM.Core.ViewModels
             if (obj is not string archivePath) return;
 
             MainModel.CurrentScriptCode = $"sideload {archivePath}";
-            MainModel.ModelExecuteCode?.Invoke();
+            MainModelStatic.ModelExecuteCode?.Invoke();
         }
 
         public delegate void PathUpdater(string path);

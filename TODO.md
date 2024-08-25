@@ -1,19 +1,18 @@
-* добавить проверку кол-ва аргументов команды - gvand
-* стилиь (шаблон) для expander - gvand
-* Шрифт - gvand
-* FlashFullRom не обновляет canexecutechanged - gvand
-* логи - gvand
-* ListBox selection style - gvand
-* многопоточность для нормального вывода информации
-* блочить файлы конфига до закрытия программы
-* review if
-* restore adb backup
-* Select all in backup + find by filter
-* Deselect partition 
-* Windows titles
-* При вызове UI-Диалогов, которые передаются во VIewModel, передается также локализированное сообщение - gvand?
-* update partitions in dil
-* handle device not in adb mode
-* auto update partitions
-* заполнить пространство снизу
+## Gvand
+* добавить проверку кол-ва аргументов команды
+* Шрифт
+* Сделать метод для delegatecommand, который будет обновлять информаицю и возможности выполнения операции
+* логи (использовать // заменить на поток (LogService.GetStream))
+* ListBox стиль для выбранных элементов 
+ (с рамкой, добавить в существующие и заменить в листбоксе устройств в mainwindow)
+* Реворк окна создания бэкапов
+* Сделать переводы и полную локализацию (TranslationService в помощь)
+* Названия окон (`Title=...`) (тоже с переводом)
 * изменить обводку выделеных элементов
+## maksimkh34
+* test restore
+* fix python installation
+* протестить адб восстановление разделов
+* многопоточность для нормального вывода информации 
+## До релиза
+* заполнить пространство снизу

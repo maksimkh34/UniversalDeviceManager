@@ -5,9 +5,9 @@ namespace UDM.Model.LogService
     public class LogEntry
     {
         public string Message { get; set; }
+        public LogLevel Level;
 
         public readonly DateTime? Date = DateTime.Now;
-        public readonly LogLevel Level;
         public readonly string Invoker;
 
         public string GetReadable() => Level + ":\t" + Message;

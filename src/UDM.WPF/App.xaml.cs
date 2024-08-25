@@ -9,35 +9,28 @@ using UDM.WPF.Dialogs;
 
 namespace UDM.WPF
 {
-    public class MessageWindow(string message, string textBoxMessage = "$unfilled$")
-    {
-        private readonly MessageBoxWindow _window = new(message, textBoxMessage);
-
-        public void Show() => _window.Show();
-        public void ShowDialog() => _window.ShowDialog();
-        public void Close() => _window.Close();
-    }
-
     public partial class App
     {
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            var pythonDownloadWindow = new MessageWindow("Downloading python...");
+            var translationService = new TranslationService((string key) => (string)FindResource(key));
+            var dialogManager = new UiDialogManager(
+                GetFile: GetFileAction,
+                GetFileArr: GetFilesAction,
+                GetDirParam: GetDirectoryAction,
+                GetUserInput: GetUserInput,
+                WaitForInput: ShowWaitForInputWindow,
+                MsgDialog: ShowMessage
+                );
+
             MainModel.RegisterMainModel(
-                msgDialog: ShowMessage,
-                executeCode: OpenPreDil,
-                autoExecuteCode: AutoOpenPreDil,
-                getImageStrAction: GetImagePath,
-                getFilesAction: GetFilesAction,
-                getArchiveStrAction: GetArchivePath,
-                getFolderStrAction: GetFolderPath,
-                changelogTitle: (string)FindResource("MsgChangelog")!,
-                pythonDownloadMsgShow: pythonDownloadWindow.Show,
-                pythonDownloadMsgClose: pythonDownloadWindow.Close,
-                waitForInputDialog: ShowWaitForInputWindow,
-                getUserInput: GetUserInput
+                preExecuteCodeAction: OpenPreDil,
+                autoExecuteCodection: AutoOpenPreDil,
+                changelogTitle: translationService.Get("MsgChangelog")!,
+                uiManager: dialogManager,
+                translationService: translationService
                 );
             LogService.Logs.Clear();    // ???
             // включить логи уровня дебаг на релизной сборке
@@ -51,10 +44,10 @@ namespace UDM.WPF
             MainModel.SettingsStorage.Get(MainModel.SnCurrentLanguage).UpdateValueChanged(UpdateLang);
             UpdateLang(new SettingChangedContext("", MainModel.SettingsStorage.GetValue(MainModel.SnCurrentLanguage) ?? "en-US"));
 
-            LogService.Log(FindResource("MsgHello")?.ToString() ?? "lang_err", LogLevel.Info);
+            LogService.Log(translationService.Get("MsgHello") ?? "lang_err", LogLevel.Info);
         }
 
-        public static string GetImagePath()
+        public static string GetFileAction(string title, string filter)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog
             {
@@ -62,33 +55,15 @@ namespace UDM.WPF
                 ReadOnlyChecked = false,
                 CheckFileExists = false,
                 AddExtension = true,
-                DefaultExt = "img",
-                Filter = "Image (*.img)|*.img|All files (*.*)|*.*",
-                Title = "Select image to flash"
+                Filter = filter,
+                Title = title
             };
             dialog.ShowDialog();
 
             return dialog.FileName;
         }
 
-        public static string GetArchivePath()
-        {
-            var dialog = new Microsoft.Win32.OpenFileDialog
-            {
-                Multiselect = false,
-                ReadOnlyChecked = false,
-                CheckFileExists = false,
-                AddExtension = true,
-                DefaultExt = "zip",
-                Filter = "ZIP archive (*.zip)|*.zip|All files (*.*)|*.*",
-                Title = "Select archive"
-            };
-            dialog.ShowDialog();
-
-            return dialog.FileName;
-        }
-
-        public static string[] GetFilesAction()
+        public static string[] GetFilesAction(string title, string filter)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog
             {
@@ -96,21 +71,20 @@ namespace UDM.WPF
                 ReadOnlyChecked = false,
                 CheckFileExists = false,
                 AddExtension = true,
-                DefaultExt = "zip",
-                Filter = "ZIP archive (*.zip)|*.zip|All files (*.*)|*.*",
-                Title = "Select files"
+                Filter = filter,
+                Title = title
             };
             dialog.ShowDialog();
 
             return dialog.FileNames;
         }
 
-        public static string GetFolderPath()
+        public static string GetDirectoryAction(string title)
         {
             var dialog = new Microsoft.Win32.OpenFolderDialog
             {
                 Multiselect = false,
-                Title = "Select folder"
+                Title = title
             };
             dialog.ShowDialog();
 
@@ -131,16 +105,16 @@ namespace UDM.WPF
             return true;
         }
 
-        public static string? GetUserInput(string message)
+        public static string GetUserInput(string message)
         {
             var window = new UserInputWindow
             {
                 DataContext = new UserInputWindowViewModel(message)
             };
             window.ShowDialog();
-            var result = MainModel.CurrentUserInputFromUserInputWindow;
-            MainModel.CurrentUserInputFromUserInputWindow = null;
-            return result;
+            var result = Model.MainModelStatic.CurrentUserInputFromUserInputWindow;
+            Model.MainModelStatic.CurrentUserInputFromUserInputWindow = null;
+            return result ?? "no input provided";
         }
 
         public static void ShutdownApp()
@@ -150,11 +124,7 @@ namespace UDM.WPF
             Environment.Exit(0);
         }
 
-        public static void ShowWaitForInputWindow()
-        {
-            WaitForInputWindow window = new();
-            window.ShowDialog();
-        }
+        public static void ShowWaitForInputWindow() => new WaitForInputWindow().ShowDialog();
 
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
@@ -167,7 +137,7 @@ namespace UDM.WPF
             e.Handled = true;
             if (e.Exception is System.ComponentModel.Win32Exception)
             {
-                ShowMessage("Warning!", msg2 + FindResource("Win32ExceptionMsg"));
+                ShowMessage("Warning!", msg2 + MainModelStatic.TranslationService?.Get("Win32ExceptionMsg"));
                 return;
             }
 
