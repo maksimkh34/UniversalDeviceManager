@@ -23,35 +23,28 @@
                    FontSize="14"
                    HorizontalAlignment="Center"
                    Margin="10,10,10,5"
-                   Text="Select partitions to backup">
+                   Text="Choose partitions to backup">
         </TextBlock>
+        <Button Click="Button_Click_1"
+                Margin="10,0,10,0" 
+                Style="{StaticResource ThemedButton}">Select all</Button>
         <DockPanel>
-            <ComboBox Style="{StaticResource ThemedComboBox}"
-                      SelectedValue="{Binding SelectedPartition}"
-                      SelectionChanged="ComboBox_SelectionChanged"
-                      ItemsSource="{Binding BeforeSelectPartitions}"
-                      DockPanel.Dock="Top"
-                      Margin="10,0,10,10">
-
-            </ComboBox>
-            <TextBlock Style="{StaticResource ThemedTextBlock}"
-                       DockPanel.Dock="Top"
-                FontSize="14"
-                HorizontalAlignment="Center"
-                Margin="10,0,10,5"
-                Text="Partitions to backup">
-            </TextBlock>
-            <ListBox DockPanel.Dock="Top"
-                     Style="{StaticResource ThemedListBox}" 
+            <ListBox x:Name="listbox1" DockPanel.Dock="Top"
+                     Style="{DynamicResource ThemedListBox}"
                      ItemTemplate="{StaticResource PartitionDataTemplate}"
-                     ItemsSource="{Binding AfterSelectPartitions}"
-                     Margin="10,5,10,0">
+                     ItemsSource="{Binding BeforeSelectPartitions}"
+                     Margin="10,5,10,0"
+                     Height="200"
+                     SelectionMode="Extended">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource ThemedListBoxItem}">
+                        <Setter Property="Width" Value="180"></Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
             </ListBox>
-            <Button Command="{Binding ApplyCommand}"
-                    CommandParameter="{Binding AfterSelectPartitions}"
+            <Button Click="Button_Click"
                     Margin="10" 
                     Style="{StaticResource ThemedButton}">Apply</Button>
         </DockPanel>
-
     </StackPanel>
 </Window>

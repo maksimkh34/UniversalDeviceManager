@@ -14,19 +14,9 @@ namespace UDM.Core.ViewModels
     public class BackupPartitionsViewModel(Action closeWindow) : BaseViewModel
     {
         public ObservableCollection<string> BeforeSelectPartitions { get; set; } = new(MainModel.ModelDeviceManager.ActiveDevice.Partitions.Keys.ToList());
-        public ObservableCollection<string> AfterSelectPartitions { get; set; } = new();
         public string? SelectedPartitions;
 
-        public ICommand ApplyCommand { get; } = new DelegateCommand(ApplyFunction, DelegateCommand.DefaultCanExecute, closeWindow);
-
-        public void SelectPartition(string? partition)
-        {
-            BeforeSelectPartitions.Remove(partition!);
-            AfterSelectPartitions.Add(partition!);
-            OnPropertyChanged(nameof(AfterSelectPartitions));
-        }
-
-        static void ApplyFunction(object param)
+        public static void ApplyFunction(object param)
         {
             if (param is ObservableCollection<string> partitions)
             {

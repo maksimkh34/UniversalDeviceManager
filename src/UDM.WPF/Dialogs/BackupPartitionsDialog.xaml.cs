@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,13 +47,25 @@ namespace UDM.WPF.Dialogs
             DataContext = _viewModel;
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            try
+            ListBox e1 = (ListBox)this.FindName("listbox1");
+            ObservableCollection<string> e2 = new ObservableCollection<string>();
+            foreach (var e3 in e1.SelectedItems)
             {
-                _viewModel?.SelectPartition(e.AddedItems[0]?.ToString());
+                e2.Add(e3.ToString());
             }
-            catch (IndexOutOfRangeException) { }
+            BackupPartitionsViewModel.ApplyFunction(e2);
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            ListBox e1 = (ListBox)this.FindName("listbox1");
+            e1.SelectedItems.Clear();
+            foreach (var e2 in e1.Items)
+            {
+                e1.SelectedItems.Add(e2.ToString());
+            }
         }
     }
 }
