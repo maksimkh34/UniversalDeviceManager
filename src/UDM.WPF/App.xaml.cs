@@ -25,6 +25,7 @@ namespace UDM.WPF
             base.OnStartup(e);
 
             var pythonDownloadWindow = new MessageWindow("Downloading python...");
+            var translationService = new TranslationService((string key) => (string)FindResource(key));
             var dialogManager = new UiDialogManager(
                 GetFile: GetFileAction,
                 GetFileArr: GetFilesAction,
@@ -40,7 +41,8 @@ namespace UDM.WPF
                 changelogTitle: (string)FindResource("MsgChangelog")!,
                 pythonDownloadMsgShow: pythonDownloadWindow.Show,
                 pythonDownloadMsgClose: pythonDownloadWindow.Close,
-                manager: dialogManager
+                manager: dialogManager,
+                TranslationService: translationService
                 );
             LogService.Logs.Clear();    // ???
             // включить логи уровня дебаг на релизной сборке

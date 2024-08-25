@@ -95,6 +95,7 @@ namespace UDM.Model
         public static string? ChangelogTitle;
 
         public static UiDialogManager? UiDialogManager;
+        public static TranslationService? TranslationService;
 
 
         public static FileStream? ConfigFileLock;
@@ -108,7 +109,7 @@ namespace UDM.Model
         }
 
         public static void RegisterMainModel(ExecuteCode executeCode, ExecuteCode autoExecuteCode, UiDialogManager manager,
-            string changelogTitle, MsgWindowAction pythonDownloadMsgShow, MsgWindowAction pythonDownloadMsgClose)
+            string changelogTitle, MsgWindowAction pythonDownloadMsgShow, MsgWindowAction pythonDownloadMsgClose, TranslationService translationService)
         {
             ChangelogTitle = changelogTitle;
             ModelExecuteCode = executeCode;
@@ -116,6 +117,7 @@ namespace UDM.Model
             PythonDownloadMsgClose = pythonDownloadMsgClose;
             PythonDownloadMsgShow = pythonDownloadMsgShow;
             UiDialogManager = manager;
+            TranslationService = translationService;
 
             try { 
                 InitFileLock = File.Open(Cwd + InitFilePath, FileMode.Open);
