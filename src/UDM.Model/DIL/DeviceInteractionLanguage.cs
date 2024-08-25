@@ -14,9 +14,14 @@ namespace UDM.Model.DIL
             LogService.LogService.Log("Executing script... \n", LogLevel.Info);
             while (script.StartsWith(' ')) script = script.Substring(1);
             var scriptLines = script.Split("\r\n");
-            foreach (var pCmd in scriptLines)
+            foreach (var fpCmd in scriptLines)
             {
+                var pCmd = fpCmd;
                 MainModel.ModelDeviceManager.UpdateDevices();
+                while (pCmd.StartsWith(" "))
+                {
+                    pCmd = pCmd.Substring(1);
+                }
 
                 var cmd = MainModel.ReplaceCodeWars(pCmd);
                 var instructions = cmd.Split(' ');
