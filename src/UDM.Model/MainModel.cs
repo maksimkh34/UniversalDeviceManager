@@ -132,8 +132,8 @@ namespace UDM.Model
             GetUserInput = getUserInput;
 
             try { 
-                //InitFileLock = File.Open(Cwd + InitFilePath, FileMode.Open);
-                //ConfigFileLock = File.Open(Cwd + SettingsConfFilePath, FileMode.Open);
+                InitFileLock = File.Open(Cwd + InitFilePath, FileMode.Open);
+                ConfigFileLock = File.Open(Cwd + SettingsConfFilePath, FileMode.Open);
             } catch (FileNotFoundException) { }
 
             // Do not forget to update SettingsViewModel! 
