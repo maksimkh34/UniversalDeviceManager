@@ -42,7 +42,7 @@ namespace UDM.WPF
                 pythonDownloadMsgShow: pythonDownloadWindow.Show,
                 pythonDownloadMsgClose: pythonDownloadWindow.Close,
                 manager: dialogManager,
-                TranslationService: translationService
+                translationService: translationService
                 );
             LogService.Logs.Clear();    // ???
             // включить логи уровня дебаг на релизной сборке

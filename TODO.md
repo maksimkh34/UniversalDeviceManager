@@ -9,8 +9,6 @@
 * Сделать переводы и полную локализацию (TranslationService в помощь)
 * Названия окон (`Title=...`) (тоже с переводом)
 ## maksimkh34
-* auto update partitions
-* handle device not in adb mode
 * test restore
 * fix python installation
 * изменить обводку выделеных элементов

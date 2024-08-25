@@ -201,7 +201,11 @@ namespace UDM.Model
     {
         public void UpdatePartitions()
         {
-            if(Type != DeviceConnectionType.adb && Type != DeviceConnectionType.recovery) throw new OperationCanceledException("Device is not in ADB mode. ");
+            if(Type != DeviceConnectionType.adb && Type != DeviceConnectionType.recovery)
+            {
+                LogService.LogService.Log("Device is not in adb mode! ", LogLevel.Error);
+                return;
+            }
 
             var result = SysCalls.ExecAndRead(MainModel.PathToPlatformtools, "adb.exe", "shell \"cd /dev/block/by-name && ls -l\"");
             if (result == null) { 
