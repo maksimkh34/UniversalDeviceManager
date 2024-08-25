@@ -1,17 +1,20 @@
-* добавить проверку кол-ва аргументов команды - gvand
-* Шрифт - gvand
+## Gvand
+* добавить проверку кол-ва аргументов команды
+* Шрифт
 * Сделать метод для delegatecommand, который будет обновлять информаицю и возможности выполнения операции
-* логи (использовать // заменить на поток (LogService.GetStream)) - gvand
-* ListBox selection style - gvand
-* многопоточность для нормального вывода информации (dodelat)
-* restore adb backup
-* Select all in backup + find by filter
-* Deselect partition 
-* translations in app using TranslationService
-* Windows titles
-* fix python installation
-* handle device not in adb mode
+* логи (использовать // заменить на поток (LogService.GetStream))
+* ListBox стиль для выбранных элементов 
+ (с рамкой, добавить в существующие и заменить в листбоксе устройств в mainwindow)
+* Реворк окна создания бэкапов
+* Сделать переводы и полную локализацию (TranslationService в помощь)
+* Названия окон (`Title=...`) (тоже с переводом)
+## maksimkh34
 * auto update partitions
-* заполнить пространство снизу
+* handle device not in adb mode
 * test restore
+* fix python installation
 * изменить обводку выделеных элементов
+* протестить адб восстановление разделов
+* многопоточность для нормального вывода информации 
+## До релиза
+* заполнить пространство снизу
