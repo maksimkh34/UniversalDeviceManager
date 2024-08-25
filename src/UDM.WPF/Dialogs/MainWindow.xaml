@@ -207,7 +207,7 @@
                              VerticalAlignment="Top">
 
                     </TextBox>
-                    <Button Margin="5" Click="Button_Click">Test </Button>
+                    <Button Margin="5" Click="Button_Click" Visibility="Collapsed">Test </Button>
                 </StackPanel>
 
                 <Button Style="{DynamicResource ThemedButton}"

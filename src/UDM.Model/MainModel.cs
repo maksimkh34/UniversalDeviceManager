@@ -43,7 +43,7 @@ namespace UDM.Model
             {
                 if (IsDebugRelease)
                 {
-                    return LocalEnvVars.LocalFastbootPath;
+                    return LocalEnvVars.LocalPlatformtoolsPath;
                 }
                 return Directory.GetCurrentDirectory() + @"\fastboot\";
             }
@@ -54,16 +54,15 @@ namespace UDM.Model
             get;
             set;
         } = NoCodeExecutedDefaultMsg;
+        public static int MaxPathLength { get => maxPathLength; set => maxPathLength = value; }
 
-        public static string? CurrentUserInputFromUserInputWindow;
+        // In GUI, there are shorters (if path more than this value, it will start
+        // with "..." and last (MaxPathLength-3) symbols of provided path
+        private static int maxPathLength = 35;
 
         public const string SnForceDebugLogs = nameof(SnForceDebugLogs); // Sn - SettingName
         public const string SnLogPath = nameof(SnLogPath);
         public const string SnCurrentLanguage = nameof(SnCurrentLanguage);
-
-        // In GUI, there are shorters (if path more than this value, it will start
-        // with "..." and last (MaxPathLength-3) symbols of provided path
-        public static int MaxPathLength = 35;
 
         public const string NoCodeExecutedDefaultMsg = "No code is being executed.";
         public const string FileNotSelected = "File not selected";
@@ -86,42 +85,25 @@ namespace UDM.Model
 
         public delegate void MsgWindowAction();
 
-        public static bool ChangelogFound;
-
-        public static ExecuteCode? ModelExecuteCode;
-        public static ExecuteCode? AutoExecuteCode;
-        public static MsgWindowAction? PythonDownloadMsgShow;
-        public static MsgWindowAction? PythonDownloadMsgClose;
-        public static string? ChangelogTitle;
-
-        public static UiDialogManager? UiDialogManager;
-        public static TranslationService? TranslationService;
-
-
-        public static FileStream? ConfigFileLock;
-        public static FileStream? InitFileLock;
-
         public static void ExitMainModel()
         {
-            InitFileLock?.Close();
-            ConfigFileLock?.Close();
+            MainModelStatic.InitFileLock?.Close();
+            MainModelStatic.ConfigFileLock?.Close();
             SettingsStorage.SaveSettings();
         }
 
-        public static void RegisterMainModel(ExecuteCode executeCode, ExecuteCode autoExecuteCode, UiDialogManager manager,
-            string changelogTitle, MsgWindowAction pythonDownloadMsgShow, MsgWindowAction pythonDownloadMsgClose, TranslationService translationService)
+        public static void RegisterMainModel(ExecuteCode preExecuteCodeAction, ExecuteCode autoExecuteCodection, UiDialogManager uiManager,
+            string changelogTitle, TranslationService translationService)
         {
-            ChangelogTitle = changelogTitle;
-            ModelExecuteCode = executeCode;
-            AutoExecuteCode = autoExecuteCode;
-            PythonDownloadMsgClose = pythonDownloadMsgClose;
-            PythonDownloadMsgShow = pythonDownloadMsgShow;
-            UiDialogManager = manager;
-            TranslationService = translationService;
+            MainModelStatic.ChangelogTitle = changelogTitle;
+            MainModelStatic.ModelExecuteCode = preExecuteCodeAction;
+            MainModelStatic.AutoExecuteCode = autoExecuteCodection;
+            MainModelStatic.UiDialogManager = uiManager;
+            MainModelStatic.TranslationService = translationService;
 
-            try { 
-                InitFileLock = File.Open(Cwd + InitFilePath, FileMode.Open);
-                ConfigFileLock = File.Open(Cwd + SettingsConfFilePath, FileMode.Open);
+            try {
+                MainModelStatic.InitFileLock = File.Open(Cwd + InitFilePath, FileMode.Open);
+                MainModelStatic.ConfigFileLock = File.Open(Cwd + SettingsConfFilePath, FileMode.Open);
             } catch (FileNotFoundException) { }
 
             // Do not forget to update SettingsViewModel! 
@@ -132,23 +114,20 @@ namespace UDM.Model
                 "StForceDebugLogs", false, null));
 
             SettingsStorage.Register(new Setting(SnCurrentLanguage,
-                Languages[0], typeof(string),
+MainModelStatic.Languages[0], typeof(string),
                 null, null, LangChanged,
-                "StCurrentLanguage", true, Languages));
+                "StCurrentLanguage", true, MainModelStatic.Languages));
 
             SettingsStorage.Register(new Setting(SnLogPath,
                 Cwd + @"\Logs.log", typeof(string),
                 ValidateLogPath, null, null,
                 "StLogPath", false, null));
 
-            ConfigFileLock?.Close();
+            MainModelStatic.
+                        ConfigFileLock?.Close();
             SettingsStorage.LoadSettings();
-            ConfigFileLock = File.Open(Cwd + SettingsConfFilePath, FileMode.Open);
+            MainModelStatic.ConfigFileLock = File.Open(Cwd + SettingsConfFilePath, FileMode.Open);
         }
-
-        public static string[] Languages = { "en-US", "ru-RU" };
-
-        public static DeviceManager ModelDeviceManager = new();
 
         /// <summary>
         /// Проверяет, первый ли это запуск. Если первый, проводит инициализацию. Если не первый, пропускает действия
@@ -161,8 +140,8 @@ namespace UDM.Model
             // Changelog
             if (File.Exists(Cwd + ChangelogPath))
             {
-                ChangelogFound = true;
-                UiDialogManager?.ShowMsg(ChangelogTitle ?? "Changelog", File.ReadAllText(Cwd + ChangelogPath));
+                MainModelStatic.ChangelogFound = true;
+                MainModelStatic.UiDialogManager?.ShowMsg(MainModelStatic.ChangelogTitle ?? "Changelog", File.ReadAllText(Cwd + ChangelogPath));
                 File.Delete(Cwd + ChangelogPath);
             }
 
@@ -172,7 +151,7 @@ namespace UDM.Model
             LogService.LogService.Log("Executing first install...", LogLevel.Debug);
 
             CurrentScriptCode = File.ReadAllText(Cwd + FirstInstallDILScriptPath);
-            AutoExecuteCode?.Invoke();
+            MainModelStatic.AutoExecuteCode?.Invoke();
 
             File.Create(Cwd + InitFilePath);
         }
@@ -196,14 +175,14 @@ namespace UDM.Model
             var result = code
                 .Replace("%pyexecutable%", PathToPython)
                 .Replace("%cwd%", Cwd)
-                .Replace("%sid%", ModelDeviceManager.ActiveDevice.Id);
+                .Replace("%sid%", MainModelStatic.ModelDeviceManager.ActiveDevice.Id);
 
             result = Vars.Keys.Aggregate(result, (current, varName) => current.Replace(varName, Vars[varName]));
 
             while (result.Contains("askuser"))
             {
                 var msg = GetBetween(result, "%askuser: [", "]%");
-                var userInput = UiDialogManager?.GetUserInput(msg);
+                var userInput = MainModelStatic.UiDialogManager?.GetUserInput(msg);
                 result = result.Replace($"%askuser: [{msg}]%", userInput);
             }
 
@@ -211,8 +190,8 @@ namespace UDM.Model
             {
                 var partition = GetBetween(result, "%getblock ", "%");
                 var replaced = "";
-                ModelDeviceManager.ActiveDevice.UpdatePartitions();
-                foreach (var pair in ModelDeviceManager.ActiveDevice.Partitions)
+                MainModelStatic.ModelDeviceManager.ActiveDevice.UpdatePartitions();
+                foreach (var pair in MainModelStatic.ModelDeviceManager.ActiveDevice.Partitions)
                 {
                     if(pair.Key == partition) replaced = pair.Value;
                 }
@@ -227,7 +206,7 @@ namespace UDM.Model
             if (!strSource.Contains(strStart) || !strSource.Contains(strEnd)) return "";
             var start = strSource.IndexOf(strStart, 0, StringComparison.Ordinal) + strStart.Length;
             var end = strSource.IndexOf(strEnd, start, StringComparison.Ordinal);
-            return strSource.Substring(start, end - start);
+            return strSource[start..end];
 
         }
 

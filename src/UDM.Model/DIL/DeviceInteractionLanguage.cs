@@ -17,7 +17,7 @@ namespace UDM.Model.DIL
             foreach (var fpCmd in scriptLines)
             {
                 var pCmd = fpCmd;
-                MainModel.ModelDeviceManager.UpdateDevices();
+                MainModelStatic.ModelDeviceManager.UpdateDevices();
                 while (pCmd.StartsWith(" "))
                 {
                     pCmd = pCmd.Substring(1);
@@ -38,8 +38,8 @@ namespace UDM.Model.DIL
 
                     case "select":
                         var deviceId = instructions[1];
-                        MainModel.ModelDeviceManager.ActiveDevice = new DeviceConnection(deviceId,
-                            MainModel.ModelDeviceManager.ActiveDevice.Type);
+                        MainModelStatic.ModelDeviceManager.ActiveDevice = new DeviceConnection(deviceId,
+MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                         break;
 
                     case "flash_rom":
@@ -63,7 +63,7 @@ namespace UDM.Model.DIL
                                 pathToBat += "flash_all_except_data_storage.bat";
                                 break;
                             case "-d":
-                                MainModel.UiDialogManager?.ShowMsg("Error", "Invalid flashing mode specifed. Flashing in clean type...");
+                                MainModelStatic.UiDialogManager?.ShowMsg("Error", "Invalid flashing mode specifed. Flashing in clean type...");
                                 pathToBat += "flash_all.bat";
                                 break;
                         }
@@ -83,7 +83,7 @@ namespace UDM.Model.DIL
 
                     case "update_partitions":
                         LogService.LogService.Log("Updating partitions... ", LogLevel.DILOutput);
-                        MainModel.ModelDeviceManager.ActiveDevice.UpdatePartitions();
+                        MainModelStatic.ModelDeviceManager.ActiveDevice.UpdatePartitions();
                         break;
 
                     case "dil":
@@ -104,7 +104,7 @@ namespace UDM.Model.DIL
                         var expressionList = expression.Split('=');
                         if(expressionList.Length != 2)
                         {
-                            MainModel.UiDialogManager?.ShowMsg("Error", "Invalid expression: " + expression + ". " + expressionList.Length + " equals found (expect 2)");
+                            MainModelStatic.UiDialogManager?.ShowMsg("Error", "Invalid expression: " + expression + ". " + expressionList.Length + " equals found (expect 2)");
                         }
 
                         bool expressionResult = expressionList[0].ToString() == expressionList[1].ToString();
@@ -138,8 +138,8 @@ namespace UDM.Model.DIL
                         }
 
                         var rebootCommand = instructions.ElementAt(1) == "EDL" ?
-                            $"-s {MainModel.ModelDeviceManager.ActiveDevice.Id} oem edl" :
-                            $"-s {MainModel.ModelDeviceManager.ActiveDevice.Id} reboot {instructions[1]}";
+                            $"-s {MainModelStatic.ModelDeviceManager.ActiveDevice.Id} oem edl" :
+                            $"-s {MainModelStatic.ModelDeviceManager.ActiveDevice.Id} reboot {instructions[1]}";
                         var rebootOutput = SysCalls.Exec(MainModel.PathToPlatformtools, "fastboot.exe",
                             rebootCommand);
                         if (rebootOutput.ErrOutput == string.Empty)
@@ -202,13 +202,13 @@ namespace UDM.Model.DIL
 
                     case "ar":
                     case "adb_reboot":
-                        if (MainModel.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.adb)
+                        if (MainModelStatic.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.adb)
                         {
                             LogService.LogService.Log("Device is not in adb mode! ", LogLevel.Error);
                             return;
                         }
 
-                        var aRebootCommand = $"-s {MainModel.ModelDeviceManager.ActiveDevice.Id} reboot {instructions[1]}";
+                        var aRebootCommand = $"-s {MainModelStatic.ModelDeviceManager.ActiveDevice.Id} reboot {instructions[1]}";
                         var aRebootOutput = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe",
                             aRebootCommand);
                         if (aRebootOutput.ErrOutput == string.Empty)
@@ -251,7 +251,7 @@ namespace UDM.Model.DIL
 
                     case "sl":
                     case "sideload":
-                        if (MainModel.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.sideload)
+                        if (MainModelStatic.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.sideload)
                         {
                             LogService.LogService.Log("Device is not in Sideload mode! ", LogLevel.Error);
                             return;
@@ -261,7 +261,7 @@ namespace UDM.Model.DIL
                         {
                             archive += " " + instructions[i];
                         }
-                        var sideloadCommand = $" -s {MainModel.ModelDeviceManager.ActiveDevice.Id} sideload \"{archive}\"";
+                        var sideloadCommand = $" -s {MainModelStatic.ModelDeviceManager.ActiveDevice.Id} sideload \"{archive}\"";
                         var sideloadOutput = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe",
                             sideloadCommand);
                         if (sideloadOutput.ErrOutput == string.Empty)
@@ -276,12 +276,12 @@ namespace UDM.Model.DIL
 
                     case "fc":
                     case "fastboot_check_bl":
-                        if (MainModel.ModelDeviceManager.ActiveDevice.Id == DeviceManager.Disconnected_id)
+                        if (MainModelStatic.ModelDeviceManager.ActiveDevice.Id == DeviceManager.Disconnected_id)
                         {
                             LogService.LogService.Log("Device is not connected!", LogLevel.Error);
                             return;
                         }
-                        var checkCommand = $"-s {MainModel.ModelDeviceManager.ActiveDevice.Id} getvar unlocked";
+                        var checkCommand = $"-s {MainModelStatic.ModelDeviceManager.ActiveDevice.Id} getvar unlocked";
                         var checkOutput = SysCalls.Exec(MainModel.PathToPlatformtools, MainModel.PathToPlatformtools + @"\fastboot.exe",
                             checkCommand);
                         if(checkOutput.StdOutput == string.Empty)
@@ -292,7 +292,7 @@ namespace UDM.Model.DIL
 
                     case "ff":
                     case "fastboot_flash":
-                        if (MainModel.ModelDeviceManager.ActiveDevice.Id == DeviceManager.Disconnected_id)
+                        if (MainModelStatic.ModelDeviceManager.ActiveDevice.Id == DeviceManager.Disconnected_id)
                         {
                             LogService.LogService.Log("Device is not connected!", LogLevel.Error);
                             return;
@@ -323,7 +323,7 @@ namespace UDM.Model.DIL
                         {
                             path += " " + instructions[i];
                         }
-                        var flashCommand = $"-s {MainModel.ModelDeviceManager.ActiveDevice.Id} {(dt ? "--disable-verity " : "")}{(df ? "--disable-verification " : "")}flash {instructions[1]} \"{path}\"";
+                        var flashCommand = $"-s {MainModelStatic.ModelDeviceManager.ActiveDevice.Id} {(dt ? "--disable-verity " : "")}{(df ? "--disable-verification " : "")}flash {instructions[1]} \"{path}\"";
                         var flashOutput = SysCalls.Exec(MainModel.PathToPlatformtools, "fastboot.exe",
                             flashCommand);
                         if(flashOutput.ErrOutput != "")
@@ -334,7 +334,7 @@ namespace UDM.Model.DIL
 
                     case "wb":
                     case "wait_for_bl":
-                        while (!MainModel.ModelDeviceManager.ActiveDeviceAlive())
+                        while (!MainModelStatic.ModelDeviceManager.ActiveDeviceAlive())
                         {
                             Thread.Sleep(1000);
                         }
@@ -342,9 +342,9 @@ namespace UDM.Model.DIL
 
                     case "wr":
                     case "wait_for_recovery":
-                        while (MainModel.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.recovery)
+                        while (MainModelStatic.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.recovery)
                         {
-                            MainModel.ModelDeviceManager.UpdateDevices();
+                            MainModelStatic.ModelDeviceManager.UpdateDevices();
                             Thread.Sleep(1000);
                         }
                         break;
@@ -374,12 +374,12 @@ namespace UDM.Model.DIL
 
                     case "msg":
                         var msg = string.Join(" ", instructions[1..]);
-                        MainModel.UiDialogManager?.ShowMsg("Console", msg);
+                        MainModelStatic.UiDialogManager?.ShowMsg("Console", msg);
                         break;
 
                     case "ww":
                     case "wait_win":
-                        MainModel.UiDialogManager?.WaitForInput();
+                        MainModelStatic.UiDialogManager?.WaitForInput();
                         break;
 
                     case "py_exec":
@@ -409,7 +409,7 @@ namespace UDM.Model.DIL
                                 LogService.LogService.Log(service.Read(), LogLevel.OuterServices);
                             } else if (command.StartsWith("display"))
                             {
-                                MainModel.UiDialogManager?.ShowMsg("Python console", service.Read());
+                                MainModelStatic.UiDialogManager?.ShowMsg("Python console", service.Read());
                             } else if (command.StartsWith("end"))
                             {
                                 LogService.LogService.Log("Sending end_wait...", LogLevel.Debug);

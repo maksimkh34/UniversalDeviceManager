@@ -21,7 +21,7 @@ namespace UDM.Core.ViewModels
         {
             if (param is ObservableCollection<string> list)
             {
-                string[] files = MainModel.UiDialogManager?.GetFiles("Select partitions to restore", "Image (*.img)|*.img|All files (*.*)|*.*") ?? new string[0];
+                string[] files = MainModelStatic.UiDialogManager?.GetFiles("Select partitions to restore", "Image (*.img)|*.img|All files (*.*)|*.*") ?? new string[0];
                 foreach(var file in files)
                 {
                     if(!list.Contains(file)) list.Add(file);
@@ -39,13 +39,13 @@ namespace UDM.Core.ViewModels
                     code += $"adb_restore \"{file}\"\r\n";
                 }
                 MainModel.CurrentScriptCode = code;
-                MainModel.ModelExecuteCode?.Invoke();
+                MainModelStatic.ModelExecuteCode?.Invoke();
             }
         }
 
         public static bool ApplyCommandPredicate(object param)
         {
-            return MainModel.ModelDeviceManager.ActiveDevice.Type == DeviceConnectionType.adb;
+            return MainModelStatic.ModelDeviceManager.ActiveDevice.Type == DeviceConnectionType.adb;
         }
     }
 }

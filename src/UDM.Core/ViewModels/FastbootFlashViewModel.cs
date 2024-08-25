@@ -59,7 +59,7 @@ public class FastbootFlashViewModel(Action closeWindowAction) : BaseViewModel
 
     public static void BrowseAction(object param)
     {
-        var path = MainModel.UiDialogManager?.GetFile("Select image to flash", "Image (*.img)|*.img|All files (*.*)|*.*");
+        var path = MainModelStatic.UiDialogManager?.GetFile("Select image to flash", "Image (*.img)|*.img|All files (*.*)|*.*");
         if (path is not null && path != "")
         {
             Updater?.Invoke(path);
@@ -80,12 +80,12 @@ public class FastbootFlashViewModel(Action closeWindowAction) : BaseViewModel
                                       $"{(disableVerity ? Model.DIL.DeviceInteractionLanguage.FastbootFlash_DisableVerity_Flag + " " : "")}" +
                                       $"{(disableVerification ? Model.DIL.DeviceInteractionLanguage.FastbootFlash_DisableVerification_Flag + " " : "")}" +
                                       $"{imgPath}";
-        MainModel.ModelExecuteCode?.Invoke();
+        MainModelStatic.ModelExecuteCode?.Invoke();
     }
 
     public static bool ActiveDeviceConnectedAndImgSelected(object param)
     {
-        if (!MainModel.ModelDeviceManager.IsActiveDeviceConnected() || MainModel.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.fastboot) return false;
+        if (!MainModelStatic.ModelDeviceManager.IsActiveDeviceConnected() || MainModelStatic.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.fastboot) return false;
         if (param is not IEnumerable<string> list) return false;
         return list.ElementAt(1) != MainModel.FileNotSelected;
     }

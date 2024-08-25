@@ -13,7 +13,7 @@ namespace UDM.Core.ViewModels
 {
     public class BackupPartitionsViewModel(Action closeWindow) : BaseViewModel
     {
-        public ObservableCollection<string> BeforeSelectPartitions { get; set; } = new(MainModel.ModelDeviceManager.ActiveDevice.Partitions.Keys.ToList());
+        public ObservableCollection<string> BeforeSelectPartitions { get; set; } = new(MainModelStatic.ModelDeviceManager.ActiveDevice.Partitions.Keys.ToList());
         public ObservableCollection<string> AfterSelectPartitions { get; set; } = new();
         public string? SelectedPartitions;
 
@@ -31,15 +31,15 @@ namespace UDM.Core.ViewModels
             if (param is ObservableCollection<string> partitions)
             {
                 var scriptCode = "";
-                string savePath = MainModel.UiDialogManager?.GetDirectory("Select folder to put backups to") ?? MainModel.Cwd + @"\images";
+                string savePath = MainModelStatic.UiDialogManager?.GetDirectory("Select folder to put backups to") ?? MainModel.Cwd + @"\images";
                 if(partitions.Count == 0)
                 {
-                    MainModel.UiDialogManager?.ShowMsg("Warning", "No partitions selected! ");
+                    MainModelStatic.UiDialogManager?.ShowMsg("Warning", "No partitions selected! ");
                     return;
                 }
                 Dictionary<string, string> blocks = new();    
                 foreach (var partition in partitions) { 
-                    foreach(var pair in MainModel.ModelDeviceManager.ActiveDevice.Partitions)
+                    foreach(var pair in MainModelStatic.ModelDeviceManager.ActiveDevice.Partitions)
                     {
                         if (pair.Key == partition) scriptCode += $"adb_backup {pair.Value.Replace("\n", "").Replace("\r", "")}" +
                                 $" {savePath}\\{pair.Value.Split("/")[^1].Replace("\n", "").Replace("\r", "")}_{pair.Key.Replace("\n", "").Replace("\r", "")}.img\r\n";
@@ -47,8 +47,8 @@ namespace UDM.Core.ViewModels
                 }
 
                 MainModel.CurrentScriptCode = scriptCode;
-                MainModel.ModelExecuteCode?.Invoke();
-                MainModel.UiDialogManager?.ShowMsg("Backup", "Backup saved to " + savePath);
+                MainModelStatic.ModelExecuteCode?.Invoke();
+                MainModelStatic.UiDialogManager?.ShowMsg("Backup", "Backup saved to " + savePath);
             }
             else return;
         }

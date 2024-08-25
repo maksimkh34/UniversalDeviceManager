@@ -29,12 +29,12 @@ namespace UDM.Core.ViewModels
 
         public static void BrowseAction(object param)
         {
-            var path = MainModel.UiDialogManager?.GetDirectory("Select ROM dir");
+            var path = MainModelStatic.UiDialogManager?.GetDirectory("Select ROM dir");
             if (path is not null && path != "")
             {
                 if (!File.Exists(path + "\\flash_all.bat") ||
                     !File.Exists(path + "\\flash_all_except_data_storage.bat") ||
-                    !File.Exists(path + "\\flash_all_lock.bat")) { MainModel.UiDialogManager?.ShowMsg("Error", "Invalid path! "); return; }
+                    !File.Exists(path + "\\flash_all_lock.bat")) { MainModelStatic.UiDialogManager?.ShowMsg("Error", "Invalid path! "); return; }
 
                 Updater?.Invoke(path);
                 
@@ -57,13 +57,13 @@ namespace UDM.Core.ViewModels
             }
 
             MainModel.CurrentScriptCode = $"flash_rom -{type} {romPath}";
-            MainModel.ModelExecuteCode?.Invoke();
+            MainModelStatic.ModelExecuteCode?.Invoke();
         }
 
         public static bool ActiveDeviceConnectedAndRomSelected(object param)
         {
             return true;
-            if (!MainModel.ModelDeviceManager.IsActiveDeviceConnected() || MainModel.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.fastboot) return false;
+            if (!MainModelStatic.ModelDeviceManager.IsActiveDeviceConnected() || MainModelStatic.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.fastboot) return false;
             if (param is not IEnumerable<string> list) return false;
             return list.ElementAt(1) != MainModel.FileNotSelected;
         }

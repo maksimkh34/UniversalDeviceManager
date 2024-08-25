@@ -30,15 +30,15 @@ namespace UDM.WPF.Dialogs
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _viewModel = new(Close);
-            if(MainModel.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.adb 
-                && MainModel.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.recovery)
+            if(MainModelStatic.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.adb 
+                && MainModelStatic.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.recovery)
             {
                 App.ShowMessage("No compatible devices found! ");
                 Close();
             }
             if (_viewModel.BeforeSelectPartitions.Count == 0)
             {
-                MainModel.ModelDeviceManager.ActiveDevice.UpdatePartitions();
+                MainModelStatic.ModelDeviceManager.ActiveDevice.UpdatePartitions();
                 App.ShowMessage("Can't get partitions table! ");
                 Close();
             }

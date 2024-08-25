@@ -6,13 +6,13 @@ public static class CommonCommands
     {
         if (param is string id)
         {
-            MainModel.ModelDeviceManager.Disconnect(id);
+            MainModelStatic.ModelDeviceManager.Disconnect(id);
         }
     }
 
     public static void InstallPython(object param)
     {
         MainModel.CurrentScriptCode = File.ReadAllText(MainModel.Cwd + MainModel.InstallPythonScriptPath);
-        MainModel.ModelExecuteCode?.Invoke();
+        MainModelStatic.ModelExecuteCode?.Invoke();
     }
 }

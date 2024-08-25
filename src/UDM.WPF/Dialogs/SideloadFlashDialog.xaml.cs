@@ -20,7 +20,7 @@ namespace UDM.WPF.Dialogs
         {
             _dataContext = new SideloadFlashViewModel(Close);
             DataContext = _dataContext;
-            ActiveDeviceTextBox.Text += MainModel.ModelDeviceManager.ActiveDevice.Id + ")";
+            ActiveDeviceTextBox.Text += MainModelStatic.ModelDeviceManager.ActiveDevice.Id + ")";
             SideloadFlashViewModel.Updater = UpdatePath;
         }
 

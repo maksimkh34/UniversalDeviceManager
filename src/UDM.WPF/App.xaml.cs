@@ -9,22 +9,12 @@ using UDM.WPF.Dialogs;
 
 namespace UDM.WPF
 {
-    public class MessageWindow(string message, string textBoxMessage = "$unfilled$")
-    {
-        private readonly MessageBoxWindow _window = new(message, textBoxMessage);
-
-        public void Show() => _window.Show();
-        public void ShowDialog() => _window.ShowDialog();
-        public void Close() => _window.Close();
-    }
-
     public partial class App
     {
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            var pythonDownloadWindow = new MessageWindow("Downloading python...");
             var translationService = new TranslationService((string key) => (string)FindResource(key));
             var dialogManager = new UiDialogManager(
                 GetFile: GetFileAction,
@@ -36,12 +26,10 @@ namespace UDM.WPF
                 );
 
             MainModel.RegisterMainModel(
-                executeCode: OpenPreDil,
-                autoExecuteCode: AutoOpenPreDil,
-                changelogTitle: (string)FindResource("MsgChangelog")!,
-                pythonDownloadMsgShow: pythonDownloadWindow.Show,
-                pythonDownloadMsgClose: pythonDownloadWindow.Close,
-                manager: dialogManager,
+                preExecuteCodeAction: OpenPreDil,
+                autoExecuteCodection: AutoOpenPreDil,
+                changelogTitle: translationService.Get("MsgChangelog")!,
+                uiManager: dialogManager,
                 translationService: translationService
                 );
             LogService.Logs.Clear();    // ???
@@ -56,7 +44,7 @@ namespace UDM.WPF
             MainModel.SettingsStorage.Get(MainModel.SnCurrentLanguage).UpdateValueChanged(UpdateLang);
             UpdateLang(new SettingChangedContext("", MainModel.SettingsStorage.GetValue(MainModel.SnCurrentLanguage) ?? "en-US"));
 
-            LogService.Log(FindResource("MsgHello")?.ToString() ?? "lang_err", LogLevel.Info);
+            LogService.Log(translationService.Get("MsgHello") ?? "lang_err", LogLevel.Info);
         }
 
         public static string GetFileAction(string title, string filter)
@@ -67,7 +55,6 @@ namespace UDM.WPF
                 ReadOnlyChecked = false,
                 CheckFileExists = false,
                 AddExtension = true,
-                DefaultExt = "zip",
                 Filter = filter,
                 Title = title
             };
@@ -84,7 +71,6 @@ namespace UDM.WPF
                 ReadOnlyChecked = false,
                 CheckFileExists = false,
                 AddExtension = true,
-                DefaultExt = "zip",
                 Filter = filter,
                 Title = title
             };
@@ -126,8 +112,8 @@ namespace UDM.WPF
                 DataContext = new UserInputWindowViewModel(message)
             };
             window.ShowDialog();
-            var result = MainModel.CurrentUserInputFromUserInputWindow;
-            MainModel.CurrentUserInputFromUserInputWindow = null;
+            var result = Model.MainModelStatic.CurrentUserInputFromUserInputWindow;
+            Model.MainModelStatic.CurrentUserInputFromUserInputWindow = null;
             return result ?? "no input provided";
         }
 
@@ -138,11 +124,7 @@ namespace UDM.WPF
             Environment.Exit(0);
         }
 
-        public static void ShowWaitForInputWindow()
-        {
-            WaitForInputWindow window = new();
-            window.ShowDialog();
-        }
+        public static void ShowWaitForInputWindow() => new WaitForInputWindow().ShowDialog();
 
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
@@ -155,7 +137,7 @@ namespace UDM.WPF
             e.Handled = true;
             if (e.Exception is System.ComponentModel.Win32Exception)
             {
-                ShowMessage("Warning!", msg2 + FindResource("Win32ExceptionMsg"));
+                ShowMessage("Warning!", msg2 + MainModelStatic.TranslationService?.Get("Win32ExceptionMsg"));
                 return;
             }
 

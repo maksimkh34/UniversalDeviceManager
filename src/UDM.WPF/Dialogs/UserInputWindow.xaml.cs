@@ -16,7 +16,7 @@ namespace UDM.WPF.Dialogs
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            MainModel.CurrentUserInputFromUserInputWindow = ((UserInputWindowViewModel)DataContext).OutMsg;
+            Model.MainModelStatic.CurrentUserInputFromUserInputWindow = ((UserInputWindowViewModel)DataContext).OutMsg;
             Close();
         }
     }
