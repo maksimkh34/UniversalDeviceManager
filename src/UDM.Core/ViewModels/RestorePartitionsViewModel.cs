@@ -24,7 +24,7 @@ namespace UDM.Core.ViewModels
                 string[] files = MainModel.GetFiles?.Invoke() ?? new string[0];
                 foreach(var file in files)
                 {
-                    list.Add(file);
+                    if(!list.Contains(file)) list.Add(file);
                 }
             }
         }
@@ -34,13 +34,18 @@ namespace UDM.Core.ViewModels
             var code = "";
             if(param is ObservableCollection<string> list)
             {
-                code += "adb_restore \r\n";
+                foreach (var file in list)
+                {
+                    code += $"adb_restore \"{file}\"\r\n";
+                }
+                MainModel.CurrentScriptCode = code;
+                MainModel.ModelExecuteCode?.Invoke();
             }
         }
 
         public static bool ApplyCommandPredicate(object param)
         {
-            return true;
+            return MainModel.ModelDeviceManager.ActiveDevice.Type == DeviceConnectionType.adb;
         }
     }
 }

@@ -232,6 +232,7 @@ namespace UDM.Model
             return result;
         }
 
+        // move
         public static string GetBetween(string strSource, string strStart, string strEnd)
         {
             if (!strSource.Contains(strStart) || !strSource.Contains(strEnd)) return "";

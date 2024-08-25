@@ -2,7 +2,7 @@
 * стилиь (шаблон) для expander - gvand
 * Шрифт - gvand
 * FlashFullRom не обновляет canexecutechanged - gvand
-* логи - gvand
+* логи (использовать // заменить на поток (LogService.GetStream)) - gvand
 * ListBox selection style - gvand
 * многопоточность для нормального вывода информации
 * review if
@@ -16,4 +16,5 @@
 * handle device not in adb mode
 * auto update partitions
 * заполнить пространство снизу
+* test restore
 * изменить обводку выделеных элементов

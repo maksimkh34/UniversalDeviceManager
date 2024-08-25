@@ -142,6 +142,54 @@ namespace UDM.Model.DIL
                         }
                         break;
 
+                    case "adb_restore":
+                        // sdc34_test_part.img
+                        var preFile = instructions[1];
+                        for(int i = 2; i < instructions.Length; i++)
+                        {
+                            preFile += instructions[i];
+                        }
+                        var file = MainModel.GetBetween(preFile, "\"", "\"");
+                        var filepParts = Path.GetFileName(file).Replace(".img", "").Split("_");
+                        var block = filepParts[0];
+                        var partition = filepParts[1];
+                        for (int i = 2; i < filepParts.Length; i++)
+                        {
+                            partition += "_" + filepParts[i];
+                        }
+                        SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"shell mkdir /sdcard/UDMBackups/");
+                        var pushResult = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"push /sdcard/UDMBackups/restore_part {file}");
+                        var restoreResult = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"shell \"dd if=/sdcard/UDMBackups/restore_part of=/dev/block/{block}");
+                        var rmResult = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"rm /sdcard/UDMBackups/restore_part");
+
+                        if (pushResult.ErrOutput == string.Empty)
+                        {
+                            LogService.LogService.Log(pushResult.StdOutput, LogLevel.Error);
+                        }
+                        else
+                        {
+                            LogService.LogService.Log(pushResult.ErrOutput, LogLevel.DILOutput);
+                        }
+
+                        if (restoreResult.ErrOutput == string.Empty)
+                        {
+                            LogService.LogService.Log(restoreResult.StdOutput, LogLevel.Error);
+                        }
+                        else
+                        {
+                            LogService.LogService.Log(restoreResult.ErrOutput, LogLevel.DILOutput);
+                        }
+
+                        if (rmResult.ErrOutput == string.Empty)
+                        {
+                            LogService.LogService.Log(rmResult.StdOutput, LogLevel.Error);
+                        }
+                        else
+                        {
+                            LogService.LogService.Log(rmResult.ErrOutput, LogLevel.DILOutput);
+                        }
+                        break;
+
                     case "ar":
                     case "adb_reboot":
                         if (MainModel.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.adb)
