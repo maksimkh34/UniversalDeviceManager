@@ -9,10 +9,38 @@ namespace UDM.Model
     {
         public static OsType OsType = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? OsType.Linux : OsType.Win;
 
+        private static string? _wd;
+        private static string? _filename;
+        private static string? _args;
+
         public static ExecutionResult Exec(string wd, string filename, string args)
         {
-            if(!File.Exists(filename)) filename = wd + "\\"+ filename;
-            LogService.LogService.Log("Executing " + filename + " " + args, LogLevel.Debug);
+            _wd = wd;
+            _filename = filename;
+            _args = args;
+            var result = Task.Run(ExecPseudoAsync).Result;
+            _wd = null;
+            _filename = null;
+            _args = null;
+            return result;
+        }
+
+        public static ExecutionResult ExecLegacy(string wd, string filename, string args)
+        {
+            _wd = wd;
+            _filename = filename;
+            _args = args;
+            var result = ExecPseudoAsync();
+            _wd = null;
+            _filename = null;
+            _args = null;
+            return result;
+        }
+
+        private static ExecutionResult ExecPseudoAsync()
+        {
+            if (!File.Exists(_filename)) _filename = _wd + "\\" + _filename;
+            LogService.LogService.Log("Executing " + _filename + " " + _args, LogLevel.Debug);
 
             switch (OsType)
             {
@@ -25,9 +53,9 @@ namespace UDM.Model
 
                     p.StartInfo.CreateNoWindow = true;
 
-                    p.StartInfo.Arguments = args;
-                    p.StartInfo.FileName = filename;
-                    p.StartInfo.WorkingDirectory = wd;
+                    p.StartInfo.Arguments = _args;
+                    p.StartInfo.FileName = _filename;
+                    p.StartInfo.WorkingDirectory = _wd;
 
                     p.Start();
                     p.WaitForExit();

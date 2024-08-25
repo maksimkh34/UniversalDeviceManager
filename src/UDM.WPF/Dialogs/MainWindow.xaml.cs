@@ -132,5 +132,12 @@ namespace UDM.WPF.Dialogs
         {
             new RestorePartitionsDialog().ShowDialog();
         }
+
+        LogStream? stream;
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (stream == null) stream = LogService.OpenStream("Test log! ", LogLevel.Debug);
+            else stream.Update(stream.Message + "!", null);
+        }
     }
 }

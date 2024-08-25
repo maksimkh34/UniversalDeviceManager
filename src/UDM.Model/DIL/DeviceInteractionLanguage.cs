@@ -9,7 +9,7 @@ namespace UDM.Model.DIL
         public const string FastbootFlash_DisableVerity_Flag = "-dt";
         public const string FastbootFlash_DisableVerification_Flag = "-df";
 
-        public static void Execute(string script)
+        public static async void Execute(string script)
         {
             LogService.LogService.Log("Executing script... \n", LogLevel.Info);
             while (script.StartsWith(' ')) script = script.Substring(1);
@@ -426,9 +426,12 @@ namespace UDM.Model.DIL
                     case "unzip":
                         var zipFile = instructions[1];
                         var extractPath = string.Join(" ", instructions[2..]);
+                        Directory.CreateDirectory(extractPath);
                         try
                         {
-                            System.IO.Compression.ZipFile.ExtractToDirectory(zipFile, extractPath);
+                            var stream = LogService.LogService.OpenStream("Unzipping file... ", LogLevel.Info);
+                            await Task.Run(() => { System.IO.Compression.ZipFile.ExtractToDirectory(zipFile, extractPath); } );
+                            stream.Update(stream.Message + "Done", null);
                         }
                         catch (IOException)
                         {
