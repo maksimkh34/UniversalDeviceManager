@@ -31,7 +31,7 @@ namespace UDM.Core.ViewModels
             if (param is ObservableCollection<string> partitions)
             {
                 var scriptCode = "";
-                string savePath = MainModel.GetFolderPath?.Invoke() ?? MainModel.Cwd + @"\images";
+                string savePath = MainModel.UiDialogManager?.GetDirectory("Select folder to put backups to") ?? MainModel.Cwd + @"\images";
                 if(partitions.Count == 0)
                 {
                     MainModel.UiMsgDialog?.Invoke("Warning", "No partitions selected! ");

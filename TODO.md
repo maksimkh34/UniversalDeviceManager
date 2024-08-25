@@ -9,6 +9,7 @@
 * restore adb backup
 * Select all in backup + find by filter
 * Deselect partition 
+* translations in app using TranslationService
 * Windows titles
 * fix python installation
 * При вызове UI-Диалогов, которые передаются во VIewModel, передается также локализированное сообщение - gvand?

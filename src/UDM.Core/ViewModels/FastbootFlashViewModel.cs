@@ -59,7 +59,7 @@ public class FastbootFlashViewModel(Action closeWindowAction) : BaseViewModel
 
     public static void BrowseAction(object param)
     {
-        var path = MainModel.GetImagePath?.Invoke();
+        var path = MainModel.UiDialogManager?.GetFile("Select image to flash", "Image (*.img)|*.img|All files (*.*)|*.*");
         if (path is not null && path != "")
         {
             Updater?.Invoke(path);

@@ -94,13 +94,10 @@ namespace UDM.Model
         public static ExecuteCode? AutoExecuteCode;
         public static MsgWindowAction? PythonDownloadMsgShow;
         public static MsgWindowAction? PythonDownloadMsgClose;
-        public static WaitForInputDialog? UiWaitForInputDialog;
-        public static GetStrAction? GetImagePath;
-        public static GetStrAction? GetArchivePath;
-        public static GetStrAction? GetFolderPath;
-        public static GetStrActionMsg? GetUserInput;
-        public static GetFilesDelegate? GetFiles;
         public static string? ChangelogTitle;
+
+        public static UiDialogManager? UiDialogManager;
+
 
         public static FileStream? ConfigFileLock;
         public static FileStream? InitFileLock;
@@ -112,23 +109,16 @@ namespace UDM.Model
             SettingsStorage.SaveSettings();
         }
 
-        public static void RegisterMainModel(MsgDialog msgDialog, ExecuteCode executeCode, ExecuteCode autoExecuteCode,
-            GetStrAction getImageStrAction, GetStrAction getArchiveStrAction, GetStrAction getFolderStrAction, GetFilesDelegate getFilesAction,
-            string changelogTitle, MsgWindowAction pythonDownloadMsgShow, MsgWindowAction pythonDownloadMsgClose,
-            WaitForInputDialog waitForInputDialog, GetStrActionMsg getUserInput)
+        public static void RegisterMainModel(MsgDialog msgDialog, ExecuteCode executeCode, ExecuteCode autoExecuteCode, UiDialogManager manager,
+            string changelogTitle, MsgWindowAction pythonDownloadMsgShow, MsgWindowAction pythonDownloadMsgClose)
         {
             UiMsgDialog = msgDialog;
             ChangelogTitle = changelogTitle;
             ModelExecuteCode = executeCode;
             AutoExecuteCode = autoExecuteCode;
-            GetImagePath = getImageStrAction;
-            GetArchivePath = getArchiveStrAction;
-            GetFolderPath = getFolderStrAction;
-            GetFiles = getFilesAction;
             PythonDownloadMsgClose = pythonDownloadMsgClose;
             PythonDownloadMsgShow = pythonDownloadMsgShow;
-            UiWaitForInputDialog = waitForInputDialog;
-            GetUserInput = getUserInput;
+            UiDialogManager = manager;
 
             try { 
                 InitFileLock = File.Open(Cwd + InitFilePath, FileMode.Open);
@@ -214,7 +204,7 @@ namespace UDM.Model
             while (result.Contains("askuser"))
             {
                 var msg = GetBetween(result, "%askuser: [", "]%");
-                var userInput = GetUserInput?.Invoke(msg);
+                var userInput = UiDialogManager?.GetUserInput(msg);
                 result = result.Replace($"%askuser: [{msg}]%", userInput);
             }
 

@@ -369,7 +369,7 @@ namespace UDM.Model.DIL
 
                     case "ww":
                     case "wait_win":
-                        MainModel.UiWaitForInputDialog?.Invoke();
+                        MainModel.UiDialogManager?.WaitForInput();
                         break;
 
                     case "py_exec":

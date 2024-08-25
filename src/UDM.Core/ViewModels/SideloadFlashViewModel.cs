@@ -22,7 +22,7 @@ namespace UDM.Core.ViewModels
 
         private static void BrowseAction(object obj)
         {
-            var path = MainModel.GetArchivePath?.Invoke();
+            var path = MainModel.UiDialogManager?.GetFile("Select archive to sideload", "ZIP Archive (*.zip)|*.zip|All files (*.*)|*.*");
             if (path is not null && path != "")
             {
                 Updater?.Invoke(path);

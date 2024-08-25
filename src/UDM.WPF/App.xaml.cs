@@ -25,19 +25,21 @@ namespace UDM.WPF
             base.OnStartup(e);
 
             var pythonDownloadWindow = new MessageWindow("Downloading python...");
+            var dialogManager = new UiDialogManager(
+                GetFile: GetFileAction,
+                GetFileArr: GetFilesAction,
+                GetDirParam: GetDirectoryAction,
+                GetUserInput: GetUserInput,
+                WaitForInput: ShowWaitForInputWindow
+                );
             MainModel.RegisterMainModel(
                 msgDialog: ShowMessage,
                 executeCode: OpenPreDil,
                 autoExecuteCode: AutoOpenPreDil,
-                getImageStrAction: GetImagePath,
-                getFilesAction: GetFilesAction,
-                getArchiveStrAction: GetArchivePath,
-                getFolderStrAction: GetFolderPath,
                 changelogTitle: (string)FindResource("MsgChangelog")!,
                 pythonDownloadMsgShow: pythonDownloadWindow.Show,
                 pythonDownloadMsgClose: pythonDownloadWindow.Close,
-                waitForInputDialog: ShowWaitForInputWindow,
-                getUserInput: GetUserInput
+                manager: dialogManager
                 );
             LogService.Logs.Clear();    // ???
             // включить логи уровня дебаг на релизной сборке
@@ -54,24 +56,7 @@ namespace UDM.WPF
             LogService.Log(FindResource("MsgHello")?.ToString() ?? "lang_err", LogLevel.Info);
         }
 
-        public static string GetImagePath()
-        {
-            var dialog = new Microsoft.Win32.OpenFileDialog
-            {
-                Multiselect = false,
-                ReadOnlyChecked = false,
-                CheckFileExists = false,
-                AddExtension = true,
-                DefaultExt = "img",
-                Filter = "Image (*.img)|*.img|All files (*.*)|*.*",
-                Title = "Select image to flash"
-            };
-            dialog.ShowDialog();
-
-            return dialog.FileName;
-        }
-
-        public static string GetArchivePath()
+        public static string GetFileAction(string title, string filter)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog
             {
@@ -80,15 +65,15 @@ namespace UDM.WPF
                 CheckFileExists = false,
                 AddExtension = true,
                 DefaultExt = "zip",
-                Filter = "ZIP archive (*.zip)|*.zip|All files (*.*)|*.*",
-                Title = "Select archive"
+                Filter = filter,
+                Title = title
             };
             dialog.ShowDialog();
 
             return dialog.FileName;
         }
 
-        public static string[] GetFilesAction()
+        public static string[] GetFilesAction(string title, string filter)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog
             {
@@ -97,20 +82,20 @@ namespace UDM.WPF
                 CheckFileExists = false,
                 AddExtension = true,
                 DefaultExt = "zip",
-                Filter = "ZIP archive (*.zip)|*.zip|All files (*.*)|*.*",
-                Title = "Select files"
+                Filter = filter,
+                Title = title
             };
             dialog.ShowDialog();
 
             return dialog.FileNames;
         }
 
-        public static string GetFolderPath()
+        public static string GetDirectoryAction(string title)
         {
             var dialog = new Microsoft.Win32.OpenFolderDialog
             {
                 Multiselect = false,
-                Title = "Select folder"
+                Title = title
             };
             dialog.ShowDialog();
 
@@ -131,7 +116,7 @@ namespace UDM.WPF
             return true;
         }
 
-        public static string? GetUserInput(string message)
+        public static string GetUserInput(string message)
         {
             var window = new UserInputWindow
             {
@@ -140,7 +125,7 @@ namespace UDM.WPF
             window.ShowDialog();
             var result = MainModel.CurrentUserInputFromUserInputWindow;
             MainModel.CurrentUserInputFromUserInputWindow = null;
-            return result;
+            return result ?? "no input provided";
         }
 
         public static void ShutdownApp()

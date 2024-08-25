@@ -29,7 +29,7 @@ namespace UDM.Core.ViewModels
 
         public static void BrowseAction(object param)
         {
-            var path = MainModel.GetFolderPath?.Invoke();
+            var path = MainModel.UiDialogManager?.GetDirectory("Select ROM dir");
             if (path is not null && path != "")
             {
                 if (!File.Exists(path + "\\flash_all.bat") ||

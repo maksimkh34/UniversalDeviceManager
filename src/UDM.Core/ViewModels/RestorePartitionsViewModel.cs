@@ -21,7 +21,7 @@ namespace UDM.Core.ViewModels
         {
             if (param is ObservableCollection<string> list)
             {
-                string[] files = MainModel.GetFiles?.Invoke() ?? new string[0];
+                string[] files = MainModel.UiDialogManager?.GetFiles("Select partitions to restore", "Image (*.img)|*.img|All files (*.*)|*.*") ?? new string[0];
                 foreach(var file in files)
                 {
                     if(!list.Contains(file)) list.Add(file);
