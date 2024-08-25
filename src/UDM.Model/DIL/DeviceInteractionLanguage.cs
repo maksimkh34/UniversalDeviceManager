@@ -23,7 +23,7 @@ namespace UDM.Model.DIL
                     pCmd = pCmd.Substring(1);
                 }
 
-                var cmd = MainModel.ReplaceCodeWars(pCmd);
+                var cmd = ModelCore.ReplaceCodeWars(pCmd);
                 var instructions = cmd.Split(' ');
                 switch (instructions[0])
                 {
@@ -109,8 +109,8 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
 
                         bool expressionResult = expressionList[0].ToString() == expressionList[1].ToString();
 
-                        var codeIfTrue = MainModel.GetBetween(string.Join("\r\n", scriptLines), "begin", "else");
-                        var codeIfFalse = MainModel.GetBetween(string.Join("\r\n", scriptLines), "else", "end");
+                        var codeIfTrue = ModelCore.GetBetween(string.Join("\r\n", scriptLines), "begin", "else");
+                        var codeIfFalse = ModelCore.GetBetween(string.Join("\r\n", scriptLines), "else", "end");
 
                         if (expressionResult) Execute(codeIfTrue);
                         else Execute(codeIfFalse);
@@ -159,7 +159,7 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                         {
                             preFile += instructions[i];
                         }
-                        var file = MainModel.GetBetween(preFile, "\"", "\"");
+                        var file = ModelCore.GetBetween(preFile, "\"", "\"");
                         var filepParts = Path.GetFileName(file).Replace(".img", "").Split("_");
                         var block = filepParts[0];
                         var partition = filepParts[1];
@@ -362,7 +362,7 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                         if (downloadPath != null) Directory.CreateDirectory(downloadPath);
 
                         LogService.LogService.Log("Downloading " + downloadFile + "...", LogLevel.DILOutput);
-                        MainModel.DownloadFile(downloadFile, instructions[2]);
+                        ModelCore.DownloadFile(downloadFile, instructions[2]);
                         if (File.Exists(downloadFile))
                         {
                             LogService.LogService.Log("Downloaded.", LogLevel.DILOutput);
@@ -389,14 +389,14 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                             scriptPathArgs += " " + instructions[i];
                         }
 
-                        var pCommands = MainModel.GetBetween(string.Join("\r\n", scriptLines), "{", "}").Split("\n");
+                        var pCommands = ModelCore.GetBetween(string.Join("\r\n", scriptLines), "{", "}").Split("\n");
                         var commands = pCommands.Where(t => t is not ("\r" or "")).ToList();
 
                         var service = new InteractionService.InteractionService(scriptPathArgs, MainModel.Cwd + MainModel.PythonWd);
                         service.Run();
                         foreach (var line in commands)
                         {
-                            var command = MainModel.ReplaceCodeWars(line).Replace("\r", "");
+                            var command = ModelCore.ReplaceCodeWars(line).Replace("\r", "");
                             for (var i = 0; i < scriptLines.Length; i++)
                             {
                                 if (!scriptLines[i].Contains(line.Replace("\r", ""))) continue;
