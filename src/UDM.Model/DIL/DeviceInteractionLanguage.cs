@@ -76,6 +76,11 @@ namespace UDM.Model.DIL
                         }
                         break;
 
+                    case "update_partitions":
+                        LogService.LogService.Log("Updating partitions... ", LogLevel.DILOutput);
+                        MainModel.ModelDeviceManager.ActiveDevice.UpdatePartitions();
+                        break;
+
                     case "dil":
                         var scriptPath = instructions[1];
                         for (int i = 2; i < instructions.Length; i++)

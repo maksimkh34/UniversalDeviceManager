@@ -12,7 +12,6 @@
 * translations in app using TranslationService
 * Windows titles
 * fix python installation
-* При вызове UI-Диалогов, которые передаются во VIewModel, передается также локализированное сообщение - gvand?
 * update partitions in dil
 * handle device not in adb mode
 * auto update partitions
