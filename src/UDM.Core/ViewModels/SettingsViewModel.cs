@@ -38,7 +38,7 @@ namespace UDM.Core.ViewModels
             {
                 var lang = MainModel.SettingsStorage.GetValue(nameof(MainModel.SnCurrentLanguage));
                 var index = 0;
-                foreach (var s in MainModel.Languages)
+                foreach (var s in MainModelStatic.Languages)
                 {
                     if ((string)lang! == s)
                     {
@@ -50,7 +50,7 @@ namespace UDM.Core.ViewModels
 
                 return -1;
             }
-            set => MainModel.SettingsStorage.Set(nameof(MainModel.SnCurrentLanguage), MainModel.Languages[value]);
+            set => MainModel.SettingsStorage.Set(nameof(MainModel.SnCurrentLanguage), MainModelStatic.Languages[value]);
         }
 
         public string LogPath

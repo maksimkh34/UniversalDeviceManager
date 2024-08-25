@@ -28,8 +28,7 @@ namespace UDM.WPF.Dialogs
             _dataContext = new MainViewModel();
             //dataContext.UpdateDevicesCommand.Execute(null);
             DataContext = _dataContext;
-
-            MainModel.ModelDeviceManager.UpdateDevices();
+            MainModelStatic.ModelDeviceManager.UpdateDevices();
 
             LogService.Log("MainWindow Loaded!", LogLevel.Debug);
         }
@@ -74,16 +73,15 @@ namespace UDM.WPF.Dialogs
 
         private void Menu_UpdatePartitionsClick(object sender, RoutedEventArgs e)
         {
-            if (!MainModel.ModelDeviceManager.IsActiveDeviceConnected() || 
-                (MainModel.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.adb && MainModel.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.recovery))
-                MainModel.UiMsgDialog?.Invoke("Error", "Device must in ADB mode!");
-
-            MainModel.ModelDeviceManager.ActiveDevice.UpdatePartitions();
-            if(MainModel.ModelDeviceManager.ActiveDevice.IsPartitioned)
+            if (!MainModelStatic.ModelDeviceManager.IsActiveDeviceConnected() || 
+                (MainModelStatic.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.adb && MainModelStatic.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.recovery))
+                MainModelStatic.UiDialogManager?.ShowMsg("Error", "Device must in ADB mode!");
+            MainModelStatic.ModelDeviceManager.ActiveDevice.UpdatePartitions();
+            if(MainModelStatic.ModelDeviceManager.ActiveDevice.IsPartitioned)
             {
-                MainModel.UiMsgDialog?.Invoke("OK", "Partitions table updated! ");
-                LogService.Log("Found partitions: " + MainModel.ModelDeviceManager.ActiveDevice.Partitions.Count, LogLevel.Debug);
-            } else MainModel.UiMsgDialog?.Invoke("Error", "Error updating partiotins table!");
+                MainModelStatic.UiDialogManager?.ShowMsg("OK", "Partitions table updated! ");
+                LogService.Log("Found partitions: " + MainModelStatic.ModelDeviceManager.ActiveDevice.Partitions.Count, LogLevel.Debug);
+            } else MainModelStatic.UiDialogManager?.ShowMsg("Error", "Error updating partiotins table!");
         }
 
         private void Menu_FastbootFlash_Click(object sender, RoutedEventArgs e)
@@ -131,6 +129,13 @@ namespace UDM.WPF.Dialogs
         private void Menu_RestorePartitionsADB(object sender, RoutedEventArgs e)
         {
             new RestorePartitionsDialog().ShowDialog();
+        }
+
+        LogStream? stream;
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (stream == null) stream = LogService.OpenStream("Test log! ", LogLevel.Debug);
+            else stream.Update(stream.Message + "!", null);
         }
     }
 }

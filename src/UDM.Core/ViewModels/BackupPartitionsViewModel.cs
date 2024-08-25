@@ -21,15 +21,15 @@ namespace UDM.Core.ViewModels
             if (param is ObservableCollection<string> partitions)
             {
                 var scriptCode = "";
-                string savePath = MainModel.GetFolderPath?.Invoke() ?? MainModel.Cwd + @"\images";
+                string savePath = MainModelStatic.UiDialogManager?.GetDirectory("Select folder to put backups to") ?? MainModel.Cwd + @"\images";
                 if(partitions.Count == 0)
                 {
-                    MainModel.UiMsgDialog?.Invoke("Warning", "No partitions selected! ");
+                    MainModelStatic.UiDialogManager?.ShowMsg("Warning", "No partitions selected! ");
                     return;
                 }
                 Dictionary<string, string> blocks = new();    
                 foreach (var partition in partitions) { 
-                    foreach(var pair in MainModel.ModelDeviceManager.ActiveDevice.Partitions)
+                    foreach(var pair in MainModelStatic.ModelDeviceManager.ActiveDevice.Partitions)
                     {
                         if (pair.Key == partition) scriptCode += $"adb_backup {pair.Value.Replace("\n", "").Replace("\r", "")}" +
                                 $" {savePath}\\{pair.Value.Split("/")[^1].Replace("\n", "").Replace("\r", "")}_{pair.Key.Replace("\n", "").Replace("\r", "")}.img\r\n";
@@ -37,8 +37,8 @@ namespace UDM.Core.ViewModels
                 }
 
                 MainModel.CurrentScriptCode = scriptCode;
-                MainModel.ModelExecuteCode?.Invoke();
-                MainModel.UiMsgDialog?.Invoke("Backup", "Backup saved to " + savePath);
+                MainModelStatic.ModelExecuteCode?.Invoke();
+                MainModelStatic.UiDialogManager?.ShowMsg("Backup", "Backup saved to " + savePath);
             }
             else return;
         }

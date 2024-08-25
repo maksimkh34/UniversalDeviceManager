@@ -18,7 +18,7 @@ namespace UDM.WPF.Dialogs
         {
             var dataContext = new FastbootRebootViewModel(Close);
             DataContext = dataContext;
-            ActiveDeviceTextBox.Text += MainModel.ModelDeviceManager.ActiveDevice.Id + ")";
+            ActiveDeviceTextBox.Text += MainModelStatic.ModelDeviceManager.ActiveDevice.Id + ")";
         }
 
     }

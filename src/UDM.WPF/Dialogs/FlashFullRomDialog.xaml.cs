@@ -31,7 +31,7 @@ namespace UDM.WPF.Dialogs
         {
             _dataContext = new FlashFullRomViewModel(Close);
             FlashFullRomViewModel.Updater = UpdatePath;
-            ActiveDeviceTextBox.Text += MainModel.ModelDeviceManager.ActiveDevice.Id + ")";
+            ActiveDeviceTextBox.Text += MainModelStatic.ModelDeviceManager.ActiveDevice.Id + ")";
             DataContext = _dataContext;
         }
 

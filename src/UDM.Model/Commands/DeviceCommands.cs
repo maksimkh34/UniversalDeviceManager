@@ -14,28 +14,28 @@ namespace UDM.Model.Commands
 
         public static void UpdateDevices(object param)
         {
-            MainModel.ModelDeviceManager.UpdateDevices();
+            MainModelStatic.ModelDeviceManager.UpdateDevices();
         }
 
         public static void SelectDevice(object param)
         {
             if (param is string id)
             {
-                MainModel.ModelDeviceManager.Select(id);
+                MainModelStatic.ModelDeviceManager.Select(id);
             }
         }
 
         public static bool ActiveDeviceConnected(object param)
         {
-            return MainModel.ModelDeviceManager.IsActiveDeviceConnected() &&
-                   MainModel.ModelDeviceManager.ActiveDevice.Type == DeviceConnectionType.fastboot;
+            return MainModelStatic.ModelDeviceManager.IsActiveDeviceConnected() &&
+MainModelStatic.ModelDeviceManager.ActiveDevice.Type == DeviceConnectionType.fastboot;
         }
 
         public static void ExecuteCode(object param)
         {
             if (param is not string mode) return;
             MainModel.CurrentScriptCode = $"fastboot_reboot {(mode == "system" ? string.Empty : mode)}";
-            MainModel.ModelExecuteCode?.Invoke();
+            MainModelStatic.ModelExecuteCode?.Invoke();
         }
 
         #endregion Command Funcs

@@ -23,6 +23,10 @@
 
   Sets selected device's id to `(id)`
 
+* `update_partitions_`
+
+  Updates partitions table for Selected device
+
 * `flash_rom (type) (path)`
 	
   Flashes rom to device (like MiFlash do)
