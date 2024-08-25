@@ -78,7 +78,6 @@ namespace UDM.Model
         public const string InstallPythonScriptPath = @"\script\py_installer.dil";
         public static readonly string PathToPython = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Programs\Python\Python312-32\python.exe";
 
-        public delegate void MsgDialog(string titleText, string textboxText);
         public delegate void WaitForInputDialog();
         public delegate bool? ExecuteCode();
         public delegate string GetStrAction();
@@ -89,7 +88,6 @@ namespace UDM.Model
 
         public static bool ChangelogFound;
 
-        public static MsgDialog? UiMsgDialog;
         public static ExecuteCode? ModelExecuteCode;
         public static ExecuteCode? AutoExecuteCode;
         public static MsgWindowAction? PythonDownloadMsgShow;
@@ -109,10 +107,9 @@ namespace UDM.Model
             SettingsStorage.SaveSettings();
         }
 
-        public static void RegisterMainModel(MsgDialog msgDialog, ExecuteCode executeCode, ExecuteCode autoExecuteCode, UiDialogManager manager,
+        public static void RegisterMainModel(ExecuteCode executeCode, ExecuteCode autoExecuteCode, UiDialogManager manager,
             string changelogTitle, MsgWindowAction pythonDownloadMsgShow, MsgWindowAction pythonDownloadMsgClose)
         {
-            UiMsgDialog = msgDialog;
             ChangelogTitle = changelogTitle;
             ModelExecuteCode = executeCode;
             AutoExecuteCode = autoExecuteCode;
@@ -163,7 +160,7 @@ namespace UDM.Model
             if (File.Exists(Cwd + ChangelogPath))
             {
                 ChangelogFound = true;
-                UiMsgDialog?.Invoke(ChangelogTitle ?? "Changelog", File.ReadAllText(Cwd + ChangelogPath));
+                UiDialogManager?.ShowMsg(ChangelogTitle ?? "Changelog", File.ReadAllText(Cwd + ChangelogPath));
                 File.Delete(Cwd + ChangelogPath);
             }
 

@@ -58,7 +58,7 @@ namespace UDM.Model.DIL
                                 pathToBat += "flash_all_except_data_storage.bat";
                                 break;
                             case "-d":
-                                MainModel.UiMsgDialog?.Invoke("Error", "Invalid flashing mode specifed. Flashing in clean type...");
+                                MainModel.UiDialogManager?.ShowMsg("Error", "Invalid flashing mode specifed. Flashing in clean type...");
                                 pathToBat += "flash_all.bat";
                                 break;
                         }
@@ -94,7 +94,7 @@ namespace UDM.Model.DIL
                         var expressionList = expression.Split('=');
                         if(expressionList.Length != 2)
                         {
-                            MainModel.UiMsgDialog?.Invoke("Error", "Invalid expression: " + expression + ". " + expressionList.Length + " equals found (expect 2)");
+                            MainModel.UiDialogManager?.ShowMsg("Error", "Invalid expression: " + expression + ". " + expressionList.Length + " equals found (expect 2)");
                         }
 
                         bool expressionResult = expressionList[0].ToString() == expressionList[1].ToString();
@@ -364,7 +364,7 @@ namespace UDM.Model.DIL
 
                     case "msg":
                         var msg = string.Join(" ", instructions[1..]);
-                        MainModel.UiMsgDialog?.Invoke("Console", msg);
+                        MainModel.UiDialogManager?.ShowMsg("Console", msg);
                         break;
 
                     case "ww":
@@ -399,7 +399,7 @@ namespace UDM.Model.DIL
                                 LogService.LogService.Log(service.Read(), LogLevel.OuterServices);
                             } else if (command.StartsWith("display"))
                             {
-                                MainModel.UiMsgDialog?.Invoke("Python console", service.Read());
+                                MainModel.UiDialogManager?.ShowMsg("Python console", service.Read());
                             } else if (command.StartsWith("end"))
                             {
                                 LogService.LogService.Log("Sending end_wait...", LogLevel.Debug);

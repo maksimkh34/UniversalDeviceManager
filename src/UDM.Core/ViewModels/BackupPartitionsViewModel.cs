@@ -34,7 +34,7 @@ namespace UDM.Core.ViewModels
                 string savePath = MainModel.UiDialogManager?.GetDirectory("Select folder to put backups to") ?? MainModel.Cwd + @"\images";
                 if(partitions.Count == 0)
                 {
-                    MainModel.UiMsgDialog?.Invoke("Warning", "No partitions selected! ");
+                    MainModel.UiDialogManager?.ShowMsg("Warning", "No partitions selected! ");
                     return;
                 }
                 Dictionary<string, string> blocks = new();    
@@ -48,7 +48,7 @@ namespace UDM.Core.ViewModels
 
                 MainModel.CurrentScriptCode = scriptCode;
                 MainModel.ModelExecuteCode?.Invoke();
-                MainModel.UiMsgDialog?.Invoke("Backup", "Backup saved to " + savePath);
+                MainModel.UiDialogManager?.ShowMsg("Backup", "Backup saved to " + savePath);
             }
             else return;
         }

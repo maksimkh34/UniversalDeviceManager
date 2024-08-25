@@ -34,7 +34,7 @@ namespace UDM.Core.ViewModels
             {
                 if (!File.Exists(path + "\\flash_all.bat") ||
                     !File.Exists(path + "\\flash_all_except_data_storage.bat") ||
-                    !File.Exists(path + "\\flash_all_lock.bat")) { MainModel.UiMsgDialog?.Invoke("Error", "Invalid path! "); return; }
+                    !File.Exists(path + "\\flash_all_lock.bat")) { MainModel.UiDialogManager?.ShowMsg("Error", "Invalid path! "); return; }
 
                 Updater?.Invoke(path);
                 

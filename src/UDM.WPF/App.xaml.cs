@@ -30,10 +30,11 @@ namespace UDM.WPF
                 GetFileArr: GetFilesAction,
                 GetDirParam: GetDirectoryAction,
                 GetUserInput: GetUserInput,
-                WaitForInput: ShowWaitForInputWindow
+                WaitForInput: ShowWaitForInputWindow,
+                MsgDialog: ShowMessage
                 );
+
             MainModel.RegisterMainModel(
-                msgDialog: ShowMessage,
                 executeCode: OpenPreDil,
                 autoExecuteCode: AutoOpenPreDil,
                 changelogTitle: (string)FindResource("MsgChangelog")!,
