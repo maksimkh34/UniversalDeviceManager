@@ -1,9 +1,9 @@
 ﻿using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Threading;
 using UDM.Core.ViewModels;
 using UDM.Model;
 using UDM.Model.LogService;
+using UDM.Model.MainModelSpace;
 using UDM.Model.SettingsService;
 using UDM.WPF.Dialogs;
 
@@ -17,12 +17,12 @@ namespace UDM.WPF
 
             var translationService = new TranslationService((string key) => (string)FindResource(key));
             var dialogManager = new UiDialogManager(
-                GetFile: GetFileAction,
-                GetFileArr: GetFilesAction,
-                GetDirParam: GetDirectoryAction,
-                GetUserInput: GetUserInput,
-                WaitForInput: ShowWaitForInputWindow,
-                MsgDialog: ShowMessage
+                getFile: GetFileAction,
+                getFileArr: GetFilesAction,
+                getDirParam: GetDirectoryAction,
+                getUserInput: GetUserInput,
+                waitForInput: ShowWaitForInputWindow,
+                msgDialog: ShowMessage
                 );
 
             MainModel.RegisterMainModel(
@@ -41,8 +41,8 @@ namespace UDM.WPF
 
             MainModel.CheckStartup();
 
-            MainModel.SettingsStorage.Get(MainModel.SnCurrentLanguage).UpdateValueChanged(UpdateLang);
-            UpdateLang(new SettingChangedContext("", MainModel.SettingsStorage.GetValue(MainModel.SnCurrentLanguage) ?? "en-US"));
+            MainModel.SettingsStorage.Get(MainModelStatic.SnCurrentLanguage).UpdateValueChanged(UpdateLang);
+            UpdateLang(new SettingChangedContext("", MainModel.SettingsStorage.GetValue(MainModelStatic.SnCurrentLanguage) ?? "en-US"));
 
             LogService.Log(translationService.Get("MsgHello") ?? "lang_err", LogLevel.Info);
         }
@@ -112,14 +112,14 @@ namespace UDM.WPF
                 DataContext = new UserInputWindowViewModel(message)
             };
             window.ShowDialog();
-            var result = Model.MainModelStatic.CurrentUserInputFromUserInputWindow;
-            Model.MainModelStatic.CurrentUserInputFromUserInputWindow = null;
+            var result = MainModelStatic.CurrentUserInputFromUserInputWindow;
+            MainModelStatic.CurrentUserInputFromUserInputWindow = null;
             return result ?? "no input provided";
         }
 
         public static void ShutdownApp()
         {
-            LogService.Save((string)(MainModel.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log"));
+            LogService.Save((string)(MainModel.SettingsStorage.GetValue(MainModelStatic.SnLogPath) ?? "C:\\log.log"));
             MainModel.ExitMainModel();
             Environment.Exit(0);
         }
@@ -128,8 +128,8 @@ namespace UDM.WPF
 
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            if (MainModel.IsDebugRelease) return;
-            var msg1 = Resources["DialogUnhandledExceptionMsg"] + " " + (string)(MainModel.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log");
+            if (MainModelStatic.IsDebugRelease) return;
+            var msg1 = Resources["DialogUnhandledExceptionMsg"] + " " + (string)(MainModel.SettingsStorage.GetValue(MainModelStatic.SnLogPath) ?? "C:\\log.log");
             var msg2 = e.Exception.GetType() + ": " + e.Exception.Message;
             LogService.Log(msg1, LogLevel.Fatal);
             LogService.Log(msg2, LogLevel.Fatal);
@@ -141,7 +141,7 @@ namespace UDM.WPF
                 return;
             }
 
-            LogService.Save((string)(MainModel.SettingsStorage.GetValue(MainModel.SnLogPath) ?? "C:\\log.log"));
+            LogService.Save((string)(MainModel.SettingsStorage.GetValue(MainModelStatic.SnLogPath) ?? "C:\\log.log"));
             ShowMessage(msg1, msg2);
 
             Environment.Exit(0);

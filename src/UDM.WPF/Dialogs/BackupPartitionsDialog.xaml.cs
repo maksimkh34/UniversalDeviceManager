@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using UDM.Core.ViewModels;
 using UDM.Model;
+using UDM.Model.MainModelSpace;
 
 namespace UDM.WPF.Dialogs
 {
@@ -49,8 +39,8 @@ namespace UDM.WPF.Dialogs
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ListBox e1 = (ListBox)this.FindName("listbox1");
-            ObservableCollection<string> e2 = new ObservableCollection<string>();
+            var e1 = (ListBox)FindName("listbox1");
+            ObservableCollection<string> e2 = [];
             foreach (var e3 in e1.SelectedItems)
             {
                 e2.Add(e3.ToString());
@@ -60,7 +50,7 @@ namespace UDM.WPF.Dialogs
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            ListBox e1 = (ListBox)this.FindName("listbox1");
+            var e1 = (ListBox)FindName("listbox1");
             e1.SelectedItems.Clear();
             foreach (var e2 in e1.Items)
             {

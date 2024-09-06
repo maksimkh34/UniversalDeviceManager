@@ -1,45 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UDM.Model.LogService
+﻿namespace UDM.Model.LogService
 {
     public class LogStream
     {
-        private bool _sealed = false;
-        private LogEntry _entry
+        private bool _sealed;
+        private LogEntry? Entry
         {
-            get => LogService.Logs[streamedIndex];
+            get => LogService.Logs[_streamedIndex];
             set
             {
                 if (value != null) return;
                 _sealed = true;
             }
         }
-        private int streamedIndex;
+        private readonly int _streamedIndex;
 
         public LogStream(LogEntry entry)
         {
-            streamedIndex = LogService.Logs.Count;
+            _streamedIndex = LogService.Logs.Count;
             LogService.Logs.Add(entry);
         }
 
-        public string Message => _entry.Message;
-        public LogLevel Level => _entry.Level;
+        public string Message => Entry?.Message ?? "";
+        public LogLevel Level => Entry?.Level ?? LogLevel.Error;
 
         public void Update(string? text, LogLevel? level)
         {
             if(_sealed) return;
-            if (text != null) LogService.Logs[streamedIndex] = new LogEntry(text, Level);
-            if(level != null) LogService.Logs[streamedIndex] = new LogEntry(Message, (LogLevel)level);
+            if (text != null) LogService.Logs[_streamedIndex] = new LogEntry(text, Level);
+            if(level != null) LogService.Logs[_streamedIndex] = new LogEntry(Message, (LogLevel)level);
             LogService.Refresh();
         }
 
         public void Seal()
         {
-            _entry = null!;
+            Entry = null!;
         }
     }
 }

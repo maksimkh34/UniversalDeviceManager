@@ -1,5 +1,5 @@
-﻿using UDM.Model;
-using UDM.Model.LogService;
+﻿using UDM.Model.LogService;
+using UDM.Model.MainModelSpace;
 using UDM.Model.SettingsService;
 
 namespace UDM.Core.ViewModels
@@ -15,19 +15,19 @@ namespace UDM.Core.ViewModels
         {
             return settingName switch
             {
-                MainModel.SnForceDebugLogs => nameof(ForceDebugLogs),
-                MainModel.SnCurrentLanguage => nameof(CurrentLanguageIndex),
-                MainModel.SnLogPath => nameof(LogPath),
+                MainModelStatic.SnForceDebugLogs => nameof(ForceDebugLogs),
+                MainModelStatic.SnCurrentLanguage => nameof(CurrentLanguageIndex),
+                MainModelStatic.SnLogPath => nameof(LogPath),
                 _ => throw new KeyNotFoundException("Setting was not found")
             };
         }
 
         public bool ForceDebugLogs
         {
-            get => (bool)(MainModel.SettingsStorage.GetValue(nameof(MainModel.SnForceDebugLogs)) ?? false);
+            get => (bool)(MainModel.SettingsStorage.GetValue(nameof(MainModelStatic.SnForceDebugLogs)) ?? false);
             set
             {
-                MainModel.SettingsStorage.Set(nameof(MainModel.SnForceDebugLogs), value);
+                MainModel.SettingsStorage.Set(nameof(MainModelStatic.SnForceDebugLogs), value);
                 OnPropertyChanged();
             }
         }
@@ -36,7 +36,7 @@ namespace UDM.Core.ViewModels
         {
             get
             {
-                var lang = MainModel.SettingsStorage.GetValue(nameof(MainModel.SnCurrentLanguage));
+                var lang = MainModel.SettingsStorage.GetValue(nameof(MainModelStatic.SnCurrentLanguage));
                 var index = 0;
                 foreach (var s in MainModelStatic.Languages)
                 {
@@ -50,17 +50,17 @@ namespace UDM.Core.ViewModels
 
                 return -1;
             }
-            set => MainModel.SettingsStorage.Set(nameof(MainModel.SnCurrentLanguage), MainModelStatic.Languages[value]);
+            set => MainModel.SettingsStorage.Set(nameof(MainModelStatic.SnCurrentLanguage), MainModelStatic.Languages[value]);
         }
 
         public string LogPath
         {
-            get => (string)(MainModel.SettingsStorage.GetValue(nameof(MainModel.SnLogPath)) ?? "-error loading path-");
+            get => (string)(MainModel.SettingsStorage.GetValue(nameof(MainModelStatic.SnLogPath)) ?? "-error loading path-");
             set
             {
                 try
                 {
-                    MainModel.SettingsStorage.Set(nameof(MainModel.SnLogPath), value);
+                    MainModel.SettingsStorage.Set(nameof(MainModelStatic.SnLogPath), value);
                 }
                 catch (SettingsExceptions.InvalidSettingValueType)
                 {

@@ -6,6 +6,7 @@ using System.Windows.Navigation;
 using UDM.Core.ViewModels;
 using UDM.Model;
 using UDM.Model.LogService;
+using UDM.Model.MainModelSpace;
 
 namespace UDM.WPF.Dialogs
 {
@@ -46,7 +47,7 @@ namespace UDM.WPF.Dialogs
 
         private void Menu_ScriptNew_Click(object sender, RoutedEventArgs e)
         {
-            MainModel.CurrentScriptCode = string.Empty;
+            MainModelStatic.CurrentScriptCode = string.Empty;
             new PreDIL().Show();
         }
 
@@ -67,7 +68,7 @@ namespace UDM.WPF.Dialogs
             if(dialog.FileName == string.Empty) return;
             var scriptFile = dialog.FileName;
 
-            MainModel.CurrentScriptCode = File.ReadAllText(scriptFile);
+            MainModelStatic.CurrentScriptCode = File.ReadAllText(scriptFile);
             new PreDIL().Show();
         }
 
@@ -131,11 +132,11 @@ namespace UDM.WPF.Dialogs
             new RestorePartitionsDialog().ShowDialog();
         }
 
-        LogStream? stream;
+        LogStream? _stream;
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (stream == null) stream = LogService.OpenStream("Test log! ", LogLevel.Debug);
-            else stream.Update(stream.Message + "!", null);
+            if (_stream == null) _stream = LogService.OpenStream("Test log! ", LogLevel.Debug);
+            else _stream.Update(_stream.Message + "!", null);
         }
     }
 }

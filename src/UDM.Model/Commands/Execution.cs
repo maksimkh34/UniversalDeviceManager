@@ -1,4 +1,6 @@
-﻿namespace UDM.Model.Commands
+﻿using UDM.Model.MainModelSpace;
+
+namespace UDM.Model.Commands
 {
     public class Execution
     {
@@ -9,8 +11,8 @@
 
         public static bool CanExecuteScriptCode(object? param)
         {
-            var code = param?.ToString() ?? MainModel.NoCodeExecutedDefaultMsg;
-            return code != MainModel.NoCodeExecutedDefaultMsg;
+            var code = param?.ToString() ?? MainModelStatic.NoCodeExecutedDefaultMsg;
+            return code != MainModelStatic.NoCodeExecutedDefaultMsg;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Windows.Input;
 using UDM.Model;
 using UDM.Model.Commands;
 using UDM.Model.LogService;
+using UDM.Model.MainModelSpace;
 
 namespace UDM.Core.ViewModels
 {
@@ -13,7 +14,7 @@ namespace UDM.Core.ViewModels
         public ObservableCollection<LogEntry> Logs { get; } = LogService.Logs;  // Connected to LogService and Log text box in main window
         public ObservableCollection<DeviceConnection> Devices { get; } = MainModelStatic.ModelDeviceManager.DeviceConnections;  // Connected to LogService and Log text box in main window
 
-        public ICommand UpdateDevicesCommand => Model.Commands.DeviceCommands.UpdateDevicesCommand;
+        public ICommand UpdateDevicesCommand => DeviceCommands.UpdateDevicesCommand;
 
         public DeviceConnection Connection => MainModelStatic.ModelDeviceManager.ActiveDevice;
 

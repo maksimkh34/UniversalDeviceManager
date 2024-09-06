@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Windows;
 using UDM.Core.ViewModels;
-using UDM.Model;
+using UDM.Model.MainModelSpace;
 
 namespace UDM.WPF.Dialogs
 {
@@ -26,7 +26,7 @@ namespace UDM.WPF.Dialogs
 
         private void Menu_Save_Click(object sender, RoutedEventArgs e)
         {
-            MainModel.CurrentScriptCode = CodeTextBox.Text;
+            MainModelStatic.CurrentScriptCode = CodeTextBox.Text;
             var dialog = new Microsoft.Win32.SaveFileDialog
             {
                 Title = "Save DIL Script",
@@ -38,7 +38,7 @@ namespace UDM.WPF.Dialogs
             dialog.ShowDialog();
             try
             {
-                File.WriteAllLines(dialog.FileName, new List<string> { MainModel.CurrentScriptCode });
+                File.WriteAllLines(dialog.FileName, new List<string> { MainModelStatic.CurrentScriptCode });
             }
             catch (ArgumentException)
             {

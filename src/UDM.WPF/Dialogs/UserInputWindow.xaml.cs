@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using UDM.Core.ViewModels;
-using UDM.Model;
+using UDM.Model.MainModelSpace;
 
 namespace UDM.WPF.Dialogs
 {
@@ -16,7 +16,7 @@ namespace UDM.WPF.Dialogs
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            Model.MainModelStatic.CurrentUserInputFromUserInputWindow = ((UserInputWindowViewModel)DataContext).OutMsg;
+            MainModelStatic.CurrentUserInputFromUserInputWindow = ((UserInputWindowViewModel)DataContext).OutMsg;
             Close();
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
-using UDM.Model;
 using UDM.Model.Commands;
+using UDM.Model.MainModelSpace;
+
 // ReSharper disable InconsistentNaming
 
 namespace UDM.Core.ViewModels
@@ -11,10 +12,10 @@ namespace UDM.Core.ViewModels
 
         public string ScriptCode
         {
-            get => MainModel.CurrentScriptCode;
+            get => MainModelStatic.CurrentScriptCode;
             set
             {
-                MainModel.CurrentScriptCode = value;
+                MainModelStatic.CurrentScriptCode = value;
                 OnPropertyChanged();
             }
         }

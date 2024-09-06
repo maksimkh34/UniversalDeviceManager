@@ -19,5 +19,7 @@ namespace UDM.Model.Commands
             try {closeWindow?.Invoke();}
             catch(System.ComponentModel.Win32Exception){ }
         }
+
+        public void CheckCanExecute() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using UDM.Core.ViewModels;
-using UDM.Model;
+using UDM.Model.MainModelSpace;
+
 
 namespace UDM.WPF.Dialogs
 {

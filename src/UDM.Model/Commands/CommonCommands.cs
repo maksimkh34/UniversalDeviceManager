@@ -1,3 +1,5 @@
+using UDM.Model.MainModelSpace;
+
 namespace UDM.Model.Commands;
 
 public static class CommonCommands
@@ -12,7 +14,7 @@ public static class CommonCommands
 
     public static void InstallPython(object param)
     {
-        MainModel.CurrentScriptCode = File.ReadAllText(MainModel.Cwd + MainModel.InstallPythonScriptPath);
+        MainModelStatic.CurrentScriptCode = File.ReadAllText(MainModelStatic.Cwd + MainModelStatic.InstallPythonScriptPath);
         MainModelStatic.ModelExecuteCode?.Invoke();
     }
 }

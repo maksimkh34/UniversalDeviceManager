@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using UDM.Model;
 using UDM.Model.Commands;
+using UDM.Model.MainModelSpace;
 
 namespace UDM.Core.ViewModels
 {
@@ -14,7 +10,7 @@ namespace UDM.Core.ViewModels
         public ICommand BrowseCommand { get; } = new DelegateCommand(BrowseAction, DelegateCommand.DefaultCanExecute);
         public ICommand ApplyCommand { get; set; } = new DelegateCommand(FlashAction, ActiveDeviceConnectedAndRomSelected, closeWindowAction);
 
-        private string _selectedRomPath = MainModel.FileNotSelected;
+        private string _selectedRomPath = MainModelStatic.FileNotSelected;
         public string SelectedRomPath
         {
             get => _selectedRomPath;
@@ -25,20 +21,15 @@ namespace UDM.Core.ViewModels
             }
         }
 
-        public static Action? UpdateApplyCommand;
-
         public static void BrowseAction(object param)
         {
             var path = MainModelStatic.UiDialogManager?.GetDirectory("Select ROM dir");
-            if (path is not null && path != "")
-            {
-                if (!File.Exists(path + "\\flash_all.bat") ||
-                    !File.Exists(path + "\\flash_all_except_data_storage.bat") ||
-                    !File.Exists(path + "\\flash_all_lock.bat")) { MainModelStatic.UiDialogManager?.ShowMsg("Error", "Invalid path! "); return; }
+            if (path is null or "") return;
+            if (!File.Exists(path + "\\flash_all.bat") ||
+                !File.Exists(path + "\\flash_all_except_data_storage.bat") ||
+                !File.Exists(path + "\\flash_all_lock.bat")) { MainModelStatic.UiDialogManager?.ShowMsg("Error", "Invalid path! "); return; }
 
-                Updater?.Invoke(path);
-                
-            }
+            Updater?.Invoke(path);
         }
 
         public static void FlashAction(object param)
@@ -47,16 +38,16 @@ namespace UDM.Core.ViewModels
 
             IEnumerable<string> enumerable = list as string[] ?? list.ToArray();
             var romPath = enumerable.ElementAt(0);
-            string type = "d";
 
-            switch(enumerable.ElementAt(1))
+            var type = enumerable.ElementAt(1) switch
             {
-                case "Flash": type = "f"; break;
-                case "Flash and lock": type = "l"; break;
-                case "Keep user files": type = "k"; break;
-            }
+                "Flash" => "f",
+                "Flash and lock" => "l",
+                "Keep user files" => "k",
+                _ => "d"
+            };
 
-            MainModel.CurrentScriptCode = $"flash_rom -{type} {romPath}";
+            MainModelStatic.CurrentScriptCode = $"flash_rom -{type} {romPath}";
             MainModelStatic.ModelExecuteCode?.Invoke();
         }
 
@@ -65,7 +56,7 @@ namespace UDM.Core.ViewModels
             return true;
             if (!MainModelStatic.ModelDeviceManager.IsActiveDeviceConnected() || MainModelStatic.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.fastboot) return false;
             if (param is not IEnumerable<string> list) return false;
-            return list.ElementAt(1) != MainModel.FileNotSelected;
+            return list.ElementAt(1) != MainModelStatic.FileNotSelected;
         }
 
         public delegate void PathUpdater(string path);

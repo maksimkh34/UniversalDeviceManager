@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using UDM.Model.LogService;
 
-namespace UDM.Model
+namespace UDM.Model.MainModelSpace
 {
     internal static class ModelCore
     {
@@ -34,13 +34,13 @@ namespace UDM.Model
         public static string ReplaceCodeWars(string code)
         {
             var result = code
-                .Replace("%pyexecutable%", MainModel.PathToPython)
-                .Replace("%cwd%", MainModel.Cwd)
+                .Replace("%pyexecutable%", MainModelStatic.PathToPython)
+                .Replace("%cwd%", MainModelStatic.Cwd)
                 .Replace("%sid%", MainModelStatic.ModelDeviceManager.ActiveDevice.Id);
 
             result = MainModel.Vars.Keys.Aggregate(result, (current, varName) => current.Replace(varName, MainModel.Vars[varName]));
 
-            while (result.Contains("askuser")) 
+            while (result.Contains("askuser"))
             {
                 var msg = GetBetween(result, "%askuser: [", "]%");
                 var userInput = MainModelStatic.UiDialogManager?.GetUserInput(msg);
@@ -52,9 +52,9 @@ namespace UDM.Model
                 var partition = GetBetween(result, "%getblock ", "%");
                 var replaced = "";
                 MainModelStatic.ModelDeviceManager.ActiveDevice.UpdatePartitions();
-                foreach (var pair in MainModelStatic.ModelDeviceManager.ActiveDevice.Partitions)
+                foreach (var pair in MainModelStatic.ModelDeviceManager.ActiveDevice.Partitions.Where(pair => pair.Key == partition))
                 {
-                    if (pair.Key == partition) replaced = pair.Value;
+                    replaced = pair.Value;
                 }
                 result = result.Replace($"%getblock {partition}%", replaced);
             }

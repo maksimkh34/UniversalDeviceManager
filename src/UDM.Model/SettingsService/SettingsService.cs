@@ -72,7 +72,7 @@
 
     public class SettingsStorage(string localFilePath)    // Система настроек программы, позволяющая абстрагировать пользователя от класса настройки
     {
-        private readonly List<Setting> _settingsStorage = new();
+        private readonly List<Setting> _settingsStorage = [];
 
         public object? GetValue(string settingName)   // Возвращает значение настройки по ее имени
         {

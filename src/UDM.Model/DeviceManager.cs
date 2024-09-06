@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using UDM.Model.Commands;
 using UDM.Model.LogService;
+using UDM.Model.MainModelSpace;
 
 namespace UDM.Model
 {
@@ -16,7 +17,7 @@ namespace UDM.Model
 
         public const bool EmulateDevice = true;
 
-        public ObservableCollection<DeviceConnection> DeviceConnections = new();
+        public ObservableCollection<DeviceConnection> DeviceConnections = [];
         private readonly DeviceConnection _connection = new();
 
         public DeviceConnection ActiveDevice
@@ -39,7 +40,7 @@ namespace UDM.Model
             }
         }
 
-        public bool ActiveDeviceAlive() => SysCalls.Exec(MainModel.PathToPlatformtools, "fastboot.exe", "devices").StdOutput
+        public bool ActiveDeviceAlive() => SysCalls.Exec(MainModelStatic.PathToPlatformtools, "fastboot.exe", "devices").StdOutput
             .Contains(ActiveDevice.Id);
 
         public bool DeviceConnected(string id)
@@ -52,7 +53,7 @@ namespace UDM.Model
         public void UpdateFastbootDevices()
         {
             LogService.LogService.Log("Updating fastboot devices", LogLevel.Debug);
-            var fastbootResult = SysCalls.Exec(MainModel.PathToPlatformtools, "fastboot.exe", "devices");
+            var fastbootResult = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "fastboot.exe", "devices");
             foreach (var device in fastbootResult.StdOutput.Split("\r\n"))
             {
                 if (device == "") continue;
@@ -70,7 +71,7 @@ namespace UDM.Model
         public void UpdateSideloadDevices()
         {
             LogService.LogService.Log("Updating sideload devices", LogLevel.Debug);
-            var commandResult = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", "devices");
+            var commandResult = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", "devices");
             foreach (var device in commandResult.StdOutput.Split("\r\n"))
             {
                 if (device is "" or "List of devices attached") continue;
@@ -88,7 +89,7 @@ namespace UDM.Model
         public void UpdateADBDevices()
         {
             LogService.LogService.Log("Updating adb devices", LogLevel.Debug);
-            var commandResult = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", "devices");
+            var commandResult = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", "devices");
             foreach (var device in commandResult.StdOutput.Split("\r\n"))
             {
                 if (device is "" or "List of devices attached") continue;
@@ -108,7 +109,7 @@ namespace UDM.Model
             DeviceConnections.Clear();
             UpdateFastbootDevices();
             UpdateSideloadDevices();
-            if (DeviceConnections.Count == 0 && EmulateDevice && MainModel.IsDebugRelease) {
+            if (DeviceConnections.Count == 0 && EmulateDevice && MainModelStatic.IsDebugRelease) {
                 DeviceConnections.Add(new DeviceConnection("emulator", DeviceConnectionType.adb));
             }
             if(DeviceConnections.Count == 1) ActiveDevice = DeviceConnections[0];
@@ -191,8 +192,8 @@ namespace UDM.Model
             {
                 var shortName = block.Value.Split("/")[^1];
                 MainModelStatic.ModelExecuteCode?.Invoke();
-                SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"shell \"dd if={block.Value} of=/sdcard/UDMBackups/{shortName}_{block.Key}.img\"");
-                SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"pull /sdcard/UDMBackups/{shortName}_{block.Key}.img {SavePath}" + @$"\{shortName}_{block.Key}.img");
+                SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", $"shell \"dd if={block.Value} of=/sdcard/UDMBackups/{shortName}_{block.Key}.img\"");
+                SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", $"pull /sdcard/UDMBackups/{shortName}_{block.Key}.img {SavePath}" + @$"\{shortName}_{block.Key}.img");
             }
         }
     }
@@ -207,12 +208,12 @@ namespace UDM.Model
                 return;
             }
 
-            var result = SysCalls.ExecAndRead(MainModel.PathToPlatformtools, "adb.exe", "shell \"cd /dev/block/by-name && ls -l\"");
+            var result = SysCalls.ExecAndRead(MainModelStatic.PathToPlatformtools, "adb.exe", "shell \"cd /dev/block/by-name && ls -l\"");
             if (result == null) { 
                 throw new Exception("ADB Shell error: " + result);
             }
 
-            Partitions = DeviceManager.GetPartitions(result ?? "");
+            Partitions = DeviceManager.GetPartitions(result);
         }
 
         public string Id

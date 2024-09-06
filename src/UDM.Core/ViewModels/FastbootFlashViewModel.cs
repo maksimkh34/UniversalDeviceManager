@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using UDM.Model;
 using UDM.Model.Commands;
+using UDM.Model.MainModelSpace;
 
 namespace UDM.Core.ViewModels;
 
@@ -46,7 +46,7 @@ public class FastbootFlashViewModel(Action closeWindowAction) : BaseViewModel
         }
     }
 
-    private string _selectedImagePath = MainModel.FileNotSelected;
+    private string _selectedImagePath = MainModelStatic.FileNotSelected;
     public string SelectedImagePath
     {
         get => _selectedImagePath;
@@ -76,7 +76,7 @@ public class FastbootFlashViewModel(Action closeWindowAction) : BaseViewModel
         var disableVerity = enumerable.ElementAt(2) == "True";
         var disableVerification = enumerable.ElementAt(3) == "True";
 
-        MainModel.CurrentScriptCode = $"fastboot_flash {partition} " +
+        MainModelStatic.CurrentScriptCode = $"fastboot_flash {partition} " +
                                       $"{(disableVerity ? Model.DIL.DeviceInteractionLanguage.FastbootFlash_DisableVerity_Flag + " " : "")}" +
                                       $"{(disableVerification ? Model.DIL.DeviceInteractionLanguage.FastbootFlash_DisableVerification_Flag + " " : "")}" +
                                       $"{imgPath}";
@@ -87,7 +87,7 @@ public class FastbootFlashViewModel(Action closeWindowAction) : BaseViewModel
     {
         if (!MainModelStatic.ModelDeviceManager.IsActiveDeviceConnected() || MainModelStatic.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.fastboot) return false;
         if (param is not IEnumerable<string> list) return false;
-        return list.ElementAt(1) != MainModel.FileNotSelected;
+        return list.ElementAt(1) != MainModelStatic.FileNotSelected;
     }
 
     public delegate void PathUpdater(string path);

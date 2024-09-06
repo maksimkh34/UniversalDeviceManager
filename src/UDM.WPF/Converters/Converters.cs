@@ -2,9 +2,8 @@
 using System.Globalization;
 using System.IO;
 using System.Windows.Data;
-using System.Windows.Documents;
-using UDM.Model;
 using UDM.Model.LogService;
+using UDM.Model.MainModelSpace;
 
 namespace UDM.WPF.Converters
 {
@@ -12,7 +11,7 @@ namespace UDM.WPF.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            ObservableCollection<string> logsStr = new();
+            ObservableCollection<string> logsStr = [];
             if (values[0] is not ObservableCollection<LogEntry> logEntries) return "Log init error. ";
             foreach (var logEntry in logEntries)
             {
@@ -47,7 +46,7 @@ namespace UDM.WPF.Converters
         {
             if (value is string pathValue)
             {
-                return pathValue.Length > MainModel.MaxPathLength ? "..." + pathValue[^(MainModel.MaxPathLength-3)..] : pathValue;
+                return pathValue.Length > MainModelStatic.MaxPathLength ? "..." + pathValue[^(MainModelStatic.MaxPathLength-3)..] : pathValue;
             }
 
             return "value_type_error";

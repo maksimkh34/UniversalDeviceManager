@@ -1,5 +1,6 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using UDM.Model.LogService;
+﻿using UDM.Model.LogService;
+using UDM.Model.MainModelSpace;
+
 // ReSharper disable InconsistentNaming
 
 namespace UDM.Model.DIL
@@ -12,15 +13,15 @@ namespace UDM.Model.DIL
         public static async void Execute(string script)
         {
             LogService.LogService.Log("Executing script... \n", LogLevel.Info);
-            while (script.StartsWith(' ')) script = script.Substring(1);
+            while (script.StartsWith(' ')) script = script[1..];
             var scriptLines = script.Split("\r\n");
             foreach (var fpCmd in scriptLines)
             {
                 var pCmd = fpCmd;
                 MainModelStatic.ModelDeviceManager.UpdateDevices();
-                while (pCmd.StartsWith(" "))
+                while (pCmd.StartsWith(' '))
                 {
-                    pCmd = pCmd.Substring(1);
+                    pCmd = pCmd[1..];
                 }
 
                 var cmd = ModelCore.ReplaceCodeWars(pCmd);
@@ -88,15 +89,15 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
 
                     case "dil":
                         var scriptPath = instructions[1];
-                        for (int i = 2; i < instructions.Length; i++)
+                        for (var i = 2; i < instructions.Length; i++)
                         {
                             scriptPath += " " + instructions[i];
                         }
-                        Execute(File.ReadAllText(scriptPath));
+                        Execute(await File.ReadAllTextAsync(scriptPath));
                         break;
                     case "if":
                         var expression = instructions[1];
-                        for(int i = 2; i < instructions.Length; i++)
+                        for(var i = 2; i < instructions.Length; i++)
                         {
                             expression += " " + instructions[i];
                         }
@@ -107,25 +108,22 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                             MainModelStatic.UiDialogManager?.ShowMsg("Error", "Invalid expression: " + expression + ". " + expressionList.Length + " equals found (expect 2)");
                         }
 
-                        bool expressionResult = expressionList[0].ToString() == expressionList[1].ToString();
+                        var expressionResult = expressionList[0].ToString() == expressionList[1].ToString();
 
                         var codeIfTrue = ModelCore.GetBetween(string.Join("\r\n", scriptLines), "begin", "else");
                         var codeIfFalse = ModelCore.GetBetween(string.Join("\r\n", scriptLines), "else", "end");
 
-                        if (expressionResult) Execute(codeIfTrue);
-                        else Execute(codeIfFalse);
+                        Execute(expressionResult ? codeIfTrue : codeIfFalse);
 
                         // replace if statement code so DIL will not execute it
-                        for(int i = 0; i < scriptLines.Length; i++)
+                        for(var i = 0; i < scriptLines.Length; i++)
                         {
-                            if (scriptLines[i] == "begin")
+                            if (scriptLines[i] != "begin") continue;
+                            while (scriptLines[i] != "end")
                             {
-                                while (scriptLines[i] != "end")
-                                {
-                                    scriptLines[i] = "\r\n"; i += 1;
-                                }
-                                scriptLines[i] = "\r\n"; break;
+                                scriptLines[i] = "\r\n"; i += 1;
                             }
+                            scriptLines[i] = "\r\n"; break;
                         }
 
                         break;
@@ -134,13 +132,13 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                     case "fastboot_reboot":
                         if (instructions.Length == 1)
                         {
-                            instructions = new[] { instructions[0], "" };
+                            instructions = [instructions[0], ""];
                         }
 
                         var rebootCommand = instructions.ElementAt(1) == "EDL" ?
                             $"-s {MainModelStatic.ModelDeviceManager.ActiveDevice.Id} oem edl" :
                             $"-s {MainModelStatic.ModelDeviceManager.ActiveDevice.Id} reboot {instructions[1]}";
-                        var rebootOutput = SysCalls.Exec(MainModel.PathToPlatformtools, "fastboot.exe",
+                        var rebootOutput = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "fastboot.exe",
                             rebootCommand);
                         if (rebootOutput.ErrOutput == string.Empty)
                         {
@@ -155,22 +153,20 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                     case "adb_restore":
                         // sdc34_test_part.img
                         var preFile = instructions[1];
-                        for(int i = 2; i < instructions.Length; i++)
+                        for(var i = 2; i < instructions.Length; i++)
                         {
                             preFile += instructions[i];
                         }
                         var file = ModelCore.GetBetween(preFile, "\"", "\"");
-                        var filepParts = Path.GetFileName(file).Replace(".img", "").Split("_");
-                        var block = filepParts[0];
-                        var partition = filepParts[1];
-                        for (int i = 2; i < filepParts.Length; i++)
+                        var fileParts = Path.GetFileName(file).Replace(".img", "").Split("_");
+                        var block = fileParts[0];
+                        for (var i = 2; i < fileParts.Length; i++)
                         {
-                            partition += "_" + filepParts[i];
                         }
-                        SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"shell mkdir /sdcard/UDMBackups/");
-                        var pushResult = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"push /sdcard/UDMBackups/restore_part {file}");
-                        var restoreResult = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"shell \"dd if=/sdcard/UDMBackups/restore_part of=/dev/block/{block}");
-                        var rmResult = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"rm /sdcard/UDMBackups/restore_part");
+                        SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", $"shell mkdir /sdcard/UDMBackups/");
+                        var pushResult = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", $"push /sdcard/UDMBackups/restore_part {file}");
+                        var restoreResult = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", $"shell \"dd if=/sdcard/UDMBackups/restore_part of=/dev/block/{block}");
+                        var rmResult = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", $"rm /sdcard/UDMBackups/restore_part");
 
                         if (pushResult.ErrOutput == string.Empty)
                         {
@@ -209,7 +205,7 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                         }
 
                         var aRebootCommand = $"-s {MainModelStatic.ModelDeviceManager.ActiveDevice.Id} reboot {instructions[1]}";
-                        var aRebootOutput = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe",
+                        var aRebootOutput = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe",
                             aRebootCommand);
                         if (aRebootOutput.ErrOutput == string.Empty)
                         {
@@ -226,9 +222,9 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                         var devBlock = instructions[1];
                         var outPath = instructions[2];
 
-                        SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"shell mkdir /sdcard/UDMBackups/");
-                        var shellResult = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"shell \"dd if={devBlock} of=/sdcard/UDMBackups/{Path.GetFileName(outPath)}\"");
-                        var pullResult = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe", $"pull /sdcard/UDMBackups/{Path.GetFileName(outPath)} {outPath}");
+                        SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", $"shell mkdir /sdcard/UDMBackups/");
+                        var shellResult = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", $"shell \"dd if={devBlock} of=/sdcard/UDMBackups/{Path.GetFileName(outPath)}\"");
+                        var pullResult = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", $"pull /sdcard/UDMBackups/{Path.GetFileName(outPath)} {outPath}");
                         if (shellResult.ErrOutput == string.Empty)
                         {
                             LogService.LogService.Log(shellResult.StdOutput, LogLevel.Error);
@@ -262,7 +258,7 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                             archive += " " + instructions[i];
                         }
                         var sideloadCommand = $" -s {MainModelStatic.ModelDeviceManager.ActiveDevice.Id} sideload \"{archive}\"";
-                        var sideloadOutput = SysCalls.Exec(MainModel.PathToPlatformtools, "adb.exe",
+                        var sideloadOutput = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe",
                             sideloadCommand);
                         if (sideloadOutput.ErrOutput == string.Empty)
                         {
@@ -282,7 +278,7 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                             return;
                         }
                         var checkCommand = $"-s {MainModelStatic.ModelDeviceManager.ActiveDevice.Id} getvar unlocked";
-                        var checkOutput = SysCalls.Exec(MainModel.PathToPlatformtools, MainModel.PathToPlatformtools + @"\fastboot.exe",
+                        var checkOutput = SysCalls.Exec(MainModelStatic.PathToPlatformtools, MainModelStatic.PathToPlatformtools + @"\fastboot.exe",
                             checkCommand);
                         if(checkOutput.StdOutput == string.Empty)
                             LogService.LogService.Log(checkOutput.ErrOutput.Split("\r\n")[0], LogLevel.DILOutput);
@@ -324,7 +320,7 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                             path += " " + instructions[i];
                         }
                         var flashCommand = $"-s {MainModelStatic.ModelDeviceManager.ActiveDevice.Id} {(dt ? "--disable-verity " : "")}{(df ? "--disable-verification " : "")}flash {instructions[1]} \"{path}\"";
-                        var flashOutput = SysCalls.Exec(MainModel.PathToPlatformtools, "fastboot.exe",
+                        var flashOutput = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "fastboot.exe",
                             flashCommand);
                         if(flashOutput.ErrOutput != "")
                             LogService.LogService.Log(flashOutput.ErrOutput, LogLevel.DILOutput);
@@ -392,7 +388,7 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                         var pCommands = ModelCore.GetBetween(string.Join("\r\n", scriptLines), "{", "}").Split("\n");
                         var commands = pCommands.Where(t => t is not ("\r" or "")).ToList();
 
-                        var service = new InteractionService.InteractionService(scriptPathArgs, MainModel.Cwd + MainModel.PythonWd);
+                        var service = new InteractionService.InteractionService(scriptPathArgs, MainModelStatic.Cwd + MainModelStatic.PythonWd);
                         service.Run();
                         foreach (var line in commands)
                         {

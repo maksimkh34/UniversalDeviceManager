@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using UDM.Model.MainModelSpace;
 
 namespace UDM.Model.Commands
 {
@@ -34,7 +35,7 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type == DeviceConnectionType.fas
         public static void ExecuteCode(object param)
         {
             if (param is not string mode) return;
-            MainModel.CurrentScriptCode = $"fastboot_reboot {(mode == "system" ? string.Empty : mode)}";
+            MainModelStatic.CurrentScriptCode = $"fastboot_reboot {(mode == "system" ? string.Empty : mode)}";
             MainModelStatic.ModelExecuteCode?.Invoke();
         }
 

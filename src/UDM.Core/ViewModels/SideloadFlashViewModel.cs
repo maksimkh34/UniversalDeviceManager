@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
-using UDM.Model;
 using UDM.Model.Commands;
+using UDM.Model.MainModelSpace;
 
 namespace UDM.Core.ViewModels
 {
@@ -9,7 +9,7 @@ namespace UDM.Core.ViewModels
         public ICommand ApplyCommand { get; set; } = new DelegateCommand(FlashAction, ActiveDeviceConnectedAndZipSelected, closeWindowAction);
         public ICommand BrowseCommand { get; } = new DelegateCommand(BrowseAction, DelegateCommand.DefaultCanExecute);
 
-        private string _selectedArchivePath = MainModel.FileNotSelected;
+        private string _selectedArchivePath = MainModelStatic.FileNotSelected;
         public string SelectedArchivePath
         {
             get => _selectedArchivePath;
@@ -34,14 +34,14 @@ namespace UDM.Core.ViewModels
         {
             if (!MainModelStatic.ModelDeviceManager.IsActiveDeviceConnected()) return false;
             if (obj is not string str) return false;
-            return str != MainModel.FileNotSelected;
+            return str != MainModelStatic.FileNotSelected;
         }
 
         private static void FlashAction(object obj)
         {
             if (obj is not string archivePath) return;
 
-            MainModel.CurrentScriptCode = $"sideload {archivePath}";
+            MainModelStatic.CurrentScriptCode = $"sideload {archivePath}";
             MainModelStatic.ModelExecuteCode?.Invoke();
         }
 

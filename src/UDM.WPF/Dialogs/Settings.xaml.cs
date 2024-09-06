@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using UDM.Core.ViewModels;
-using UDM.Model;
+using UDM.Model.MainModelSpace;
 using CheckBox = System.Windows.Controls.CheckBox;
 using ComboBox = System.Windows.Controls.ComboBox;
 using Orientation = System.Windows.Controls.Orientation;
@@ -50,7 +50,7 @@ namespace UDM.WPF.Dialogs
                         }
                     };
                     checkbox.SetResourceReference(ContentProperty, setting.DisplayName);
-                    var binding = new System.Windows.Data.Binding
+                    var binding = new Binding
                     {
                         Source = _dataContext,
                         Mode = BindingMode.TwoWay,
@@ -78,7 +78,7 @@ namespace UDM.WPF.Dialogs
                     };
                     title.SetResourceReference(TextBlock.TextProperty, setting.DisplayName);
 
-                    foreach (var possibleValue in setting.GetPossibleValues() ?? new List<string>())
+                    foreach (var possibleValue in setting.GetPossibleValues() ?? [])
                     {
                         comboBox.Items.Add(new TextBlock()
                         {
@@ -90,7 +90,7 @@ namespace UDM.WPF.Dialogs
                         });
                     }
 
-                    var binding = new System.Windows.Data.Binding
+                    var binding = new Binding
                     {
                         Source = _dataContext,
                         Mode = BindingMode.TwoWay,
@@ -122,7 +122,7 @@ namespace UDM.WPF.Dialogs
                         VerticalAlignment = VerticalAlignment.Center
                     };
 
-                    var binding = new System.Windows.Data.Binding
+                    var binding = new Binding
                     {
                         Source = _dataContext,
                         Mode = BindingMode.TwoWay,

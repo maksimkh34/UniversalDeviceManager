@@ -30,7 +30,7 @@
 
         public static List<List<string>> LoadDataList(string fileName, char delimiter = '=')
         {
-            List<List<string>> result = new();
+            List<List<string>> result = [];
 
             string[] text;
             try
@@ -39,11 +39,11 @@
             }
             catch (FileNotFoundException)
             {
-                return new List<List<string>>();
+                return [];
             }
             catch (DirectoryNotFoundException)
             {
-                return new List<List<string>>();
+                return [];
             }
             if (text.Length == 0) return result;
 
