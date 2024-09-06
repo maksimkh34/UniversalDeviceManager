@@ -35,7 +35,7 @@ namespace UDM.WPF.Dialogs
             DataContext = _dataContext;
         }
 
-        public void UpdatePath(string path)
+        private void UpdatePath(string path)
         {
             _dataContext!.SelectedRomPath = path;
         }

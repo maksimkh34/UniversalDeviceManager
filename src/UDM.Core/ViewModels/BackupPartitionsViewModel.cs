@@ -13,7 +13,7 @@ namespace UDM.Core.ViewModels
 {
     public class BackupPartitionsViewModel(Action closeWindow) : BaseViewModel
     {
-        public ObservableCollection<string> BeforeSelectPartitions { get; set; } = new(MainModel.ModelDeviceManager.ActiveDevice.Partitions.Keys.ToList());
+        public ObservableCollection<string> BeforeSelectPartitions { get; set; } = new(MainModelStatic.ModelDeviceManager.ActiveDevice.Partitions.Keys.ToList());
         public string? SelectedPartitions;
 
         public static void ApplyFunction(object param)

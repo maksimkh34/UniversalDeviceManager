@@ -14,9 +14,9 @@ namespace UDM.Model
 
         public static bool ChangelogFound;
 
-        public static ExecuteCode? ModelExecuteCode;
+        public static MainModel.ExecuteCode? ModelExecuteCode;
 
-        public static ExecuteCode? AutoExecuteCode;
+        public static MainModel.ExecuteCode? AutoExecuteCode;
 
         public static UiDialogManager? UiDialogManager;
 

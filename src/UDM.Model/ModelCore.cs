@@ -34,13 +34,13 @@ namespace UDM.Model
         public static string ReplaceCodeWars(string code)
         {
             var result = code
-                .Replace("%pyexecutable%", PathToPython)
-                .Replace("%cwd%", Cwd)
+                .Replace("%pyexecutable%", MainModel.PathToPython)
+                .Replace("%cwd%", MainModel.Cwd)
                 .Replace("%sid%", MainModelStatic.ModelDeviceManager.ActiveDevice.Id);
 
-            result = Vars.Keys.Aggregate(result, (current, varName) => current.Replace(varName, Vars[varName]));
+            result = MainModel.Vars.Keys.Aggregate(result, (current, varName) => current.Replace(varName, MainModel.Vars[varName]));
 
-            while (result.Contains("askuser"))
+            while (result.Contains("askuser")) 
             {
                 var msg = GetBetween(result, "%askuser: [", "]%");
                 var userInput = MainModelStatic.UiDialogManager?.GetUserInput(msg);
