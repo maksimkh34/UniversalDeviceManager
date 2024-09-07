@@ -10,6 +10,8 @@ namespace UDM.Model.DIL
         public const string FastbootFlash_DisableVerity_Flag = "-dt";
         public const string FastbootFlash_DisableVerification_Flag = "-df";
 
+        private static string _downloadFilePath = "";
+
         public static async void Execute(string script)
         {
             LogService.LogService.Log("Executing script... \n", LogLevel.Info);
@@ -64,7 +66,7 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                                 pathToBat += "flash_all_except_data_storage.bat";
                                 break;
                             case "-d":
-                                MainModelStatic.UiDialogManager?.ShowMsg("Error", "Invalid flashing mode specifed. Flashing in clean type...");
+                                MainModelStatic.UiDialogManager?.ShowMsg("Error", "Invalid flashing mode specified. Flashing in clean type...");
                                 pathToBat += "flash_all.bat";
                                 break;
                         }
@@ -347,7 +349,6 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
 
                     case "iget":
                         var downloadFile = instructions[1];
-
                         if (cmd.Contains("--overwrite-if-exists") || cmd.Contains("-oie"))
                         {
                             if(File.Exists(downloadFile)) File.Delete(downloadFile);
@@ -355,10 +356,12 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                         else if (File.Exists(downloadFile)) break;
 
                         var downloadPath = Path.GetDirectoryName(downloadFile);
-                        if (downloadPath != null) Directory.CreateDirectory(downloadPath);
+                        if (!string.IsNullOrEmpty(downloadPath)) Directory.CreateDirectory(downloadPath);
 
                         LogService.LogService.Log("Downloading " + downloadFile + "...", LogLevel.DILOutput);
-                        ModelCore.DownloadFile(downloadFile, instructions[2]);
+                        await ModelCore.DownloadFile(downloadFile, instructions[2]);
+                        _downloadFilePath = downloadPath ?? "";
+                        Task.Run(() => ModelCore.DownloadFileAsync(_downloadFilePath, instructions[2])).Wait();
                         if (File.Exists(downloadFile))
                         {
                             LogService.LogService.Log("Downloaded.", LogLevel.DILOutput);

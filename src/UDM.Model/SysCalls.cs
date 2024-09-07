@@ -63,7 +63,7 @@ namespace UDM.Model
                     var stdOutput = p.StandardOutput.ReadToEnd();
                     var errOutput = p.StandardError.ReadToEnd();
 
-                    return new ExecutionResult(new[] { errOutput, stdOutput });
+                    return new ExecutionResult([errOutput, stdOutput]);
 
                 case OsType.Linux:
                     throw new NotImplementedException();

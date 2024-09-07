@@ -1,19 +1,20 @@
 ﻿using System.Net;
 using UDM.Model.LogService;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace UDM.Model.MainModelSpace
 {
     internal static class ModelCore
     {
 
-        public static void DownloadFile(string path, string url)
+        public static async Task DownloadFileAsync(string path, string url)
         {
             try
             {
-#pragma warning disable SYSLIB0014
-                var webClient = new WebClient();
-#pragma warning restore SYSLIB0014
-                webClient.DownloadFile(new Uri(url), path);
+                var uri = new Uri(url);
+                var response = await new HttpClient().GetAsync(uri);
+                await using var fs = new FileStream(path, FileMode.Create);
+                await response.Content.CopyToAsync(fs);
             }
             catch (Exception ex)
             {
@@ -21,7 +22,11 @@ namespace UDM.Model.MainModelSpace
             }
         }
 
-        // move
+        public static async Task DownloadFile(string path, string url)
+        {
+            await DownloadFileAsync(path, url);
+        }
+
         public static string GetBetween(string strSource, string strStart, string strEnd)
         {
             if (!strSource.Contains(strStart) || !strSource.Contains(strEnd)) return "";
