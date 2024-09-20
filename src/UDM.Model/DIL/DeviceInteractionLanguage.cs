@@ -1,4 +1,5 @@
-﻿using UDM.Model.LogService;
+﻿using System.Security.Cryptography.X509Certificates;
+using UDM.Model.LogService;
 using UDM.Model.MainModelSpace;
 
 // ReSharper disable InconsistentNaming
@@ -74,13 +75,13 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                         var fullFlashOutput = SysCalls.Exec(fullFlashPath, pathToBat,
                             "");
 
-                        if (fullFlashOutput.ErrOutput == string.Empty)
+                        if (fullFlashOutput.Result.ErrOutput == string.Empty)
                         {
-                            LogService.LogService.Log(fullFlashOutput.StdOutput, LogLevel.Error);
+                            LogService.LogService.Log(fullFlashOutput.Result.StdOutput, LogLevel.Error);
                         }
                         else
                         {
-                            LogService.LogService.Log(fullFlashOutput.ErrOutput, LogLevel.DILOutput);
+                            LogService.LogService.Log(fullFlashOutput.Result.ErrOutput, LogLevel.DILOutput);
                         }
                         break;
 
@@ -110,7 +111,7 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                             MainModelStatic.UiDialogManager?.ShowMsg("Error", "Invalid expression: " + expression + ". " + expressionList.Length + " equals found (expect 2)");
                         }
 
-                        var expressionResult = expressionList[0].ToString() == expressionList[1].ToString();
+                        var expressionResult = expressionList[0] == expressionList[1];
 
                         var codeIfTrue = ModelCore.GetBetween(string.Join("\r\n", scriptLines), "begin", "else");
                         var codeIfFalse = ModelCore.GetBetween(string.Join("\r\n", scriptLines), "else", "end");
@@ -142,13 +143,13 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                             $"-s {MainModelStatic.ModelDeviceManager.ActiveDevice.Id} reboot {instructions[1]}";
                         var rebootOutput = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "fastboot.exe",
                             rebootCommand);
-                        if (rebootOutput.ErrOutput == string.Empty)
+                        if (rebootOutput.Result.ErrOutput == string.Empty)
                         {
-                            LogService.LogService.Log(rebootOutput.StdOutput, LogLevel.Error);
+                            LogService.LogService.Log(rebootOutput.Result.StdOutput, LogLevel.Error);
                         }
                         else
                         {
-                            LogService.LogService.Log(rebootOutput.ErrOutput, LogLevel.DILOutput);
+                            LogService.LogService.Log(rebootOutput.Result.ErrOutput, LogLevel.DILOutput);
                         }
                         break;
 
@@ -170,31 +171,31 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                         var restoreResult = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", $"shell \"dd if=/sdcard/UDMBackups/restore_part of=/dev/block/{block}");
                         var rmResult = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", $"rm /sdcard/UDMBackups/restore_part");
 
-                        if (pushResult.ErrOutput == string.Empty)
+                        if (pushResult.Result.ErrOutput == string.Empty)
                         {
-                            LogService.LogService.Log(pushResult.StdOutput, LogLevel.Error);
+                            LogService.LogService.Log(pushResult.Result.StdOutput, LogLevel.Error);
                         }
                         else
                         {
-                            LogService.LogService.Log(pushResult.ErrOutput, LogLevel.DILOutput);
+                            LogService.LogService.Log(pushResult.Result.ErrOutput, LogLevel.DILOutput);
                         }
 
-                        if (restoreResult.ErrOutput == string.Empty)
+                        if (restoreResult.Result.ErrOutput == string.Empty)
                         {
-                            LogService.LogService.Log(restoreResult.StdOutput, LogLevel.Error);
+                            LogService.LogService.Log(restoreResult.Result.StdOutput, LogLevel.Error);
                         }
                         else
                         {
-                            LogService.LogService.Log(restoreResult.ErrOutput, LogLevel.DILOutput);
+                            LogService.LogService.Log(restoreResult.Result.ErrOutput, LogLevel.DILOutput);
                         }
 
-                        if (rmResult.ErrOutput == string.Empty)
+                        if (rmResult.Result.ErrOutput == string.Empty)
                         {
-                            LogService.LogService.Log(rmResult.StdOutput, LogLevel.Error);
+                            LogService.LogService.Log(rmResult.Result.StdOutput, LogLevel.Error);
                         }
                         else
                         {
-                            LogService.LogService.Log(rmResult.ErrOutput, LogLevel.DILOutput);
+                            LogService.LogService.Log(rmResult.Result.ErrOutput, LogLevel.DILOutput);
                         }
                         break;
 
@@ -209,13 +210,13 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                         var aRebootCommand = $"-s {MainModelStatic.ModelDeviceManager.ActiveDevice.Id} reboot {instructions[1]}";
                         var aRebootOutput = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe",
                             aRebootCommand);
-                        if (aRebootOutput.ErrOutput == string.Empty)
+                        if (aRebootOutput.Result.ErrOutput == string.Empty)
                         {
-                            LogService.LogService.Log(aRebootOutput.StdOutput, LogLevel.Error);
+                            LogService.LogService.Log(aRebootOutput.Result.StdOutput, LogLevel.Error);
                         }
                         else
                         {
-                            LogService.LogService.Log(aRebootOutput.ErrOutput, LogLevel.DILOutput);
+                            LogService.LogService.Log(aRebootOutput.Result.ErrOutput, LogLevel.DILOutput);
                         }
                         break;
 
@@ -227,22 +228,22 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                         SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", $"shell mkdir /sdcard/UDMBackups/");
                         var shellResult = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", $"shell \"dd if={devBlock} of=/sdcard/UDMBackups/{Path.GetFileName(outPath)}\"");
                         var pullResult = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", $"pull /sdcard/UDMBackups/{Path.GetFileName(outPath)} {outPath}");
-                        if (shellResult.ErrOutput == string.Empty)
+                        if (shellResult.Result.ErrOutput == string.Empty)
                         {
-                            LogService.LogService.Log(shellResult.StdOutput, LogLevel.Error);
+                            LogService.LogService.Log(shellResult.Result.StdOutput, LogLevel.Error);
                         }
                         else
                         {
-                            LogService.LogService.Log(shellResult.ErrOutput, LogLevel.DILOutput);
+                            LogService.LogService.Log(shellResult.Result.ErrOutput, LogLevel.DILOutput);
                         }
 
-                        if (pullResult.ErrOutput == string.Empty)
+                        if (pullResult.Result.ErrOutput == string.Empty)
                         {
-                            LogService.LogService.Log(pullResult.StdOutput, LogLevel.Error);
+                            LogService.LogService.Log(pullResult.Result.StdOutput, LogLevel.Error);
                         }
                         else
                         {
-                            LogService.LogService.Log(pullResult.ErrOutput, LogLevel.DILOutput);
+                            LogService.LogService.Log(pullResult.Result.ErrOutput, LogLevel.DILOutput);
                         }
 
                         break;
@@ -262,13 +263,13 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                         var sideloadCommand = $" -s {MainModelStatic.ModelDeviceManager.ActiveDevice.Id} sideload \"{archive}\"";
                         var sideloadOutput = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe",
                             sideloadCommand);
-                        if (sideloadOutput.ErrOutput == string.Empty)
+                        if (sideloadOutput.Result.ErrOutput == string.Empty)
                         {
-                            LogService.LogService.Log(sideloadOutput.StdOutput, LogLevel.Error);
+                            LogService.LogService.Log(sideloadOutput.Result.StdOutput, LogLevel.Error);
                         }
                         else
                         {
-                            LogService.LogService.Log(sideloadOutput.ErrOutput, LogLevel.DILOutput);
+                            LogService.LogService.Log(sideloadOutput.Result.ErrOutput, LogLevel.DILOutput);
                         }
                         break;
 
@@ -282,10 +283,10 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                         var checkCommand = $"-s {MainModelStatic.ModelDeviceManager.ActiveDevice.Id} getvar unlocked";
                         var checkOutput = SysCalls.Exec(MainModelStatic.PathToPlatformtools, MainModelStatic.PathToPlatformtools + @"\fastboot.exe",
                             checkCommand);
-                        if(checkOutput.StdOutput == string.Empty)
-                            LogService.LogService.Log(checkOutput.ErrOutput.Split("\r\n")[0], LogLevel.DILOutput);
+                        if(checkOutput.Result.StdOutput == string.Empty)
+                            LogService.LogService.Log(checkOutput.Result.ErrOutput.Split("\r\n")[0], LogLevel.DILOutput);
                         else
-                            LogService.LogService.Log(checkOutput.StdOutput, LogLevel.Error);
+                            LogService.LogService.Log(checkOutput.Result.StdOutput, LogLevel.Error);
                         break;
 
                     case "ff":
@@ -324,9 +325,9 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                         var flashCommand = $"-s {MainModelStatic.ModelDeviceManager.ActiveDevice.Id} {(dt ? "--disable-verity " : "")}{(df ? "--disable-verification " : "")}flash {instructions[1]} \"{path}\"";
                         var flashOutput = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "fastboot.exe",
                             flashCommand);
-                        if(flashOutput.ErrOutput != "")
-                            LogService.LogService.Log(flashOutput.ErrOutput, LogLevel.DILOutput);
-                        else LogService.LogService.Log(flashOutput.StdOutput, LogLevel.Error);
+                        if(flashOutput.Result.ErrOutput != "")
+                            LogService.LogService.Log(flashOutput.Result.ErrOutput, LogLevel.DILOutput);
+                        else LogService.LogService.Log(flashOutput.Result.StdOutput, LogLevel.Error);
 
                         break;
 
@@ -359,9 +360,8 @@ MainModelStatic.ModelDeviceManager.ActiveDevice.Type);
                         if (!string.IsNullOrEmpty(downloadPath)) Directory.CreateDirectory(downloadPath);
 
                         LogService.LogService.Log("Downloading " + downloadFile + "...", LogLevel.DILOutput);
-                        await ModelCore.DownloadFile(downloadFile, instructions[2]);
+                        await ModelCore.DownloadFileAsync(downloadFile, instructions[2]);
                         _downloadFilePath = downloadPath ?? "";
-                        Task.Run(() => ModelCore.DownloadFileAsync(_downloadFilePath, instructions[2])).Wait();
                         if (File.Exists(downloadFile))
                         {
                             LogService.LogService.Log("Downloaded.", LogLevel.DILOutput);

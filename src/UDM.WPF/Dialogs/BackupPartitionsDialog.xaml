@@ -25,8 +25,7 @@
                    Margin="10,10,10,5"
                    Text="Choose partitions to backup">
         </TextBlock>
-        <Button Click="Button_Click_1"
-                Margin="10,0,10,0" 
+        <Button Margin="10,0,10,0" 
                 Style="{StaticResource ThemedButton}">Select all</Button>
         <DockPanel>
             <ListBox x:Name="listbox1" DockPanel.Dock="Top"

@@ -40,7 +40,7 @@ namespace UDM.Model
             }
         }
 
-        public bool ActiveDeviceAlive() => SysCalls.Exec(MainModelStatic.PathToPlatformtools, "fastboot.exe", "devices").StdOutput
+        public bool ActiveDeviceAlive() => SysCalls.Exec(MainModelStatic.PathToPlatformtools, "fastboot.exe", "devices").Result.StdOutput
             .Contains(ActiveDevice.Id);
 
         public bool DeviceConnected(string id)
@@ -54,7 +54,7 @@ namespace UDM.Model
         {
             LogService.LogService.Log("Updating fastboot devices", LogLevel.Debug);
             var fastbootResult = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "fastboot.exe", "devices");
-            foreach (var device in fastbootResult.StdOutput.Split("\r\n"))
+            foreach (var device in fastbootResult.Result.StdOutput.Split("\r\n"))
             {
                 if (device == "") continue;
                 var parsedDevice = DeviceConnection.Parse(device);
@@ -72,7 +72,7 @@ namespace UDM.Model
         {
             LogService.LogService.Log("Updating sideload devices", LogLevel.Debug);
             var commandResult = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", "devices");
-            foreach (var device in commandResult.StdOutput.Split("\r\n"))
+            foreach (var device in commandResult.Result.StdOutput.Split("\r\n"))
             {
                 if (device is "" or "List of devices attached") continue;
                 var parsedDevice = DeviceConnection.Parse(device);
@@ -90,7 +90,7 @@ namespace UDM.Model
         {
             LogService.LogService.Log("Updating adb devices", LogLevel.Debug);
             var commandResult = SysCalls.Exec(MainModelStatic.PathToPlatformtools, "adb.exe", "devices");
-            foreach (var device in commandResult.StdOutput.Split("\r\n"))
+            foreach (var device in commandResult.Result.StdOutput.Split("\r\n"))
             {
                 if (device is "" or "List of devices attached") continue;
                 var parsedDevice = DeviceConnection.Parse(device);
@@ -252,6 +252,10 @@ namespace UDM.Model
                     .Replace("device", "adb")));
             }
             catch (ArgumentException)
+            {
+                return new DeviceConnection();
+            }
+            catch (IndexOutOfRangeException)
             {
                 return new DeviceConnection();
             }

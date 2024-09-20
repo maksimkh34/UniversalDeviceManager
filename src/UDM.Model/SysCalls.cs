@@ -13,17 +13,7 @@ namespace UDM.Model
         private static string? _filename;
         private static string? _args;
 
-        public static ExecutionResult Exec(string wd, string filename, string args)
-        {
-            _wd = wd;
-            _filename = filename;
-            _args = args;
-            var result = Task.Run(ExecPseudoAsync).Result;
-            _wd = null;
-            _filename = null;
-            _args = null;
-            return result;
-        }
+        private static ExecutionResult _result = new(["", ""]);
 
         public static ExecutionResult ExecLegacy(string wd, string filename, string args)
         {
@@ -35,6 +25,18 @@ namespace UDM.Model
             _filename = null;
             _args = null;
             return result;
+        }
+
+        public static async Task<ExecutionResult> Exec(string wd, string filename, string args)
+        {
+            _wd = wd;
+            _filename = filename;
+            _args = args;
+            Task.Run(ExecAsync).Wait();
+            _wd = null;
+            _filename = null;
+            _args = null;
+            return _result;
         }
 
         private static ExecutionResult ExecPseudoAsync()
@@ -64,6 +66,39 @@ namespace UDM.Model
                     var errOutput = p.StandardError.ReadToEnd();
 
                     return new ExecutionResult([errOutput, stdOutput]);
+
+                case OsType.Linux:
+                    throw new NotImplementedException();
+                default:
+                    throw new InvalidEnumArgumentException();
+            }
+        }
+
+        private static async Task ExecAsync()
+        {
+            if (!File.Exists(_filename)) _filename = _wd + "\\" + _filename;
+            LogService.LogService.Log("Executing " + _filename + " " + _args, LogLevel.Debug);
+
+            switch (OsType)
+            {
+                case OsType.Win:
+                    var p = new Process();
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.RedirectStandardError = true;
+                    p.StartInfo.RedirectStandardOutput = true;
+                    p.StartInfo.CreateNoWindow = true;
+                    p.StartInfo.Arguments = _args;
+                    p.StartInfo.FileName = _filename;
+                    p.StartInfo.WorkingDirectory = _wd;
+
+                    p.Start();
+                    await p.WaitForExitAsync();
+
+                    var stdOutput = await p.StandardOutput.ReadToEndAsync();
+                    var errOutput = await p.StandardError.ReadToEndAsync();
+
+                    _result = new ExecutionResult([errOutput, stdOutput]); 
+                    break;
 
                 case OsType.Linux:
                     throw new NotImplementedException();

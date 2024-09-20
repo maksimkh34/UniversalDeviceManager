@@ -3,11 +3,11 @@ using UDM.Model.MainModelSpace;
 
 namespace UDM.Core.ViewModels
 {
-    public class BackupPartitionsViewModel(Action closeWindow) : BaseViewModel
+    public class BackupPartitionsViewModel : BaseViewModel
     {
-        private readonly Action _closeWindow = closeWindow;
         public ObservableCollection<string> BeforeSelectPartitions { get; set; } = new(MainModelStatic.ModelDeviceManager.ActiveDevice.Partitions.Keys.ToList());
         public string? SelectedPartitions;
+        public static Action CloseWindow;
 
         public static void ApplyFunction(object param)
         {
@@ -22,14 +22,15 @@ namespace UDM.Core.ViewModels
                     from pair in MainModelStatic.ModelDeviceManager.ActiveDevice.Partitions 
                     where pair.Key == partition select pair)
                 .Aggregate("", (current, pair) => current + 
-                                                  ($"adb_backup {pair.Value.Replace("\n", "")
+                                                  $"adb_backup {pair.Value.Replace("\n", "")
                                                       .Replace("\r", "")}" + $" {savePath}\\{pair.Value.Split("/")[^1]
                                                           .Replace("\n", "").Replace("\r", "")}_{pair.Key.Replace("\n", "")
-                                                          .Replace("\r", "")}.img\r\n"));
+                                                          .Replace("\r", "")}.img\r\n");
 
             MainModelStatic.CurrentScriptCode = scriptCode;
             MainModelStatic.ModelExecuteCode?.Invoke();
             MainModelStatic.UiDialogManager?.ShowMsg("Backup", "Backup saved to " + savePath);
+            CloseWindow.Invoke();
         }
     }
 }

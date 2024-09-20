@@ -21,7 +21,10 @@ namespace UDM.WPF.Controls.Titlebar
 
         #region Triggers
 
-        private void Border_MouseDown_Trigger(object sender, RoutedEventArgs e) => _parentWindow?.DragMove();
+        private void Border_MouseDown_Trigger(object sender, RoutedEventArgs e)
+        {
+            try { _parentWindow?.DragMove(); } catch (InvalidOperationException) { }
+        }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {

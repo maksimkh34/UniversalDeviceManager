@@ -12,7 +12,7 @@ namespace UDM.WPF.Dialogs
     /// </summary>
     public partial class BackupPartitionsDialog : Window
     {
-        BackupPartitionsViewModel? _viewModel;
+        private BackupPartitionsViewModel? _viewModel;
         public BackupPartitionsDialog()
         {
             InitializeComponent();
@@ -20,8 +20,9 @@ namespace UDM.WPF.Dialogs
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _viewModel = new(Close);
-            if(MainModelStatic.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.adb 
+            _viewModel = new BackupPartitionsViewModel();
+            BackupPartitionsViewModel.CloseWindow = Close;
+            if (MainModelStatic.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.adb 
                 && MainModelStatic.ModelDeviceManager.ActiveDevice.Type != DeviceConnectionType.recovery)
             {
                 App.ShowMessage("No compatible devices found! ");
@@ -39,23 +40,13 @@ namespace UDM.WPF.Dialogs
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var e1 = (ListBox)FindName("listbox1");
-            ObservableCollection<string> e2 = [];
+            var e1 = (ListBox)FindName("listbox1")!;
+            ObservableCollection<string?> e2 = [];
             foreach (var e3 in e1.SelectedItems)
             {
                 e2.Add(e3.ToString());
             }
             BackupPartitionsViewModel.ApplyFunction(e2);
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            var e1 = (ListBox)FindName("listbox1");
-            e1.SelectedItems.Clear();
-            foreach (var e2 in e1.Items)
-            {
-                e1.SelectedItems.Add(e2.ToString());
-            }
         }
     }
 }

@@ -15,7 +15,7 @@ namespace UDM.WPF
         {
             base.OnStartup(e);
 
-            var translationService = new TranslationService((string key) => (string)FindResource(key));
+            var translationService = new TranslationService(key => ((string)FindResource(key)! ?? key));
             var dialogManager = new UiDialogManager(
                 getFile: GetFileAction,
                 getFileArr: GetFilesAction,
